@@ -1,12 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Bouncer from './components/Bouncer';
+import Auth from './components/Auth';
 import * as serviceWorker from './serviceWorker';
+
+import { BrowserRouter, Route, Switch} from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <BrowserRouter>
+        <Switch>
+          <Route exact={ true } path="/auth:code?" component={Auth} />
+          <Route exact={ true } path="/" component={Bouncer} />
+        </Switch>
+      </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
