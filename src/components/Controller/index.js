@@ -4,6 +4,7 @@ import SkipButton from './components/SkipButton';
 
 import { Box } from '@material-ui/core';
 import spotify from '../../utils/spotify';
+import config from '../../config/config.json';
 
 import './style.css';
 
@@ -22,7 +23,7 @@ const syncNowPlaying = (access_token, setPlayer, setSyncer, syncTimer, setSyncTi
       setTimeout(() => {
         setSyncer(true);
         setSyncTimer(undefined);
-      }, 30000)
+      }, config.SPOTIFY_PING_INTERVAL || 30000)
     );
   });
 }
@@ -39,7 +40,14 @@ export default function Controller(props) {
   }, [syncer, props.access_token, syncTimer]);
   
   return (
-    <Box className="controller">
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      position="fixed"
+      bottom={3}
+      width="100%"
+    >
       <SkipButton
         {...props}
         player={player}

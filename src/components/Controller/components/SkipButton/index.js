@@ -30,7 +30,7 @@ export default function SkipButton(props) {
   }
 
   return (
-    <IconButton disabled={player === ''} onClick={() => spotifyAction(access_token, action, setSyncer)}>
+    <IconButton disabled={!player} onClick={() => spotifyAction(access_token, action, setSyncer)}>
       { icon }
     </IconButton>
   );

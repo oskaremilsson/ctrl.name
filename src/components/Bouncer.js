@@ -4,11 +4,7 @@ import LandingPage from '../pages/LandingPage';
 import LoadingPage from '../pages/LoadingPage';
 import spotify from '../utils/spotify';
 
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import { Box } from '@material-ui/core';
-
-const theme = createMuiTheme();
 
 const verifyToken = (access_token, setMe, setLoggedIn, props) => {
   spotify(access_token).get('me')

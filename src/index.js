@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import Bouncer from './components/Bouncer';
 import Auth from './components/Auth';
 import * as serviceWorker from './serviceWorker';

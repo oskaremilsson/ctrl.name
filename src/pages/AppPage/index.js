@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Controller from '../../components/Controller';
 import SwitchCurrentMe from './parts/SwitchCurrentMe';
+import GiveConsent from './parts/GiveConsent';
 import { Box } from '@material-ui/core'
 
 import api from '../../utils/api';
@@ -29,16 +30,17 @@ export default function AppPage(props) {
     }
   }, [currentMe, tokenFetched]);
 
-  let part = <SwitchCurrentMe
-                me={me}
-                currentMe={currentMe}
-                setCurrentMe={setCurrentMe}
-                setTokenFetched={setTokenFetched}
-              />
 
   return (
     <Box className="AppPage">
-      { part }
+      <SwitchCurrentMe
+        me={me}
+        currentMe={currentMe}
+        setCurrentMe={setCurrentMe}
+        setTokenFetched={setTokenFetched}
+      />
+
+      <GiveConsent />
 
       <Controller access_token={access_token}/>
     </Box>
