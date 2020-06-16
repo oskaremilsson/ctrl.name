@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css';
+
 import config from '../../config/config.json';
 import { Box, Button } from '@material-ui/core';
 

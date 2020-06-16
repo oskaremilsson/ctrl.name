@@ -6,6 +6,7 @@ import spotify from '../utils/spotify';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import { Box } from '@material-ui/core';
 
 const theme = createMuiTheme();
 
@@ -41,8 +42,8 @@ export default function Bouncer(props) {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <Box>
       { component }
-    </ThemeProvider>
+    </Box>
   );
 }

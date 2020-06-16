@@ -1,7 +1,7 @@
 import React from 'react';
 import spotify from '../../../../utils/spotify';
 import { SkipNext, SkipPrevious, FiberManualRecord } from '@material-ui/icons';
-import { Box, IconButton } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 
 const spotifyAction = (access_token, action, setSyncer) => {
   spotify(access_token).post(`me/player/${action}`)

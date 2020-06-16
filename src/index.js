@@ -6,14 +6,19 @@ import Auth from './components/Auth';
 import * as serviceWorker from './serviceWorker';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+
+const theme = createMuiTheme();
 
 ReactDOM.render(
+  <ThemeProvider theme={theme}>
     <BrowserRouter>
       <Switch>
         <Route exact={ true } path="/auth:code?" component={Auth} />
         <Route exact={ true } path="/" component={Bouncer} />
       </Switch>
-    </BrowserRouter>,
+    </BrowserRouter>
+  </ThemeProvider>,
   document.getElementById('root')
 );
 
