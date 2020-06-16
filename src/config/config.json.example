@@ -1,6 +1,8 @@
 {
+  "API_BASE_URL": "http://localhost:9000",
   "SPOTIFY_BASE_URL": "https://api.spotify.com/v1/",
   "CLIENT_ID": "your_id",
   "SPOTIFY_REDIRECT_URI": "",
-  "SPOTIFY_SCOPE":"user-modify-playback-state,user-read-playback-state,user-read-currently-playing"
+  "SPOTIFY_SCOPE":"user-modify-playback-state,user-read-playback-state,user-read-currently-playing",
+  "SPOTIFY_PING_INTERVAL": 15000
 }
