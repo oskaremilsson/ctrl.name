@@ -5,8 +5,10 @@ import GiveConsent from './parts/GiveConsent';
 import { Box } from '@material-ui/core'
 
 import api from '../../utils/api';
+import spotify from '../../utils/spotify';
+import config from '../../config/config.json';
 
-const getAccessToken = (username, setAccessToken, setTokenFetched) => {
+const getAccessToken = (username, setAccessToken, setTokenFetched, setSyncer) => {
   var data = new FormData();
   data.append("username", username);
 
@@ -14,8 +16,30 @@ const getAccessToken = (username, setAccessToken, setTokenFetched) => {
   .then(res => {
     setAccessToken(res.data.Access_token);
     setTokenFetched(true);
+    setSyncer(true);
   });
 };
+
+const syncNowPlaying = (access_token, setPlayer, setSyncer, syncTimer, setSyncTimer) => {
+  spotify(access_token).get('me/player').then(res => {
+    setSyncer(false);
+    console.log(res);
+    if (res.status === 200) {
+      setPlayer(res.data);
+    } else {
+      setPlayer(undefined);
+    }
+
+    /* Syncs twize for some reason */
+    clearTimeout(syncTimer);
+    setSyncTimer(
+      setTimeout(() => {
+        setSyncer(true);
+        setSyncTimer(undefined);
+      }, config.SPOTIFY_PING_INTERVAL || 30000)
+    );
+  });
+}
 
 export default function AppPage(props) {
   const { me } = props;
@@ -23,12 +47,21 @@ export default function AppPage(props) {
   const [access_token, setAccessToken] = useState(undefined);
   const [currentMe, setCurrentMe] = useState(me.id);
   const [tokenFetched, setTokenFetched] = useState(false);
+  const [syncer, setSyncer] = useState(true);
+  const [syncTimer, setSyncTimer] = useState(undefined);
+  const [player, setPlayer] = useState(undefined);
 
   useEffect(() => {
     if (!tokenFetched) {
-      getAccessToken(currentMe, setAccessToken, setTokenFetched);
+      getAccessToken(currentMe, setAccessToken, setTokenFetched, setSyncer);
     }
   }, [currentMe, tokenFetched]);
+
+  useEffect(() => {
+    if (access_token && syncer) {
+      syncNowPlaying(access_token, setPlayer, setSyncer, syncTimer, setSyncTimer);
+    }
+  }, [syncer, access_token, syncTimer]);
 
 
   return (
@@ -38,11 +71,17 @@ export default function AppPage(props) {
         currentMe={currentMe}
         setCurrentMe={setCurrentMe}
         setTokenFetched={setTokenFetched}
+        setSyncer={setSyncer}
       />
 
       <GiveConsent />
 
-      <Controller access_token={access_token}/>
+      <Controller
+        syncer={syncer}
+        setSyncer={setSyncer}
+        access_token={access_token}
+        player={player}
+      />
     </Box>
   );
 }
