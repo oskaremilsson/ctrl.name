@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PlayButton from './components/PlayButton';
 import SkipButton from './components/SkipButton';
 
+import { Box } from '@material-ui/core';
 import spotify from '../../utils/spotify';
 
 import './style.css';
@@ -35,10 +36,10 @@ export default function Controller(props) {
     if (props.access_token && syncer) {
       syncNowPlaying(props.access_token, setPlayer, setSyncer, syncTimer, setSyncTimer);
     }
-  }, [syncer]);
+  }, [syncer, props.access_token, syncTimer]);
   
   return (
-    <div className="controller">
+    <Box className="controller">
       <SkipButton
         {...props}
         player={player}
@@ -54,6 +55,6 @@ export default function Controller(props) {
         action={"next"}
         icon={"skip_next"}
       />
-    </div>
+    </Box>
   );
 }

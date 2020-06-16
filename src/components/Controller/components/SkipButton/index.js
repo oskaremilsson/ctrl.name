@@ -1,6 +1,7 @@
 import React from 'react';
 import spotify from '../../../../utils/spotify';
-import MaterialIcon from 'material-icons-react';
+import { SkipNext, SkipPrevious, FiberManualRecord } from '@material-ui/icons';
+import { Box, IconButton } from '@material-ui/core';
 
 const spotifyAction = (access_token, action, setSyncer) => {
   spotify(access_token).post(`me/player/${action}`)
@@ -12,11 +13,25 @@ const spotifyAction = (access_token, action, setSyncer) => {
 };
 
 export default function SkipButton(props) {
-  const { icon, action, access_token, player, setSyncer } = props;
+  const { action, access_token, player, setSyncer } = props;
+
+  let icon;
+  switch (action) {
+    case 'next':
+      icon = <SkipNext fontSize="small" />
+      break;
+    case 'previous':
+      icon = <SkipPrevious fontSize="small" />
+      break;
+    default:
+      //fallback
+      icon = <FiberManualRecord fontSize="medium" />
+      break;
+  }
 
   return (
-    <button disabled={!player} onClick={() => spotifyAction(access_token, action, setSyncer)}>
-      <MaterialIcon size={40} icon={icon} />
-    </button>
+    <IconButton disabled={player === ''} onClick={() => spotifyAction(access_token, action, setSyncer)}>
+      { icon }
+    </IconButton>
   );
 }

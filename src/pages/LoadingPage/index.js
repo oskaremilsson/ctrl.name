@@ -1,9 +1,10 @@
 import React from 'react';
+import { Box, CircularProgress } from '@material-ui/core';
 
 export default function LoadingPage() {
   return (
-    <div className="LoadingPage">
-      Loading..
-    </div>
+    <Box>
+      <CircularProgress />
+    </Box>
   );
 }

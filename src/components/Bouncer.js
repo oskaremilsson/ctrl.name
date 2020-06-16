@@ -4,6 +4,11 @@ import LandingPage from '../pages/LandingPage';
 import LoadingPage from '../pages/LoadingPage';
 import spotify from '../utils/spotify';
 
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme();
+
 const verifyToken = (access_token, setMe, setLoggedIn, props) => {
   spotify(access_token).get('me')
   .then(res => {
@@ -26,11 +31,18 @@ export default function Bouncer(props) {
     }
   }, [my_tokens, loggedIn, props]);
 
+  let component;
   if (my_tokens && !loggedIn) {
-    return <LoadingPage />
+    component = <LoadingPage />
   } else if (me && loggedIn) {
-    return <AppPage me={me}/>
+    component = <AppPage me={me}/>
   } else {
-    return <LandingPage />
+    component = <LandingPage />
   }
+
+  return (
+    <ThemeProvider theme={theme}>
+      { component }
+    </ThemeProvider>
+  );
 }

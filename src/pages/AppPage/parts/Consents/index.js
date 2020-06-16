@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import api from '../../../../utils/api';
-import MaterialIcon from 'material-icons-react';
-import { Dropdown } from 'semantic-ui-react';
+import { Box, Button, Menu, MenuItem } from '@material-ui/core';
 
 import './style.css';
 
@@ -12,15 +11,18 @@ const getConsents = (setConsents) => {
   });
 };
 
-const changedMe = (e, setCurrentMe, setTokenFetched) => {
-  console.log(e);
-  setCurrentMe(e.target.value);
-  setTokenFetched(false);
-}
-
 export default function Concents(props) {
   const { me, currentMe, setCurrentMe, setTokenFetched } = props;
   const [consents, setConsents] = useState(undefined);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleCurrentMeClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const closeCurrentMeMenu = () => {
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     if (!consents) {
@@ -28,25 +30,40 @@ export default function Concents(props) {
     }
   }, [consents]);
   
-  const consentList = consents && consents.map((consent) => 
-    <option key={consent} value={consent}>
+  const consentItems = consents && consents.map((consent) => 
+    <MenuItem key={consent} onClick={() => {
+      setCurrentMe(consent);
+      closeCurrentMeMenu();
+      setTokenFetched(false)
+    }}>
       {consent}
-    </option>
+    </MenuItem>
   );
 
 
   return (
-    <div>
-      <div className="now-controlling">
-        <MaterialIcon key={"face"} size={50} icon="face" />
-        <select
-          onChange={(e) => { changedMe(e, setCurrentMe, setTokenFetched) }}
-          selected={currentMe}
-        >
-          <option key={me.id} value={me.id}>{me.id}</option>
-          {consentList}
-        </select>
-      </div>
-    </div>
+    <Box>
+      <Box className="now-controlling">
+        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleCurrentMeClick}>
+          {currentMe}
+        </Button>
+        <Menu
+        id="select-current-me"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={closeCurrentMeMenu}
+      >
+        <MenuItem key={me.id} onClick={() => {
+          setCurrentMe(me.id);
+          setTokenFetched(false);
+          closeCurrentMeMenu();
+        }}>
+          {me.id}
+        </MenuItem>
+        {consentItems}
+      </Menu>
+      </Box>
+    </Box>
   );
 }

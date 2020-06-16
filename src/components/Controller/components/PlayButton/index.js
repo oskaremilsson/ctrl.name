@@ -1,6 +1,8 @@
 import React from 'react';
 import spotify from '../../../../utils/spotify';
-import MaterialIcon from 'material-icons-react';
+import { PlayCircleFilled, PauseCircleFilled } from '@material-ui/icons';
+import { green, grey } from '@material-ui/core/colors';
+import { Box, IconButton } from '@material-ui/core';
 
 const spotifyAction = (access_token, action, setSyncer) => {
   spotify(access_token).put(`me/player/${action}`)
@@ -13,18 +15,26 @@ const spotifyAction = (access_token, action, setSyncer) => {
 
 export default function PlayButton(props) {
   const { access_token, player, setSyncer } = props;
+  const isPlaying = player && player.is_playing;
+  const activePlayer = player !== '';
+  let iconStyle;
+  if (player !== '') {
+    iconStyle = { color: green[500] }
+  } else {
+    iconStyle = { color: grey[400] }
+  }
 
   return (
-    <div>
-      { player && player.is_playing ?
-        <button disabled={!player} onClick={() => spotifyAction(access_token, 'pause', setSyncer)} >
-          <MaterialIcon key={"pause"} size={50} icon="pause_circle_outline" />
-        </button>
+    <Box>
+      { isPlaying ?
+        <IconButton disabled={!activePlayer} onClick={() => spotifyAction(access_token, 'pause', setSyncer)}>
+          <PauseCircleFilled fontSize="large" style={iconStyle} />
+        </IconButton>
         :
-        <button disabled={!player} onClick={() => spotifyAction(access_token, 'play', setSyncer)}>
-          <MaterialIcon key={"play"} size={50} icon="play_circle_outline" />
-        </button>
+        <IconButton disabled={!activePlayer} onClick={() => spotifyAction(access_token, 'play', setSyncer)} >
+          <PlayCircleFilled fontSize="large" style={iconStyle} />
+        </IconButton>
       }
-    </div>
+    </Box>
   );
 }

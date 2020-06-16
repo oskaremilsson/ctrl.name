@@ -5,17 +5,15 @@ import Bouncer from './components/Bouncer';
 import Auth from './components/Auth';
 import * as serviceWorker from './serviceWorker';
 
-import { BrowserRouter, Route, Switch} from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 ReactDOM.render(
-  <React.StrictMode>
-      <BrowserRouter>
-        <Switch>
-          <Route exact={ true } path="/auth:code?" component={Auth} />
-          <Route exact={ true } path="/" component={Bouncer} />
-        </Switch>
-      </BrowserRouter>
-  </React.StrictMode>,
+    <BrowserRouter>
+      <Switch>
+        <Route exact={ true } path="/auth:code?" component={Auth} />
+        <Route exact={ true } path="/" component={Bouncer} />
+      </Switch>
+    </BrowserRouter>,
   document.getElementById('root')
 );
 

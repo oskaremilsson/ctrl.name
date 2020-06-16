@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Controller from '../../components/Controller';
 import Consents from './parts/Consents';
+import { Box } from '@material-ui/core'
 
 import api from '../../utils/api';
 
@@ -36,14 +37,10 @@ export default function AppPage(props) {
               />
 
   return (
-    <div className="AppPage">
-      <div>Welcome {me.id}!</div>
-
+    <Box className="AppPage">
       { part }
 
-      { access_token &&
-        <Controller access_token={access_token}/>
-      }
-    </div>
+      <Controller access_token={access_token}/>
+    </Box>
   );
 }
