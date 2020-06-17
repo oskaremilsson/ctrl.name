@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import spotify from '../../../../utils/spotify';
-import { PlayCircleFilled, PauseCircleFilled } from '@material-ui/icons';
-import { green } from '@material-ui/core/colors';
+import { PlayArrow, Pause } from '@material-ui/icons';
 import { Box, IconButton } from '@material-ui/core';
 
 export default function PlayButton(props) {
@@ -24,11 +23,11 @@ export default function PlayButton(props) {
     <Box>
       { isPlaying ?
         <IconButton disabled={!player} onClick={() => setAction('pause')}>
-          <PauseCircleFilled fontSize="large" style={{ color: green[500] }} />
+          <Pause fontSize="large" />
         </IconButton>
         :
         <IconButton disabled={!player} onClick={() => setAction('play')} >
-          <PlayCircleFilled fontSize="large" style={{ color: green[500] }} />
+          <PlayArrow fontSize="large" />
         </IconButton>
       }
     </Box>

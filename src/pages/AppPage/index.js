@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Controller from '../../components/Controller';
 import SwitchCurrentMe from './parts/SwitchCurrentMe';
 import GiveConsent from './parts/GiveConsent';
+import Playlists from './parts/Playlists';
 import { Box } from '@material-ui/core'
 
 import api from '../../utils/api';
@@ -66,6 +67,13 @@ export default function AppPage(props) {
 
   return (
     <Box className="AppPage">
+      <Controller
+        syncer={syncer}
+        setSyncer={setSyncer}
+        access_token={access_token}
+        player={player}
+      />
+
       <SwitchCurrentMe
         me={me}
         currentMe={currentMe}
@@ -76,11 +84,9 @@ export default function AppPage(props) {
 
       <GiveConsent />
 
-      <Controller
-        syncer={syncer}
+      <Playlists 
         setSyncer={setSyncer}
         access_token={access_token}
-        player={player}
       />
     </Box>
   );

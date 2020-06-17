@@ -13,6 +13,7 @@
     "fontsource-roboto": "^2.1.4",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
+    "react-color-extractor": "^1.1.2",
     "react-dom": "^16.13.1",
     "react-dropdown-select": "^4.4.2",
     "react-router-dom": "^5.2.0",
