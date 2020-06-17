@@ -41,7 +41,7 @@ export default function App(props) {
         props.history.replace('/');
       });
     }
-  }, [code, loaded, props.history, refreshToken]);
+  }, [code, loaded, props.history, refreshToken, uploaded]);
 
   return (
     <Box
