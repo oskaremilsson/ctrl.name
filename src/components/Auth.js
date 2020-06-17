@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
+import { Box, CircularProgress } from '@material-ui/core';
 
 import api from '../utils/api';
 
@@ -10,10 +11,12 @@ export default function App(props) {
   const code = query && query.code;
 
   const [loaded, setLoaded] = useState(false);
+  const [refreshToken, setRefreshToken] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
 
   useEffect(() => {
     if (code && !loaded) {
-      var data = new FormData();
+      let data = new FormData();
       data.append("code", code);
 
       api.post('codeExchange', data).then(res => {
@@ -24,13 +27,30 @@ export default function App(props) {
           access_token: res.data.Access_token
         }));
 
+        setRefreshToken(res.data.Refresh_token);
+      });
+    }
+
+    if (refreshToken && !uploaded) {
+      let data = new FormData();
+      data.append("refresh_token", refreshToken);
+
+      api.post('storeRefreshToken', data).then(res => {
+        setUploaded(true);
+
         props.history.replace('/');
       });
     }
-  }, [code, loaded, props.history]);
+  }, [code, loaded, props.history, refreshToken]);
 
   return (
-    <div>
-    </div>
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      minHeight="100vh"
+    >
+      <CircularProgress />
+    </Box>
   );
 }

@@ -10,6 +10,7 @@
 
 # production
 /build
+build_and_release.sh
 
 # misc
 .DS_Store
@@ -23,3 +24,4 @@ yarn-debug.log*
 yarn-error.log*
 
 src/config/config.json
+src/config/config_prod.json
