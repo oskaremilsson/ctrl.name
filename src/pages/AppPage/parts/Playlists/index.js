@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Playlists(props) {
   const { access_token, setSyncer } = props;
   const [playlists, setPlaylists] = useState(undefined);
-  const [startPlaylist, setStartPlaylist] = useState(undefined);
+  const [openPlaylist, setOpenPlaylist] = useState(undefined);
   const classes = useStyles();
 
   useEffect(() => {
@@ -33,41 +33,17 @@ export default function Playlists(props) {
       });
     }
 
-    if (access_token && startPlaylist) {
-      spotify(access_token).get(`playlists/${startPlaylist.id}/tracks`).then(res => {
-        const items = res && res.data && res.data.items;
-        if (items) {
-          items.forEach((item) => {
-            const track = item.track;
-            if (track && !track.is_local && track.type === "track") {
-              console.log(item.track.uri);
-              spotify(access_token).post(`me/player/queue?uri=${track.uri}`)
-              .then(res => {
-                console.log(res);
-              }).catch( _ => {
-                console.log('error');
-              });
-            }
-          });
-        }
-      })
-      
-      console.log('start new playlist!', startPlaylist);
+    if (access_token && openPlaylist) {
+      console.log('Open playlist:', openPlaylist);
     }
-  }, [access_token, playlists, setSyncer, startPlaylist, setStartPlaylist]);
+  }, [access_token, playlists, setSyncer, openPlaylist, setOpenPlaylist]);
 
   return (
     <Box marginTop={5}>
-      <Typography variant="body2">
-        NOTE: Selecting a playlist will queue it's first 100 songs
-      </Typography>
-      <Typography variant="body2">
-        This is due to the fact that Spotify Web API doesn't support change of now-playing playlist
-      </Typography>
       <List>
         {playlists && playlists.map((playlist) => (
           <Box key={playlist.id}>
-            <ListItem button alignItems="center" onClick={()=> {setStartPlaylist(playlist)}}>
+            <ListItem button alignItems="center" onClick={()=> {setOpenPlaylist(playlist)}}>
               <ListItemAvatar>
                 <Avatar alt={playlist.name} src={playlist.images[0].url} />
               </ListItemAvatar>
