@@ -30,15 +30,6 @@ const syncNowPlaying = (access_token, setPlayer, setSyncer, syncTimer, setSyncTi
     } else {
       setPlayer(undefined);
     }
-
-    /* Syncs twize for some reason */
-    clearTimeout(syncTimer);
-    setSyncTimer(
-      setTimeout(() => {
-        setSyncer(true);
-        setSyncTimer(undefined);
-      }, config.SPOTIFY_PING_INTERVAL || 30000)
-    );
   });
 }
 
@@ -61,6 +52,14 @@ export default function AppPage(props) {
   useEffect(() => {
     if (access_token && syncer) {
       syncNowPlaying(access_token, setPlayer, setSyncer, syncTimer, setSyncTimer);
+    }
+
+    if (!syncTimer) {
+      setSyncTimer(
+        setInterval(() => {
+          setSyncer(true);
+        }, config.SPOTIFY_PING_INTERVAL || 30000)
+      );
     }
   }, [syncer, access_token, syncTimer]);
 
