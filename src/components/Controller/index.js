@@ -54,7 +54,6 @@ export default function Controller(props) {
     <Box
       display="flex"
       marginBottom={4}
-      marginTop={4}
       width="100%"
     >
       { albumCover &&
@@ -67,16 +66,16 @@ export default function Controller(props) {
       <Card className={classes.root} style={{background: color}}>
         <CardMedia
           className={classes.cover}
-          image={albumCover || '/public/logo192.png'}
+          image={albumCover || '/logo192.png'}
           title={albumName}
         />
         <Box className={classes.details}>
           <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
-              { songTitle }
+              { songTitle || 'No active device found' }
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              { artists }
+              { artists || 'Start music on spotify and come back here' }
             </Typography>
           </CardContent>
 

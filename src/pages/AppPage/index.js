@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Controller from '../../components/Controller';
 import SwitchCurrentMe from './parts/SwitchCurrentMe';
-import GiveConsent from './parts/GiveConsent';
 import Playlists from './parts/Playlists';
-import { Box } from '@material-ui/core'
+import Settings from './parts/Settings';
+
+import { Settings as SettingsIcon } from '@material-ui/icons';
+import { Box, IconButton } from '@material-ui/core';
 
 import api from '../../utils/api';
 import spotify from '../../utils/spotify';
@@ -21,7 +23,7 @@ const getAccessToken = (username, setAccessToken, setTokenFetched, setSyncer) =>
   });
 };
 
-const syncNowPlaying = (access_token, setPlayer, setSyncer, syncTimer, setSyncTimer) => {
+const syncNowPlaying = (access_token, setPlayer, setSyncer) => {
   spotify(access_token).get('me/player').then(res => {
     setSyncer(false);
     console.log(res);
@@ -42,6 +44,7 @@ export default function AppPage(props) {
   const [syncer, setSyncer] = useState(true);
   const [syncTimer, setSyncTimer] = useState(undefined);
   const [player, setPlayer] = useState(undefined);
+  const [showSettings, setShowSettings] = useState(undefined);
 
   useEffect(() => {
     if (!tokenFetched) {
@@ -51,7 +54,7 @@ export default function AppPage(props) {
 
   useEffect(() => {
     if (access_token && syncer) {
-      syncNowPlaying(access_token, setPlayer, setSyncer, syncTimer, setSyncTimer);
+      syncNowPlaying(access_token, setPlayer, setSyncer);
     }
 
     if (!syncTimer) {
@@ -66,12 +69,24 @@ export default function AppPage(props) {
 
   return (
     <Box className="AppPage">
+
       <Controller
         syncer={syncer}
         setSyncer={setSyncer}
         access_token={access_token}
         player={player}
       />
+
+      <IconButton onClick={() => setShowSettings(true)}>
+        <SettingsIcon />
+      </IconButton>
+
+      { showSettings && 
+        <Settings
+          setShowSettings={setShowSettings}
+          {...props}
+        />
+      }
 
       <SwitchCurrentMe
         me={me}
@@ -80,8 +95,6 @@ export default function AppPage(props) {
         setTokenFetched={setTokenFetched}
         setSyncer={setSyncer}
       />
-
-      <GiveConsent />
 
       <Playlists 
         setSyncer={setSyncer}

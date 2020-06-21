@@ -5,12 +5,13 @@ import Auth from './components/Auth';
 import * as serviceWorker from './serviceWorker';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider, CssBaseline } from '@material-ui/core';
 
 const theme = createMuiTheme();
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
+    <CssBaseline />
     <BrowserRouter>
       <Switch>
         <Route exact={ true } path="/auth:code?" component={Auth} />
