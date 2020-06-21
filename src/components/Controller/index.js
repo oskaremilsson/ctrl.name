@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 0 auto',
   },
   cover: {
-    width: 159,
+    width: 160,
   },
   controls: {
     display: 'flex',
@@ -66,16 +66,16 @@ export default function Controller(props) {
       <Card className={classes.root} style={{background: color}}>
         <CardMedia
           className={classes.cover}
-          image={albumCover || '/logo192.png'}
+          image={albumCover || "/no_album.png"}
           title={albumName}
         />
-        <Box className={classes.details}>
+        <Box className={classes.details} minHeight="160px">
           <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
-              { songTitle || 'No active device found' }
+              { songTitle || "No active device" }
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              { artists || 'Start music on spotify and come back here' }
+              { artists }
             </Typography>
           </CardContent>
 
