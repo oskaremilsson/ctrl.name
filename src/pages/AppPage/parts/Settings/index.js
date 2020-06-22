@@ -1,9 +1,12 @@
 import React from 'react';
 import { useTheme } from '@material-ui/core/styles';
-import { Box, IconButton, Typography } from '@material-ui/core';
+import { Box, IconButton, Typography, Divider } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 
-import GiveConsent from '../../parts/GiveConsent';
+import GiveConsent from './components/GiveConsent';
+import CreateRequest from './components/CreateRequest';
+import ConsentRequests from './components/ConsentRequests';
+import ConsentList from './components/ConsentList';
 
 export default function Settings(props) {
   const theme = useTheme();
@@ -13,7 +16,7 @@ export default function Settings(props) {
     <Box
       minHeight="100vh"
       width="100%"
-      position="fixed"
+      position="absolute"
       top={0}
       left={0}
       zIndex="10"
@@ -37,6 +40,18 @@ export default function Settings(props) {
       </Box>
 
       <GiveConsent />
+
+      <Divider />
+
+      <CreateRequest />
+
+      <Divider />
+
+      <ConsentRequests />
+
+      <Divider />
+
+      <ConsentList />
     </Box>
   );
 }

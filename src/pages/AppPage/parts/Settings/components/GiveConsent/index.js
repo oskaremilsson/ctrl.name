@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 
-import api from '../../../../utils/api';
+import api from '../../../../../../utils/api';
 import { Box, TextField, Button } from '@material-ui/core';
 
 export default function GiveConsent() {
