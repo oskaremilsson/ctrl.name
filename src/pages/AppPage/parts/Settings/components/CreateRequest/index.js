@@ -8,18 +8,21 @@ export default function CreateRequest() {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [username, setUsername] = useState(undefined);
 
+  const [openFailure, setOpenFailure] = useState(false);
+  const [failureMessage, setFailureMessage] = useState(undefined);
+
   const handleClose = (e, reason) => {
     switch(reason) {
       case 'undo':
         console.log('remove request');
-        /*var data = new FormData();
-        data.append("disallow_user", username);
+        var data = new FormData();
+        data.append("username", username);
 
-        api.post('revokeConsent', data)
+        api.post('removeRequest', data)
         .then(res => {
           console.log(res);
-          setRequests(false);
-        });*/
+          setUsername(undefined);
+        });
         break;
       default:
         setTimeout(() => {
@@ -34,7 +37,6 @@ export default function CreateRequest() {
   const createRequest = (e) => {
     e.preventDefault();
     console.log('uploading:', username);
-    setOpenSuccess(true);
     setUsername(username);
 
     var data = new FormData();
@@ -42,6 +44,13 @@ export default function CreateRequest() {
 
     api.post('createRequest', data)
     .then(res => {
+      if (res && res.data && res.data.Success) {
+        setOpenSuccess(true);
+      } else {
+        setFailureMessage(res.data.Message);
+        setOpenFailure(true);
+      }
+
       console.log(res);
     });
     e.target.reset();
@@ -85,6 +94,23 @@ export default function CreateRequest() {
               UNDO
             </Button>
             <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
+
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={openFailure}
+        autoHideDuration={6000}
+        message={failureMessage}
+        action={
+          <React.Fragment>
+            <IconButton size="small" aria-label="close" color="inherit" onClick={() => { setOpenFailure(false) }}>
               <CloseIcon fontSize="small" />
             </IconButton>
           </React.Fragment>

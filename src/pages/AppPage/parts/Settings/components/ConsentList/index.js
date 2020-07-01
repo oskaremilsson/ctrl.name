@@ -71,8 +71,8 @@ export default function ConsentList() {
         <List>
           { consents.map((consent) => (
             <ListItem key={consent}>
-              <IconButton size="medium" aria-label="revoke access" color="secondary" onClick={() => {revokeConsent(consent)}}>
-                <BlockIcon fontSize="medium" />
+              <IconButton size="small" aria-label="revoke access" color="secondary" onClick={() => {revokeConsent(consent)}}>
+                <BlockIcon fontSize="small" />
               </IconButton>
 
                 <ListItemText primary={consent}/>

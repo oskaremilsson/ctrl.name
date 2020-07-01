@@ -30,7 +30,7 @@ export default function SkipButton(props) {
       break;
     default:
       //fallback
-      icon = <FiberManualRecord fontSize="medium" />
+      icon = <FiberManualRecord fontSize="small" />
       break;
   }
 

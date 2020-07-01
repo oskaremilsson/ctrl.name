@@ -83,12 +83,12 @@ export default function ConsentRequests() {
         <List>
           { requests.map((request) => (
             <ListItem key={request}>
-              <IconButton size="medium" aria-label="reject" color="secondary" onClick={() => {rejectRequest(request)}}>
-                <BlockIcon fontSize="medium" />
+              <IconButton size="large" aria-label="reject" color="secondary" onClick={() => {rejectRequest(request)}}>
+                <BlockIcon fontSize="large" />
               </IconButton>
 
-              <IconButton size="medium" aria-label="allow" color="primary" onClick={() => {allowRequest(request)}}>
-                <CheckIcon fontSize="medium" />
+              <IconButton size="large" aria-label="allow" color="primary" onClick={() => {allowRequest(request)}}>
+                <CheckIcon fontSize="large" />
               </IconButton>
 
               <ListItemText primary={request}/>
