@@ -15,7 +15,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route exact={ true } path="/auth:code?" component={Auth} />
-        <Route exact={ true } path="/" component={Bouncer} />
+        <Route path="/" component={Bouncer} />
       </Switch>
     </BrowserRouter>
   </ThemeProvider>,

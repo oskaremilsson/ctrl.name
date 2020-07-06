@@ -30,11 +30,11 @@ export default function Bouncer(props) {
 
   let component;
   if (my_tokens && !loggedIn) {
-    component = <LoadingPage />
+    component = <LoadingPage {...props} />
   } else if (me && loggedIn) {
-    component = <AppPage me={me}/>
+    component = <AppPage me={me} {...props} />
   } else {
-    component = <LandingPage />
+    component = <LandingPage {...props} />
   }
 
   return (

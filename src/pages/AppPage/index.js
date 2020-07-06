@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Controller from '../../components/Controller';
 import SwitchCurrentMe from './parts/SwitchCurrentMe';
 import Playlists from './parts/Playlists';
-import Settings from './parts/Settings';
+
+import Settings from './subPages/Settings';
 
 import { Settings as SettingsIcon } from '@material-ui/icons';
 import { Box, IconButton } from '@material-ui/core';
@@ -36,7 +37,7 @@ const syncNowPlaying = (access_token, setPlayer, setSyncer) => {
 }
 
 export default function AppPage(props) {
-  const { me } = props;
+  const { me, history, location } = props;
   
   const [access_token, setAccessToken] = useState(undefined);
   const [currentMe, setCurrentMe] = useState(me.id);
@@ -44,7 +45,6 @@ export default function AppPage(props) {
   const [syncer, setSyncer] = useState(true);
   const [syncTimer, setSyncTimer] = useState(undefined);
   const [player, setPlayer] = useState(undefined);
-  const [showSettings, setShowSettings] = useState(undefined);
 
   useEffect(() => {
     if (!tokenFetched) {
@@ -66,6 +66,36 @@ export default function AppPage(props) {
     }
   }, [syncer, access_token, syncTimer]);
 
+  let component;
+  switch (location && location.pathname) {
+    case '/settings':
+      component = <Settings
+          {...props}
+        />
+      break;
+    default:
+      component = <Box>
+          <IconButton onClick={ () => history.push('settings') }>
+            <SettingsIcon />
+          </IconButton>
+
+          <SwitchCurrentMe
+            me={me}
+            currentMe={currentMe}
+            setCurrentMe={setCurrentMe}
+            setTokenFetched={setTokenFetched}
+            setSyncer={setSyncer}
+          />
+
+          <Playlists 
+            setSyncer={setSyncer}
+            access_token={access_token}
+          />
+        </Box>
+      break;
+
+  }
+
 
   return (
     <Box className="AppPage">
@@ -77,29 +107,8 @@ export default function AppPage(props) {
         player={player}
       />
 
-      <IconButton onClick={() => setShowSettings(true)}>
-        <SettingsIcon />
-      </IconButton>
-
-      { showSettings && 
-        <Settings
-          setShowSettings={setShowSettings}
-          {...props}
-        />
-      }
-
-      <SwitchCurrentMe
-        me={me}
-        currentMe={currentMe}
-        setCurrentMe={setCurrentMe}
-        setTokenFetched={setTokenFetched}
-        setSyncer={setSyncer}
-      />
-
-      <Playlists 
-        setSyncer={setSyncer}
-        access_token={access_token}
-      />
+      { component }
+      
     </Box>
   );
 }

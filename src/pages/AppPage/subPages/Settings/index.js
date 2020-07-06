@@ -10,7 +10,7 @@ import ConsentList from './components/ConsentList';
 
 export default function Settings(props) {
   const theme = useTheme();
-  const { me, setShowSettings } = props;
+  const { me, history } = props;
 
   return (
     <Box
@@ -28,7 +28,7 @@ export default function Settings(props) {
         top={1}
         right={1}
       >
-        <IconButton onClick={() => setShowSettings(false)}>
+        <IconButton onClick={ () => history.push('/') }>
           <CloseIcon />
         </IconButton>
       </Box>
