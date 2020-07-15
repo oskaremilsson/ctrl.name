@@ -18,9 +18,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Playlists(props) {
-  const { access_token, setSyncer } = props;
+  const { history, access_token, setSyncer } = props;
   const [playlists, setPlaylists] = useState(undefined);
-  const [openPlaylist, setOpenPlaylist] = useState(undefined);
   const classes = useStyles();
 
   useEffect(() => {
@@ -33,17 +32,14 @@ export default function Playlists(props) {
       });
     }
 
-    if (access_token && openPlaylist) {
-      console.log('Open playlist:', openPlaylist);
-    }
-  }, [access_token, playlists, setSyncer, openPlaylist, setOpenPlaylist]);
+  }, [access_token, playlists, setSyncer]);
 
   return (
     <Box marginTop={5}>
       <List>
         {playlists && playlists.map((playlist) => (
           <Box key={playlist.id}>
-            <ListItem button alignItems="center" onClick={()=> {setOpenPlaylist(playlist)}}>
+            <ListItem button alignItems="center" onClick={()=> { history.push(`playlist?id=${playlist.id}`) }}>
               <ListItemAvatar>
                 <Avatar alt={playlist.name} src={playlist.images[0].url} />
               </ListItemAvatar>

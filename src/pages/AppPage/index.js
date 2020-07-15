@@ -4,6 +4,7 @@ import SwitchCurrentMe from './parts/SwitchCurrentMe';
 import Playlists from './parts/Playlists';
 
 import Settings from './subPages/Settings';
+import Playlist from './subPages/Playlist';
 
 import { Settings as SettingsIcon } from '@material-ui/icons';
 import { Box, IconButton } from '@material-ui/core';
@@ -67,9 +68,16 @@ export default function AppPage(props) {
   }, [syncer, access_token, syncTimer]);
 
   let component;
+  console.log(location, history);
   switch (location && location.pathname) {
     case '/settings':
       component = <Settings
+          {...props}
+        />
+      break;
+    case '/playlist':
+      component = <Playlist
+          access_token={access_token}
           {...props}
         />
       break;
@@ -90,6 +98,7 @@ export default function AppPage(props) {
           <Playlists 
             setSyncer={setSyncer}
             access_token={access_token}
+            {...props}
           />
         </Box>
       break;
