@@ -4,7 +4,8 @@ import { selectors } from 'shared/stores';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Box, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
-import { ColorExtractor } from 'react-color-extractor'
+import { ColorExtractor } from 'react-color-extractor';
+import invert from 'invert-color';
 
 import PlayButton from './components/PlayButton';
 import SkipButton from './components/SkipButton';
@@ -16,7 +17,8 @@ const { getSpotifyPlayer } = selectors;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    width: '100%'
+    width: '100%',
+    margin: theme.spacing(2),
   },
   details: {
     display: 'flex',
@@ -42,9 +44,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Controller(props) {
   const player = useSelector((state) => getSpotifyPlayer(state));
-  console.log(player);
 
   const [color, setColor] = useState();
+  const backgroundColor = color || '#000000';
+  const textColor = invert(backgroundColor, true);
   const theme = useTheme();
   const classes = useStyles(theme);
 
@@ -70,7 +73,7 @@ export default function Controller(props) {
           getColors={colors => { colors && setColor(colors[0]) }}
         />
       }
-      <Card className={classes.root} style={{background: color}}>
+      <Card className={classes.root} style={{ background: backgroundColor }}>
         <CardMedia
           className={classes.cover}
           image={albumCover || "/no_album.png"}
@@ -78,10 +81,10 @@ export default function Controller(props) {
         />
         <Box className={classes.details} minHeight="160px">
           <CardContent className={classes.content}>
-            <Typography component="h5" variant="h5">
+            <Typography variant="h5"  style={{ color: textColor }}>
               { songTitle || "No active device" }
             </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
+            <Typography variant="subtitle1" style={{ color: textColor }}>
               { artists }
             </Typography>
           </CardContent>
@@ -92,13 +95,19 @@ export default function Controller(props) {
             player={player}
             action={"previous"}
             icon={"skip_previous"}
+            color={textColor}
           />
-          <PlayButton {...props} player={player} />
+          <PlayButton
+            {...props}
+            player={player}
+            color={textColor}
+            />
           <SkipButton
             {...props}
             player={player}
             action={"next"}
             icon={"skip_next"}
+            color={textColor}
           />
           </Box>
         </Box>

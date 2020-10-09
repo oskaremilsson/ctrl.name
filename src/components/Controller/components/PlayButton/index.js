@@ -8,7 +8,7 @@ import { Box, IconButton } from '@material-ui/core';
 
 export default function PlayButton(props) {
   const dispatch = useDispatch();
-  const { access_token, player } = props;
+  const { access_token, player, color } = props;
   const isPlaying = player && player.is_playing;
   const [action, setAction] = useState(false);
 
@@ -27,11 +27,11 @@ export default function PlayButton(props) {
     <Box>
       { isPlaying ?
         <IconButton disabled={!player} onClick={() => setAction('pause')}>
-          <Pause fontSize="large" />
+          <Pause fontSize="large" style={{ color: color }}/>
         </IconButton>
         :
         <IconButton disabled={!player} onClick={() => setAction('play')} >
-          <PlayArrow fontSize="large" />
+          <PlayArrow fontSize="large" style={{ color: color }}/>
         </IconButton>
       }
     </Box>

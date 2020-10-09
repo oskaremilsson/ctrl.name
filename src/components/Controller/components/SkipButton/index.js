@@ -8,7 +8,7 @@ import { IconButton } from '@material-ui/core';
 
 export default function SkipButton(props) {
   const dispatch = useDispatch();
-  const { action, access_token, player } = props;
+  const { action, access_token, player, color } = props;
   const [execute, setExecute] = useState(false);
 
   useEffect(() => {
@@ -27,14 +27,14 @@ export default function SkipButton(props) {
   let icon;
   switch (action) {
     case 'next':
-      icon = <SkipNext fontSize="small" />
+      icon = <SkipNext fontSize="small" style={{ color: color }} />
       break;
     case 'previous':
-      icon = <SkipPrevious fontSize="small" />
+      icon = <SkipPrevious fontSize="small"  style={{ color: color }} />
       break;
     default:
       //fallback
-      icon = <FiberManualRecord fontSize="small" />
+      icon = <FiberManualRecord fontSize="small"  style={{ color: color }} />
       break;
   }
 
