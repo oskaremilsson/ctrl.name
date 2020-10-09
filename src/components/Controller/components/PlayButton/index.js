@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import spotify from '../../../../utils/spotify';
+import { useDispatch } from 'react-redux';
+import { actions } from 'shared/stores';
+
+import spotify from 'utils/spotify';
 import { PlayArrow, Pause } from '@material-ui/icons';
 import { Box, IconButton } from '@material-ui/core';
 
 export default function PlayButton(props) {
-  const { access_token, player, setSyncer } = props;
+  const dispatch = useDispatch();
+  const { access_token, player } = props;
   const isPlaying = player && player.is_playing;
   const [action, setAction] = useState(false);
 
@@ -12,12 +16,12 @@ export default function PlayButton(props) {
     if (action) {
       spotify(access_token).put(`me/player/${action}`)
       .then(_ => {
-        setSyncer(true);
+        dispatch(actions.setSpotifyPlayerSync(true));
       }).catch( _ => {
-        setSyncer(true);
+        dispatch(actions.setSpotifyPlayerSync(true));
       });
     }
-  }, [access_token, action, setSyncer]);
+  }, [dispatch, access_token, action]);
 
   return (
     <Box>

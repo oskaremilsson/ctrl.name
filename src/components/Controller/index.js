@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectors } from 'shared/stores';
+
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Box, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 import { ColorExtractor } from 'react-color-extractor'
@@ -7,6 +10,8 @@ import PlayButton from './components/PlayButton';
 import SkipButton from './components/SkipButton';
 
 import './style.css';
+
+const { getSpotifyPlayer } = selectors;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +41,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Controller(props) {
-  const { setSyncer, player } = props;
+  const player = useSelector((state) => getSpotifyPlayer(state));
+  console.log(player);
+
   const [color, setColor] = useState();
   const theme = useTheme();
   const classes = useStyles(theme);
@@ -83,15 +90,13 @@ export default function Controller(props) {
             <SkipButton
             {...props}
             player={player}
-            setSyncer={setSyncer}
             action={"previous"}
             icon={"skip_previous"}
           />
-          <PlayButton {...props} player={player} setSyncer={setSyncer} />
+          <PlayButton {...props} player={player} />
           <SkipButton
             {...props}
             player={player}
-            setSyncer={setSyncer}
             action={"next"}
             icon={"skip_next"}
           />

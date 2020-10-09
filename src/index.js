@@ -4,21 +4,29 @@ import Bouncer from './components/Bouncer';
 import Auth from './components/Auth';
 import * as serviceWorker from './serviceWorker';
 
+import rootReducer from './shared/stores';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider, CssBaseline } from '@material-ui/core';
 
 const theme = createMuiTheme();
 
+const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <BrowserRouter>
-      <Switch>
-        <Route exact={ true } path="/auth:code?" component={Auth} />
-        <Route path="/" component={Bouncer} />
-      </Switch>
-    </BrowserRouter>
-  </ThemeProvider>,
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <Switch>
+          <Route exact={true} path="/auth:code?" component={Auth} />
+          <Route path="/" component={Bouncer} />
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
+  </Provider>,
   document.getElementById('root')
 );
 

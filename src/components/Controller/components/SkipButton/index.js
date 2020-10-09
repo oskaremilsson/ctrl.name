@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import spotify from '../../../../utils/spotify';
+import { useDispatch } from 'react-redux';
+import { actions } from 'shared/stores';
+
+import spotify from 'utils/spotify';
 import { SkipNext, SkipPrevious, FiberManualRecord } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 
 export default function SkipButton(props) {
-  const { action, access_token, player, setSyncer } = props;
+  const dispatch = useDispatch();
+  const { action, access_token, player } = props;
   const [execute, setExecute] = useState(false);
 
   useEffect(() => {
     if (action && execute) {
       spotify(access_token).post(`me/player/${action}`)
       .then(_ => {
-        setSyncer(true);
+        dispatch(actions.setSpotifyPlayerSync(true));
         setExecute(false);
       }).catch( _ => {
-        setSyncer(true);
+        dispatch(actions.setSpotifyPlayerSync(true));
         setExecute(false);
       });
     }
-  }, [access_token, setSyncer, setExecute, execute, action]);
+  }, [dispatch, access_token, setExecute, execute, action]);
 
   let icon;
   switch (action) {
