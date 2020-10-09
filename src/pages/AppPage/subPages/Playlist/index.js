@@ -48,7 +48,7 @@ export default function Playlist(props) {
       });
     }
 
-  }, [access_token, playlist, tracks]);
+  }, [access_token, playlist, tracks, id]);
 
   return (
     <Box>
