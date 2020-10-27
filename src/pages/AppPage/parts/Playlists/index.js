@@ -51,7 +51,7 @@ export default function Playlists(props) {
                       className={classes.inline}
                       color="textPrimary"
                     >
-                      {playlist.description}
+                      {playlist.tracks.total} items
                     </Typography>
                 }
               />

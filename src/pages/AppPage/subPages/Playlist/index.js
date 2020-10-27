@@ -6,7 +6,7 @@ import { Box, IconButton, Typography,
 import { makeStyles } from '@material-ui/core/styles';
 import { Close as CloseIcon } from '@material-ui/icons';
 
-import spotify from '../../../../utils/spotify';
+import spotify from 'utils/spotify';
 
 const useStyles = makeStyles((theme) => ({
   root: {
