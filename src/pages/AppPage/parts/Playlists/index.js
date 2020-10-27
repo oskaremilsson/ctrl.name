@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box,
+import { Box, Button,
         List, ListItem, ListItemAvatar, ListItemText,
         Avatar, Typography, Divider } from '@material-ui/core';
 
-import spotify from '../../../../utils/spotify';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import spotify from 'utils/spotify';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,29 +20,40 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Playlists(props) {
   const { history, access_token, setSyncer } = props;
-  const [playlists, setPlaylists] = useState(undefined);
+  const [loading, setLoading] = useState(true);
+  const [playlists, setPlaylists] = useState([]);
+  const [nrOfPlaylists, setNrOfPlaylists] = useState(0);
+  const [nextQuery, setNextQuery] = useState(undefined);
   const classes = useStyles();
 
   useEffect(() => {
-    if (access_token && !playlists) {
-      spotify(access_token).get(`me/playlists`)
+    if (access_token && loading) {
+      const query = nextQuery ? nextQuery.split('?')[1] : '';
+      setLoading(false);
+      spotify(access_token).get(`me/playlists?${query}`)
       .then(res => {
-        setPlaylists(res.data.items);
+        setPlaylists(playlists => playlists.concat(res.data.items));
+        setNextQuery(res.data.next);
       }).catch( _ => {
         console.log('error');
       });
     }
 
-  }, [access_token, playlists, setSyncer]);
+  }, [access_token, playlists, setSyncer, nextQuery, nrOfPlaylists, loading]);
 
   return (
-    <Box marginTop={5}>
+    <Box marginTop={5} marginBottom={5}>
       <List>
         {playlists && playlists.map((playlist) => (
           <Box key={playlist.id}>
             <ListItem button alignItems="center" onClick={()=> { history.push(`playlist?id=${playlist.id}`) }}>
               <ListItemAvatar>
-                <Avatar alt={playlist.name} src={playlist.images[0].url} />
+                {
+                  playlist.images.length > 0 ?
+                    <Avatar alt={playlist.name} src={playlist.images[0].url} />
+                  :
+                    <Avatar alt={playlist.name} />
+                }
               </ListItemAvatar>
               <ListItemText
                 primary={playlist.name}
@@ -57,9 +69,14 @@ export default function Playlists(props) {
               />
             </ListItem>
             <Divider />
-            </Box>
+          </Box>
         ))}
       </List>
+      {
+        nextQuery && (
+          <Button onClick={() => setLoading(true)}>Load more</Button>
+        )
+      }
     </Box>
   );
 }

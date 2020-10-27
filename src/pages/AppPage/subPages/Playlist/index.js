@@ -64,10 +64,15 @@ export default function Playlist(props) {
 
       <List>
         {tracks && tracks.map((track) => (
-          <Box key={track.track.id}>
+          <Box key={track.track.id || track.track.uri}>
             <ListItem alignItems="center">
               <ListItemAvatar>
-                <Avatar alt={track.track.name} src={track.track.album.images[0].url} />
+                {
+                  track.track.album.images.length > 0 ?
+                    <Avatar alt={track.track.name} src={track.track.album.images[0].url} />
+                  :
+                    <Avatar alt={track.track.name} />
+                }
               </ListItemAvatar>
               <ListItemText
                 primary={track.track.name}
