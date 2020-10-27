@@ -4,7 +4,6 @@ import { Box, Button,
         List, ListItem, ListItemAvatar, ListItemText,
         Avatar, Typography, Divider } from '@material-ui/core';
 
-import InfiniteScroll from 'react-infinite-scroll-component';
 import spotify from 'utils/spotify';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +21,6 @@ export default function Playlists(props) {
   const { history, access_token, setSyncer } = props;
   const [loading, setLoading] = useState(true);
   const [playlists, setPlaylists] = useState([]);
-  const [nrOfPlaylists, setNrOfPlaylists] = useState(0);
   const [nextQuery, setNextQuery] = useState(undefined);
   const classes = useStyles();
 
@@ -39,7 +37,7 @@ export default function Playlists(props) {
       });
     }
 
-  }, [access_token, playlists, setSyncer, nextQuery, nrOfPlaylists, loading]);
+  }, [access_token, playlists, setSyncer, nextQuery, loading]);
 
   return (
     <Box marginTop={5} marginBottom={5}>
