@@ -60,7 +60,7 @@ export default function Controller(props) {
   const [scrollTitle, setScrollTitle] = useState(false);
   const [scrollArtist, setScrollArtist] = useState(false);
   const [isNewSong, setIsNewSong] = useState(true);
-  const [oldSong, setOldSong] = useState('');
+  const [oldSong, setOldSong] = useState(false);
   const textColor = invert(color, true);
 
   const handleTitleOverflow = (isOverflowed) => {
@@ -99,6 +99,9 @@ export default function Controller(props) {
         setScrollTitle(false);
         console.log('new song');
       }
+    } else {
+      setScrollArtist(false);
+      setScrollTitle(false);
     }
   }, [song, oldSong]);
 
