@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import queryString from 'query-string';
 import { Box, Button, IconButton, Typography,
   List, ListItem, ListItemAvatar, ListItemText,
-  Avatar, Divider } from '@material-ui/core';
+  ListItemSecondaryAction, Avatar, Divider, Snackbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Close as CloseIcon } from '@material-ui/icons';
+import { Close as CloseIcon, QueueMusic } from '@material-ui/icons';
+
+import Alert from '@material-ui/lab/Alert';
 
 import spotify from 'utils/spotify';
 
@@ -30,12 +32,21 @@ export default function Playlist(props) {
   const [tracks, setTracks] = useState([]);
   const [nextQuery, setNextQuery] = useState(undefined);
   const [loadMore, setLoadMore] = useState(false);
+  const [openQueueSuccess, setOpenQueueSuccess] = useState(false);
+
+  const queueTrack = (uri) => {
+    spotify(access_token).post(`me/player/queue?uri=${uri}`)
+      .then(_ => {
+        setOpenQueueSuccess(true);
+      }).catch(_ => {
+        console.log('could not queue song');
+      });
+  };
 
   useEffect(() => {
     if (access_token && !playlist) {
       spotify(access_token).get(`playlists/${id}`)
       .then(res => {
-        console.log(res.data);
         setPlaylist(res.data);
         setNextQuery(res.data.tracks.next);
         setTracks(tracks => tracks.concat(res.data.tracks.items));
@@ -53,15 +64,12 @@ export default function Playlist(props) {
       spotify(access_token).get(`playlists/${id}/tracks?${query}`)
       .then(res => {
         setTracks(tracks => tracks.concat(res.data.items));
-        console.log(res.data);
         setNextQuery(res.data.next);
       }).catch( _ => {
         console.log('error');
       });
     }
   }, [access_token, id, tracks, loadMore, nextQuery]);
-
-  console.log(nextQuery);
 
   return (
     <Box marginTop={5} marginBottom={5}>
@@ -99,6 +107,15 @@ export default function Playlist(props) {
                     </Typography>
                 }
               />
+              <ListItemSecondaryAction>
+                <IconButton
+                  onClick={() => queueTrack(track.track.uri)}
+                  edge="end"
+                  aria-label="queue"
+                >
+                  <QueueMusic />
+                </IconButton>
+              </ListItemSecondaryAction>
             </ListItem>
             <Divider />
             </Box>
@@ -109,6 +126,24 @@ export default function Playlist(props) {
           <Button onClick={() => setLoadMore(true)}>Load more</Button>
         )
       }
+
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        open={openQueueSuccess}
+        autoHideDuration={6000}
+        onClose={() => {setOpenQueueSuccess(false)}}
+      >
+        <Alert
+          elevation={6}
+          severity="success"
+          variant="filled"
+        >
+          Successfully queued!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
