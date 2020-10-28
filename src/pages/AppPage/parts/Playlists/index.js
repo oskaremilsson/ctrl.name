@@ -19,15 +19,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Playlists(props) {
   const { history, access_token, setSyncer } = props;
-  const [loading, setLoading] = useState(true);
+  const [loadMore, setLoadMore] = useState(true);
   const [playlists, setPlaylists] = useState([]);
   const [nextQuery, setNextQuery] = useState(undefined);
   const classes = useStyles();
 
   useEffect(() => {
-    if (access_token && loading) {
+    if (access_token && loadMore) {
       const query = nextQuery ? nextQuery.split('?')[1] : '';
-      setLoading(false);
+      setLoadMore(false);
       spotify(access_token).get(`me/playlists?${query}`)
       .then(res => {
         setPlaylists(playlists => playlists.concat(res.data.items));
@@ -37,13 +37,13 @@ export default function Playlists(props) {
       });
     }
 
-  }, [access_token, playlists, setSyncer, nextQuery, loading]);
+  }, [access_token, playlists, setSyncer, nextQuery, loadMore]);
 
   return (
     <Box marginTop={5} marginBottom={5}>
       <List>
-        {playlists && playlists.map((playlist) => (
-          <Box key={playlist.id}>
+        {playlists && playlists.map((playlist, i) => (
+          <Box key={playlist.id + i}>
             <ListItem button alignItems="center" onClick={()=> { history.push(`playlist?id=${playlist.id}`) }}>
               <ListItemAvatar>
                 {
@@ -72,7 +72,7 @@ export default function Playlists(props) {
       </List>
       {
         nextQuery && (
-          <Button onClick={() => setLoading(true)}>Load more</Button>
+          <Button onClick={() => setLoadMore(true)}>Load more</Button>
         )
       }
     </Box>

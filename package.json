@@ -23,7 +23,7 @@
     "redux": "^4.0.5"
   },
   "engines": {
-    "node": "13.7.0",
+    "node": "14",
     "yarn": "1.22.5"
   },
   "scripts": {
