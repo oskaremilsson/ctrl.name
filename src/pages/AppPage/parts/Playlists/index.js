@@ -72,7 +72,13 @@ export default function Playlists(props) {
       </List>
       {
         nextQuery && (
-          <Button onClick={() => setLoadMore(true)}>Load more</Button>
+          <Box
+            display="flex"
+            justifyContent="center"
+            padding={3}
+          >
+            <Button onClick={() => setLoadMore(true)}>Load more</Button>
+          </Box>
         )
       }
     </Box>
