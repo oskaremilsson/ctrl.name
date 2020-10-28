@@ -48,7 +48,7 @@ export default function Playlists(props) {
               <ListItemAvatar>
                 {
                   playlist.images.length > 0 ?
-                    <Avatar alt={playlist.name} src={playlist.images[0].url} />
+                    <Avatar alt={playlist.name} src={playlist.images[playlist.images.length - 1].url} />
                   :
                     <Avatar alt={playlist.name} />
                 }
