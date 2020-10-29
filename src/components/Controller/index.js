@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectors } from 'shared/stores';
 
@@ -61,25 +61,18 @@ export default function Controller(props) {
   const [color, setColor] = useState('#FFFFFF');
   const [scrollTitle, setScrollTitle] = useState(false);
   const [scrollArtist, setScrollArtist] = useState(false);
-  const [isNewSong, setIsNewSong] = useState(true);
   const [oldSong, setOldSong] = useState(false);
   const textColor = invert(color, true);
 
   const handleTitleOverflow = (isOverflowed) => {
-    console.log('overflow title detected', isOverflowed, isNewSong);
     if (isOverflowed) {
-      setTimeout(() => {
-        setScrollTitle(isOverflowed);
-      }, 1000);
+      setScrollTitle(true);
     }
   }
 
   const handleArtistOverflow = (isOverflowed) => {
-    console.log("set artist scroll to:", isOverflowed, isNewSong);
     if (isOverflowed) {
-      setTimeout(() => {
-        setScrollArtist(isOverflowed);
-      }, 1000);
+      setScrollArtist(true);
     }
   }
 
@@ -92,19 +85,13 @@ export default function Controller(props) {
 
   const artists = song && song.artists && song.artists.map((artist)=> artist.name).join(', ');
 
-  useEffect(() => {
-    if (song) {
-      if (oldSong !== song.uri) {
-        setOldSong(song.uri);
-        setIsNewSong(true);
-        setScrollArtist(false);
-        setScrollTitle(false);
-      }
-    } else {
+  if (player) {
+    if (oldSong !== player.item.uri) {
+      setOldSong(player.item.uri);
       setScrollArtist(false);
       setScrollTitle(false);
     }
-  }, [song, oldSong]);
+  }
 
   return (
     <Box
@@ -119,7 +106,12 @@ export default function Controller(props) {
           getColors={colors => { colors && setColor(colors[0]) }}
         />
       }
-      <Card className={classes.root} style={{ background: color }}>
+      <Card
+        className={classes.root}
+        style={{
+          background: `radial-gradient(circle at top right, ${hexToRgba(color, '0.5')} 0%, ${hexToRgba(color, '0.9')} 35%, ${hexToRgba(color, '1')} 100%)`,
+        }}
+      >
         <CardMedia
           className={classes.cover}
           image={albumCover || coverart}
@@ -136,34 +128,14 @@ export default function Controller(props) {
             <OverflowDetector onOverflowChange={handleTitleOverflow}>
               {
                 scrollTitle ?
-                  <Box className={classes.marquee}>
-                    <span style={{
-                      position: "absolute",
-                      top: 0,
-                      left: "-1px",
-                      zIndex: 2,
-                      width: "25px",
-                      height: "32px",
-                      backgroundImage: `linear-gradient(to left, ${hexToRgba(color, '0')}, ${hexToRgba(color, '1')} 90%)`
-                    }}></span>
-                    <Typography variant="h6" style={{ color: textColor }}>
-                      <Marquee
-                        delay={0}
-                        direction="left"
-                      >
-                        { songTitle || "No active device found" }
-                      </Marquee>
-                    </Typography>
-                    <span style={{
-                      position: "absolute",
-                      top: 0,
-                      right: "-1px",
-                      zIndex: 2,
-                      width: "25px",
-                      height: "32px",
-                      backgroundImage: `linear-gradient(to right, ${hexToRgba(color, '0')}, ${hexToRgba(color, '1')} 90%)`
-                    }}></span>
-                  </Box>
+                  <Typography variant="h6" style={{ color: textColor }}>
+                    <Marquee
+                      delay={0}
+                      direction="left"
+                    >
+                      { songTitle || "No active device found" }
+                    </Marquee>
+                  </Typography>
                 :
                   <Typography variant="h6" style={{ color: textColor }}>
                     { songTitle || "No active device found" }
@@ -175,15 +147,6 @@ export default function Controller(props) {
               {
                 scrollArtist ?
                   <Box className={classes.marquee}>
-                    <span style={{
-                      position: "absolute",
-                      top: 0,
-                      left: "-1px",
-                      zIndex: 2,
-                      width: "20px",
-                      height: "28px",
-                      backgroundImage: `linear-gradient(to left, ${hexToRgba(color, '0')}, ${hexToRgba(color, '1')} 90%)`
-                    }}></span>
                     <Typography variant="subtitle1" style={{ color: textColor }}>
                       <Marquee
                         delay={0}
@@ -192,15 +155,6 @@ export default function Controller(props) {
                         { artists }
                       </Marquee>
                     </Typography>
-                    <span style={{
-                      position: "absolute",
-                      top: 0,
-                      right: "-1px",
-                      zIndex: 2,
-                      width: "20px",
-                      height: "28px",
-                      backgroundImage: `linear-gradient(to right, ${hexToRgba(color, '0')}, ${hexToRgba(color, '1')} 90%)`
-                    }}></span>
                   </Box>
                 :
                   <Typography variant="subtitle1" style={{ color: textColor }}>
