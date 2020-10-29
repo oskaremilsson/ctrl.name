@@ -8,10 +8,13 @@ import { ColorExtractor } from 'react-color-extractor';
 import invert from 'invert-color';
 
 import { OverflowDetector } from 'react-overflow';
-import Marquee from 'react-smooth-marquee';
+import Marquee from 'react-double-marquee';
+import hexToRgba from 'hex-to-rgba';
 
 import PlayButton from './components/PlayButton';
 import SkipButton from './components/SkipButton';
+
+import coverart from 'assets/coverart.png';
 
 import './style.css';
 
@@ -27,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     whiteSpace: 'noWrap',
-    overflowX: 'hidden',
   },
   content: {
     flex: '1 0 auto',
@@ -56,7 +58,7 @@ export default function Controller(props) {
   const classes = useStyles(theme);
   const player = useSelector((state) => getSpotifyPlayer(state));
 
-  const [color, setColor] = useState('#FF0000');
+  const [color, setColor] = useState('#FFFFFF');
   const [scrollTitle, setScrollTitle] = useState(false);
   const [scrollArtist, setScrollArtist] = useState(false);
   const [isNewSong, setIsNewSong] = useState(true);
@@ -97,7 +99,6 @@ export default function Controller(props) {
         setIsNewSong(true);
         setScrollArtist(false);
         setScrollTitle(false);
-        console.log('new song');
       }
     } else {
       setScrollArtist(false);
@@ -121,7 +122,7 @@ export default function Controller(props) {
       <Card className={classes.root} style={{ background: color }}>
         <CardMedia
           className={classes.cover}
-          image={albumCover || "/no_album.png"}
+          image={albumCover || coverart}
           title={albumName}
         />
 
@@ -132,36 +133,74 @@ export default function Controller(props) {
           >
 
           <CardContent className={classes.content}>
-            <OverflowDetector
-              onOverflowChange={handleTitleOverflow}
-            >
+            <OverflowDetector onOverflowChange={handleTitleOverflow}>
               {
                 scrollTitle ?
                   <Box className={classes.marquee}>
-                    <Marquee velocity={0.05}>
-                      <Typography variant="h6" style={{ color: textColor }}>
+                    <span style={{
+                      position: "absolute",
+                      top: 0,
+                      left: "-1px",
+                      zIndex: 2,
+                      width: "25px",
+                      height: "32px",
+                      backgroundImage: `linear-gradient(to left, ${hexToRgba(color, '0')}, ${hexToRgba(color, '1')} 90%)`
+                    }}></span>
+                    <Typography variant="h6" style={{ color: textColor }}>
+                      <Marquee
+                        delay={0}
+                        direction="left"
+                      >
                         { songTitle || "No active device found" }
-                      </Typography>
-                    </Marquee>
+                      </Marquee>
+                    </Typography>
+                    <span style={{
+                      position: "absolute",
+                      top: 0,
+                      right: "-1px",
+                      zIndex: 2,
+                      width: "25px",
+                      height: "32px",
+                      backgroundImage: `linear-gradient(to right, ${hexToRgba(color, '0')}, ${hexToRgba(color, '1')} 90%)`
+                    }}></span>
                   </Box>
                 :
-                <Typography variant="h6" style={{ color: textColor }}>
-                  { songTitle || "No active device found" }
-                </Typography>
+                  <Typography variant="h6" style={{ color: textColor }}>
+                    { songTitle || "No active device found" }
+                  </Typography>
               }
             </OverflowDetector>
 
-            <OverflowDetector
-              onOverflowChange={handleArtistOverflow}
-            >
+            <OverflowDetector onOverflowChange={handleArtistOverflow}>
               {
                 scrollArtist ?
                   <Box className={classes.marquee}>
-                    <Marquee velocity={0.05}>
-                      <Typography variant="subtitle1" style={{ color: textColor }}>
+                    <span style={{
+                      position: "absolute",
+                      top: 0,
+                      left: "-1px",
+                      zIndex: 2,
+                      width: "20px",
+                      height: "28px",
+                      backgroundImage: `linear-gradient(to left, ${hexToRgba(color, '0')}, ${hexToRgba(color, '1')} 90%)`
+                    }}></span>
+                    <Typography variant="subtitle1" style={{ color: textColor }}>
+                      <Marquee
+                        delay={0}
+                        direction="left"
+                      >
                         { artists }
-                      </Typography>
-                    </Marquee>
+                      </Marquee>
+                    </Typography>
+                    <span style={{
+                      position: "absolute",
+                      top: 0,
+                      right: "-1px",
+                      zIndex: 2,
+                      width: "20px",
+                      height: "28px",
+                      backgroundImage: `linear-gradient(to right, ${hexToRgba(color, '0')}, ${hexToRgba(color, '1')} 90%)`
+                    }}></span>
                   </Box>
                 :
                   <Typography variant="subtitle1" style={{ color: textColor }}>
