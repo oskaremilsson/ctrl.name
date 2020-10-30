@@ -58,7 +58,7 @@ export default function Controller(props) {
   const classes = useStyles(theme);
   const player = useSelector((state) => getSpotifyPlayer(state));
 
-  const [color, setColor] = useState('#FFFFFF');
+  const [color, setColor] = useState('#535b5c');
   const [scrollTitle, setScrollTitle] = useState(false);
   const [scrollArtist, setScrollArtist] = useState(false);
   const [oldSong, setOldSong] = useState(false);
@@ -109,7 +109,7 @@ export default function Controller(props) {
       <Card
         className={classes.root}
         style={{
-          background: `radial-gradient(circle at top right, ${hexToRgba(color, '0.5')} 0%, ${hexToRgba(color, '0.9')} 35%, ${hexToRgba(color, '1')} 100%)`,
+          background: `radial-gradient(circle at top right, ${hexToRgba(color, '1')} 0%, ${hexToRgba(color, '0.7')} 35%, ${hexToRgba(color, '0.2')} 100%)`,
         }}
       >
         <CardMedia
