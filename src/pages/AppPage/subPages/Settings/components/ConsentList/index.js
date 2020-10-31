@@ -1,40 +1,24 @@
 import React, { useEffect, useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectors, actions } from 'shared/stores';
 
-import api from '../../../../../../utils/api';
+import api from 'utils/api';
 import { Box, List, ListItem, ListItemText,
-         Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core';
-import { Close as CloseIcon, Block as BlockIcon } from '@material-ui/icons';
+         CircularProgress, Snackbar, IconButton } from '@material-ui/core';
+import { Block as BlockIcon } from '@material-ui/icons';
+
+import Alert from '@material-ui/lab/Alert';
+
+const { getConsents } = selectors;
 
 export default function ConsentList() {
-  const [consents, setConsents] = useState(false);
+  const dispatch = useDispatch();
+  const consents = useSelector((state) => getConsents(state));
   const [openSuccess, setOpenSuccess] = useState(false);
+  const [openFailure, setOpenFailure] = useState(false);
   const [username, setUsername] = useState(undefined);
 
-  const handleClose = (e, reason) => {
-    switch(reason) {
-      case 'undo':
-        var data = new FormData();
-        data.append("allow_user", username);
-
-        api.post('giveConsent', data)
-        .then(res => {
-          console.log(res);
-          setConsents(false);
-        });
-        break;
-      default:
-        setTimeout(() => {
-          setUsername(undefined);
-        }, 500);
-        break;
-    }
-
-    setOpenSuccess(false);
-  };
-
   const revokeConsent = (username) => {
-    console.log('uploading:', username);
-    setOpenSuccess(true);
     setUsername(username);
 
     var data = new FormData();
@@ -42,10 +26,11 @@ export default function ConsentList() {
 
     api.post('revokeConsent', data)
     .then(res => {
-      console.log(res);
-      setConsents(false);
+      setOpenSuccess(true);
+      dispatch(actions.setConsents(null));
     }).catch(_ => {
-      setConsents(false);
+      dispatch(actions.setConsents(null));
+      setOpenFailure(true);
     });
   };
 
@@ -54,11 +39,10 @@ export default function ConsentList() {
     if (!consents) {
       api.post('getMyConsents')
       .then(res => {
-        console.log(res);
-        setConsents(res.data && res.data.Consents);
+        dispatch(actions.setConsents(res.data && res.data.Consents));
       });
     }
-  }, [consents]);
+  }, [dispatch, consents]);
 
 
   return (
@@ -89,19 +73,34 @@ export default function ConsentList() {
         }}
         open={openSuccess}
         autoHideDuration={6000}
-        onClose={handleClose}
-        message={`Revoked access for ${username}`}
-        action={
-          <React.Fragment>
-            <Button color="secondary" size="small" onClick={(e) => handleClose(e, 'undo')}>
-              UNDO
-            </Button>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </React.Fragment>
-        }
-      />
+        onClose={() => {setOpenSuccess(false)}}
+      >
+        <Alert
+          elevation={6}
+          severity="success"
+          variant="filled"
+        >
+         { `Revoked access for ${username}` }
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={openFailure}
+        autoHideDuration={6000}
+        onClose={() => {setOpenSuccess(false)}}
+      >
+        <Alert
+          elevation={6}
+          severity="error"
+          variant="filled"
+        >
+         { `Could not revoke access, try again!` }
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

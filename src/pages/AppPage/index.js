@@ -51,9 +51,7 @@ export default function AppPage(props) {
   const [access_token, setAccessToken] = useState(undefined);
   const [currentMe, setCurrentMe] = useState(me.id);
   const [tokenFetched, setTokenFetched] = useState(false);
-  //const [syncer, setSyncer] = useState(true);
   const [syncTimer, setSyncTimer] = useState(undefined);
-  //const [player, setPlayer] = useState(undefined);
 
   useEffect(() => {
     if (!tokenFetched) {
