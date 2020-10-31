@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react';
 
-import api from '../../../../../../utils/api';
+import api from 'utils/api';
 import { Box, List, ListItem, ListItemText,
          Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core';
 import { Close as CloseIcon, Check as CheckIcon, Block as BlockIcon } from '@material-ui/icons';

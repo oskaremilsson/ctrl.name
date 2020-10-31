@@ -1,6 +1,6 @@
 import React from 'react';
 
-import config from '../../config/config.json';
+import config from 'config/config.json';
 import { Box, Button } from '@material-ui/core';
 
 export default function LandingPage() {

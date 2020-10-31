@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import api from '../../../../utils/api';
+import api from 'utils/api';
 import { Box, MenuItem, Select, InputLabel, FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { SettingsRemote } from '@material-ui/icons';

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import { Box, CircularProgress } from '@material-ui/core';
 
-import api from '../utils/api';
+import api from 'utils/api';
 
 export default function App(props) {
   const { location } = props;

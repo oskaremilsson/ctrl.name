@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 
-import api from '../../../../../../utils/api';
+import api from 'utils/api';
 import { Box, TextField, Button, Snackbar, IconButton } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 
