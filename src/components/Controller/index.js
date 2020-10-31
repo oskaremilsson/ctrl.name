@@ -26,11 +26,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     margin: theme.spacing(2),
   },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-    whiteSpace: 'noWrap',
-  },
   content: {
     flex: '1 0 auto',
   },
@@ -38,19 +33,6 @@ const useStyles = makeStyles((theme) => ({
     width: 160,
     minWidth: 160,
   },
-  controls: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
-  },
-  playIcon: {
-    height: 38,
-    width: 38,
-  },
-  marquee: {
-    overflowX: 'hidden',
-  }
 }));
 
 export default function Controller(props) {
@@ -109,7 +91,7 @@ export default function Controller(props) {
       <Card
         className={classes.root}
         style={{
-          background: `radial-gradient(circle at top right, ${hexToRgba(color, '1')} 0%, ${hexToRgba(color, '0.7')} 35%, ${hexToRgba(color, '0.2')} 100%)`,
+          background: `radial-gradient(circle at center, ${hexToRgba(color, '1')} 0%, ${hexToRgba(color, '0.85')} 45%, ${hexToRgba(color, '0.6')} 100%)`,
         }}
       >
         <CardMedia
@@ -119,7 +101,9 @@ export default function Controller(props) {
         />
 
           <Box
-            className={classes.details}
+            display="flex"
+            flexDirection="column"
+            whiteSpace="noWrap"
             minHeight="160px"
             style={{overflowX: "hidden"}}
           >
@@ -146,16 +130,14 @@ export default function Controller(props) {
             <OverflowDetector onOverflowChange={handleArtistOverflow}>
               {
                 scrollArtist ?
-                  <Box className={classes.marquee}>
-                    <Typography variant="subtitle1" style={{ color: textColor }}>
-                      <Marquee
-                        delay={0}
-                        direction="left"
-                      >
-                        { artists }
-                      </Marquee>
-                    </Typography>
-                  </Box>
+                  <Typography variant="subtitle1" style={{ color: textColor }}>
+                    <Marquee
+                      delay={0}
+                      direction="left"
+                    >
+                      { artists }
+                    </Marquee>
+                  </Typography>
                 :
                   <Typography variant="subtitle1" style={{ color: textColor }}>
                     { artists }
@@ -164,7 +146,12 @@ export default function Controller(props) {
             </OverflowDetector>
           </CardContent>
 
-          <Box className={classes.controls}>
+          <Box
+            display="flex"
+            alignItems="center"
+            paddingLeft={1}
+            paddingBottom={1}
+          >
             <SkipButton
               {...props}
               player={player}
