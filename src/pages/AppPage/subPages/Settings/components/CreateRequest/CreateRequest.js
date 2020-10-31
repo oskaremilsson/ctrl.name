@@ -4,6 +4,8 @@ import api from 'utils/api';
 import { Box, TextField, Button, Snackbar, IconButton } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 
+import Alert from '@material-ui/lab/Alert';
+
 export default function CreateRequest() {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [username, setUsername] = useState(undefined);
@@ -52,6 +54,9 @@ export default function CreateRequest() {
       }
 
       console.log(res);
+    }).catch((_) => {
+      setFailureMessage(`Could not create request for ${username}`);
+      setOpenFailure(true);
     });
     e.target.reset();
   };
@@ -79,43 +84,42 @@ export default function CreateRequest() {
           </Button>
         </Box>
       </form>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        open={openSuccess}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message={`You requested to control ${username}`}
-        action={
-          <React.Fragment>
-            <Button color="secondary" size="small" onClick={(e) => handleClose(e, 'undo')}>
-              UNDO
-            </Button>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </React.Fragment>
-        }
-      />
 
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        open={openSuccess}
+        autoHideDuration={6000}
+        onClose={() => {setOpenSuccess(false)}}
+      >
+        <Alert
+          elevation={6}
+          severity="success"
+          variant="filled"
+        >
+         { `Requested to control ${username}` }
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
         }}
         open={openFailure}
         autoHideDuration={6000}
-        message={failureMessage}
-        action={
-          <React.Fragment>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={() => { setOpenFailure(false) }}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </React.Fragment>
-        }
-      />
+        onClose={() => {setOpenFailure(false)}}
+      >
+        <Alert
+          elevation={6}
+          severity="info"
+          variant="filled"
+        >
+          { failureMessage }
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

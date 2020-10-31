@@ -20,7 +20,7 @@ export default function GiveConsent() {
     var data = new FormData();
     data.append("allow_user", username);
   
-    api.post('giveConsent', data)
+    api.post("giveConsent", data)
     .then(res => {
       dispatch(actions.setConsents(null));
       if (res && res.data && res.data.Success) {
@@ -29,6 +29,9 @@ export default function GiveConsent() {
         setFailureMessage(res.data.Message);
         setOpenFailure(true);
       }
+    }).catch((_) => {
+      setFailureMessage(`Could not give consent to ${username}`);
+      setOpenFailure(true);
     });
     e.target.reset();
   };
@@ -56,8 +59,8 @@ export default function GiveConsent() {
 
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: 'top',
+          horizontal: 'center',
         }}
         open={openSuccess}
         autoHideDuration={6000}
@@ -74,8 +77,8 @@ export default function GiveConsent() {
 
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: 'top',
+          horizontal: 'center',
         }}
         open={openFailure}
         autoHideDuration={6000}

@@ -68,8 +68,8 @@ export default function ConsentList() {
 
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: 'top',
+          horizontal: 'center',
         }}
         open={openSuccess}
         autoHideDuration={6000}
@@ -86,8 +86,8 @@ export default function ConsentList() {
 
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: 'top',
+          horizontal: 'center',
         }}
         open={openFailure}
         autoHideDuration={6000}
