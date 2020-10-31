@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import AppPage from '../pages/AppPage';
-import LandingPage from '../pages/LandingPage';
-import LoadingPage from '../pages/LoadingPage';
-import spotify from '../utils/spotify';
+import AppPage from 'pages/AppPage';
+import LandingPage from 'pages/LandingPage';
+import LoadingPage from 'pages/LoadingPage';
+import spotify from 'utils/spotify';
 
 import { Box } from '@material-ui/core';
 

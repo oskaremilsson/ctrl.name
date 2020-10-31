@@ -4,7 +4,7 @@ import { Box, CircularProgress } from '@material-ui/core';
 
 import api from 'utils/api';
 
-export default function App(props) {
+export default function Auth(props) {
   const { location } = props;
 
   const query = queryString.parse(location.search);

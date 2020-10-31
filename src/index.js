@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Bouncer from './components/Bouncer';
-import Auth from './components/Auth';
+import Bouncer from './shared/components/Bouncer';
+import Auth from './shared/components/Auth';
 import * as serviceWorker from './serviceWorker';
 
 import rootReducer from './shared/stores';
