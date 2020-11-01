@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectors, actions } from 'shared/stores';
 
-import Controller from './parts/Controller';
-import SwitchCurrentMe from './parts/SwitchCurrentMe';
-import Playlists from './parts/Playlists';
+import NavBar from 'shared/components/NavBar';
+import Controller from './components/Controller';
+import SwitchCurrentMe from './components/SwitchCurrentMe';
 
-import Settings from './subPages/Settings';
-import Playlist from './subPages/Playlist';
+import Settings from 'pages/Settings';
+import Playlists from 'pages/Playlists';
+import Playlist from 'pages/Playlist';
 
-import { Settings as SettingsIcon } from '@material-ui/icons';
-import { Box, IconButton } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 
 import api from 'utils/api';
 import spotify from 'utils/spotify';
@@ -46,7 +46,7 @@ export default function AppPage(props) {
   const dispatch = useDispatch();
   const playerSync = useSelector((state) => getSpotifyPlayerSync(state));
 
-  const { me, history, location } = props;
+  const { me, location } = props;
   
   const [access_token, setAccessToken] = useState(undefined);
   const [currentMe, setCurrentMe] = useState(me.id);
@@ -86,22 +86,23 @@ export default function AppPage(props) {
           {...props}
         />
       break;
+    case '/playlists':
+      component = <Playlists
+          access_token={access_token}
+          {...props}
+        />
+      break;
     default:
       component = <Box>
-          <IconButton onClick={ () => history.push('settings') }>
-            <SettingsIcon />
-          </IconButton>
+          <Controller
+            access_token={access_token}
+          />
 
           <SwitchCurrentMe
             me={me}
             currentMe={currentMe}
             setCurrentMe={setCurrentMe}
             setTokenFetched={setTokenFetched}
-          />
-
-          <Playlists 
-            access_token={access_token}
-            {...props}
           />
         </Box>
       break;
@@ -110,14 +111,17 @@ export default function AppPage(props) {
 
 
   return (
-    <Box className="AppPage">
-
-      <Controller
-        access_token={access_token}
-      />
+    <Box marginBottom={5}>
 
       { component }
       
+      <Box
+        position="fixed"
+        bottom={0}
+        width="100%"
+      >
+        <NavBar {...props} />
+      </Box>
     </Box>
   );
 }

@@ -1,8 +1,7 @@
 import React, { useState} from 'react';
 
 import api from 'utils/api';
-import { Box, TextField, Button, Snackbar, IconButton } from '@material-ui/core';
-import { Close as CloseIcon } from '@material-ui/icons';
+import { Box, TextField, Button, Snackbar } from '@material-ui/core';
 
 import Alert from '@material-ui/lab/Alert';
 
@@ -13,32 +12,8 @@ export default function CreateRequest() {
   const [openFailure, setOpenFailure] = useState(false);
   const [failureMessage, setFailureMessage] = useState(undefined);
 
-  const handleClose = (e, reason) => {
-    switch(reason) {
-      case 'undo':
-        console.log('remove request');
-        var data = new FormData();
-        data.append("username", username);
-
-        api.post('removeRequest', data)
-        .then(res => {
-          console.log(res);
-          setUsername(undefined);
-        });
-        break;
-      default:
-        setTimeout(() => {
-          setUsername(undefined);
-        }, 500);
-        break;
-    }
-
-    setOpenSuccess(false);
-  };
-
   const createRequest = (e) => {
     e.preventDefault();
-    console.log('uploading:', username);
     setUsername(username);
 
     var data = new FormData();

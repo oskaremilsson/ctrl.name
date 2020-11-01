@@ -40,7 +40,7 @@ export default function Playlists(props) {
   }, [access_token, playlists, setSyncer, nextQuery, loadMore]);
 
   return (
-    <Box marginTop={5} marginBottom={5}>
+    <Box padding={2}>
       <List>
         {playlists && playlists.map((playlist, i) => (
           <Box key={playlist.id + i}>
