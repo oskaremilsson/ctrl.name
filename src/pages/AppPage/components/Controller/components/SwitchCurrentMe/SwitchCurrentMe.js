@@ -23,7 +23,7 @@ const getConsents = (setConsents) => {
 };
 
 export default function SwitchCurrentMe(props) {
-  const { history, me, currentMe, access_token, setCurrentMe, setTokenFetched, openSwitch, setOpenSwitch } = props;
+  const { history, me, access_token, setCurrentMe, setTokenFetched, openSwitch, setOpenSwitch } = props;
   const [consents, setConsents] = useState(undefined);
 
   const myAvatarAlt = (me && me.id) || 'current';

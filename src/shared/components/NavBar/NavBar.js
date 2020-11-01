@@ -3,7 +3,7 @@ import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 
 import {
   Home as HomeIcon, 
-  Settings as SettingsIcon,
+  AccountCircle as AccountCircleIcon,
   List as ListIcon
 } from '@material-ui/icons';
 
@@ -29,7 +29,7 @@ export default function NavBar(props) {
     >
       <BottomNavigationAction value="/" label="Home" icon={<HomeIcon />} />
       <BottomNavigationAction value="/playlists" label="Playlists" icon={<ListIcon />} />
-      <BottomNavigationAction value="/settings" label="Settings" icon={<SettingsIcon />} />
+      <BottomNavigationAction value="/profile" label="Profile" icon={<AccountCircleIcon />} />
     </BottomNavigation>
   );
 }

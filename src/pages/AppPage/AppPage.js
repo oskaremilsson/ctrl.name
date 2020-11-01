@@ -5,7 +5,7 @@ import { selectors, actions } from 'shared/stores';
 import NavBar from 'shared/components/NavBar';
 import Controller from './components/Controller';
 
-import Settings from 'pages/Settings';
+import Profile from 'pages/Profile';
 import Playlists from 'pages/Playlists';
 import Playlist from 'pages/Playlist';
 
@@ -74,8 +74,8 @@ export default function AppPage(props) {
 
   let component;
   switch (location && location.pathname) {
-    case '/settings':
-      component = <Settings
+    case '/profile':
+      component = <Profile
           {...props}
         />
       break;
@@ -103,9 +103,7 @@ export default function AppPage(props) {
           />
         </Box>
       break;
-
   }
-
 
   return (
     <Box marginBottom={5}>
