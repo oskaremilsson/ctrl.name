@@ -49,13 +49,13 @@ export default function AppPage(props) {
   const { me, location } = props;
   
   const [access_token, setAccessToken] = useState(undefined);
-  const [currentMe, setCurrentMe] = useState(me.id);
+  const [currentMe, setCurrentMe] = useState(me);
   const [tokenFetched, setTokenFetched] = useState(false);
   const [syncTimer, setSyncTimer] = useState(undefined);
 
   useEffect(() => {
-    if (!tokenFetched) {
-      getAccessToken(dispatch, currentMe, setAccessToken, setTokenFetched);
+    if (!tokenFetched && currentMe) {
+      getAccessToken(dispatch, currentMe.id, setAccessToken, setTokenFetched);
     }
   }, [dispatch, currentMe, tokenFetched]);
 
@@ -95,14 +95,12 @@ export default function AppPage(props) {
     default:
       component = <Box>
           <Controller
-            access_token={access_token}
-          />
-
-          <SwitchCurrentMe
             me={me}
+            access_token={access_token}
             currentMe={currentMe}
             setCurrentMe={setCurrentMe}
             setTokenFetched={setTokenFetched}
+            {...props}
           />
         </Box>
       break;

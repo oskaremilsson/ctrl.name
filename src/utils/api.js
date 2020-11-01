@@ -9,10 +9,10 @@ const base = () => {
   return req;
 }
 
-const post = (url, data) => {
-  if (!data) {
+const post = (url, data = new FormData()) => {
+  /*if (!data) {
     data = new FormData();
-  }
+  }*/
   const api = base();
 
   if(!data.has('code')) {

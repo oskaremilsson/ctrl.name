@@ -3,20 +3,15 @@ import { useSelector } from 'react-redux';
 import { selectors } from 'shared/stores';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Box, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
+import { Box, Card, CardMedia, Avatar } from '@material-ui/core';
 import { ColorExtractor } from 'react-color-extractor';
 import invert from 'invert-color';
-
-import { OverflowDetector } from 'react-overflow';
-import Marquee from 'react-double-marquee';
 import hexToRgba from 'hex-to-rgba';
 
-import PlayButton from './components/PlayButton';
-import SkipButton from './components/SkipButton';
+import CardContent from './components/CardContent';
+import SwitchCurrentMe from './components/SwitchCurrentMe';
 
 import coverart from 'assets/coverart.png';
-
-import './style.css';
 
 const { getSpotifyPlayer } = selectors;
 
@@ -25,55 +20,36 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     width: '100%',
     margin: theme.spacing(2),
-  },
-  content: {
-    flex: '1 0 auto',
+    position: 'relative',
   },
   cover: {
     width: 160,
     minWidth: 160,
   },
+  avatar: {
+    color: theme.palette.getContrastText(theme.palette.primary.main),
+    backgroundColor: theme.palette.primary.main,
+    cursor: 'pointer',
+  },
 }));
 
 export default function Controller(props) {
+  const { currentMe } = props;
   const theme = useTheme();
   const classes = useStyles(theme);
   const player = useSelector((state) => getSpotifyPlayer(state));
 
   const [color, setColor] = useState('#535b5c');
-  const [scrollTitle, setScrollTitle] = useState(false);
-  const [scrollArtist, setScrollArtist] = useState(false);
-  const [oldSong, setOldSong] = useState(false);
   const textColor = invert(color, true);
 
-  const handleTitleOverflow = (isOverflowed) => {
-    if (isOverflowed) {
-      setScrollTitle(true);
-    }
-  }
+  const [openSwitch, setOpenSwitch] = useState(false);
 
-  const handleArtistOverflow = (isOverflowed) => {
-    if (isOverflowed) {
-      setScrollArtist(true);
-    }
-  }
+  const avatarAlt = (currentMe && currentMe.id) || 'current';
+  const avatarImg = currentMe && currentMe.images && currentMe.images[0] && currentMe.images[0].url;
 
   const album = player && player.item && player.item.album;
   const albumName = album && album.name;
   const albumCover = album && album.images && album.images[0] && album.images[0].url;
-
-  const song = player && player.item;
-  const songTitle = song && song.name;
-
-  const artists = song && song.artists && song.artists.map((artist)=> artist.name).join(', ');
-
-  if (player) {
-    if (oldSong !== player.item.uri) {
-      setOldSong(player.item.uri);
-      setScrollArtist(false);
-      setScrollTitle(false);
-    }
-  }
 
   return (
     <Box
@@ -100,80 +76,30 @@ export default function Controller(props) {
           title={albumName}
         />
 
-          <Box
-            display="flex"
-            flexDirection="column"
-            whiteSpace="noWrap"
-            minHeight="160px"
-            style={{overflowX: "hidden"}}
-          >
-
-          <CardContent className={classes.content}>
-            <OverflowDetector onOverflowChange={handleTitleOverflow}>
-              {
-                scrollTitle ?
-                  <Typography variant="h6" style={{ color: textColor }}>
-                    <Marquee
-                      delay={0}
-                      direction="left"
-                    >
-                      { songTitle || "No active device found" }
-                    </Marquee>
-                  </Typography>
-                :
-                  <Typography variant="h6" style={{ color: textColor }}>
-                    { songTitle || "No active device found" }
-                  </Typography>
-              }
-            </OverflowDetector>
-
-            <OverflowDetector onOverflowChange={handleArtistOverflow}>
-              {
-                scrollArtist ?
-                  <Typography variant="subtitle1" style={{ color: textColor }}>
-                    <Marquee
-                      delay={0}
-                      direction="left"
-                    >
-                      { artists }
-                    </Marquee>
-                  </Typography>
-                :
-                  <Typography variant="subtitle1" style={{ color: textColor }}>
-                    { artists }
-                  </Typography>
-              }
-            </OverflowDetector>
-          </CardContent>
-
-          <Box
-            display="flex"
-            alignItems="center"
-            paddingLeft={1}
-            paddingBottom={1}
-          >
-            <SkipButton
-              {...props}
-              player={player}
-              action={"previous"}
-              icon={"skip_previous"}
-              color={textColor}
-            />
-            <PlayButton
-              {...props}
-              player={player}
-              color={textColor}
-            />
-            <SkipButton
-              {...props}
-              player={player}
-              action={"next"}
-              icon={"skip_next"}
-              color={textColor}
-            />
-          </Box>
+        <Box
+          position="absolute"
+          bottom="5px"
+          left="5px"
+        >
+          <Avatar
+            alt={avatarAlt}
+            src={avatarImg}
+            className={classes.avatar}
+            onClick={() => { setOpenSwitch(true) }}
+          />
         </Box>
+
+        <CardContent
+          textColor={textColor}
+          player={player}
+        />
       </Card>
+
+      <SwitchCurrentMe
+        openSwitch={openSwitch}
+        setOpenSwitch={setOpenSwitch}
+        {...props}
+      />
     </Box>
   );
 }

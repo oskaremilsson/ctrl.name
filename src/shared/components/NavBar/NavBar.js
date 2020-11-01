@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 
 import {
@@ -9,13 +9,17 @@ import {
 
 export default function NavBar(props) {
   const { history, location } = props;
-  const activePage = location && location.pathname;
-  const [value, setValue] = useState(activePage);
+  const [value, setValue] = useState();
 
   const navigate = (_, newValue) => {
-    setValue(newValue);
     history.push(newValue);
   }
+
+  useEffect(() => {
+    if (location && location.pathname) {
+      setValue(location.pathname);
+    }
+  }, [location]);
 
   return (
     <BottomNavigation
