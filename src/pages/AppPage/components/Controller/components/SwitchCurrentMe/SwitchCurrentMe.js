@@ -65,7 +65,7 @@ export default function SwitchCurrentMe(props) {
             </ListItem>
           ))}
 
-          <ListItem button onClick={() => history.push('/settings')}>
+          <ListItem button onClick={() => history.push('/profile')}>
             <ListItemAvatar>
               <Avatar>
                 <AddIcon />
