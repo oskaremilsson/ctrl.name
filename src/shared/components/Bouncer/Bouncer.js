@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import AppPage from 'pages/AppPage';
+import App from 'App';
 import LandingPage from 'pages/LandingPage';
 import LoadingPage from 'pages/LoadingPage';
 import spotify from 'utils/spotify';
@@ -32,7 +32,7 @@ export default function Bouncer(props) {
   if (my_tokens && !loggedIn) {
     component = <LoadingPage {...props} />
   } else if (me && loggedIn) {
-    component = <AppPage me={me} {...props} />
+    component = <App me={me} {...props} />
   } else {
     component = <LandingPage {...props} />
   }

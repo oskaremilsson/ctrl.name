@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectors, actions } from 'shared/stores';
 
 import NavBar from 'shared/components/NavBar';
-import Controller from './components/Controller';
 
+import Home from 'pages/Home';
 import Profile from 'pages/Profile';
 import Playlists from 'pages/Playlists';
 import Playlist from 'pages/Playlist';
@@ -41,7 +41,7 @@ const syncNowPlaying = (dispatch, access_token) => {
   });
 }
 
-export default function AppPage(props) {
+export default function App(props) {
   const dispatch = useDispatch();
   const playerSync = useSelector((state) => getSpotifyPlayerSync(state));
 
@@ -92,8 +92,8 @@ export default function AppPage(props) {
         />
       break;
     default:
-      component = <Box>
-          <Controller
+      component =
+          <Home
             me={me}
             access_token={access_token}
             currentMe={currentMe}
@@ -101,7 +101,6 @@ export default function AppPage(props) {
             setTokenFetched={setTokenFetched}
             {...props}
           />
-        </Box>
       break;
   }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Divider } from '@material-ui/core';
+import { Box, Divider } from '@material-ui/core';
 
 import ProfileHeader from './components/ProfileHeader';
 import GiveConsent from './components/GiveConsent';
@@ -8,8 +8,6 @@ import ConsentRequests from './components/ConsentRequests';
 import ConsentList from './components/ConsentList';
 
 export default function Profile(props) {
-  const { me } = props;
-
   return (
     <Box padding={2} >
 
