@@ -23,7 +23,7 @@ const getConsents = (setConsents) => {
 };
 
 export default function SwitchCurrentMe(props) {
-  const { history, me, access_token, setCurrentMe, setTokenFetched, openSwitch, setOpenSwitch } = props;
+  const { history, me, currentMe, access_token, setCurrentMe, setTokenFetched, openSwitch, setOpenSwitch } = props;
   const [consents, setConsents] = useState(undefined);
 
   const myAvatarAlt = (me && me.id) || 'current';
@@ -65,13 +65,13 @@ export default function SwitchCurrentMe(props) {
             </ListItem>
           ))}
 
-          <ListItem autoFocus button onClick={() => history.push('/settings')}>
+          <ListItem button onClick={() => history.push('/settings')}>
             <ListItemAvatar>
               <Avatar>
                 <AddIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary="Create new request" />
+            <ListItemText primary="Create request" />
           </ListItem>
         </List>
       </Dialog>

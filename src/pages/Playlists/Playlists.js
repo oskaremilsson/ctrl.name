@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Button,
         List, ListItem, ListItemAvatar, ListItemText,
-        Avatar, Typography, Divider } from '@material-ui/core';
+        Avatar, Typography, Divider, CircularProgress } from '@material-ui/core';
 
 import spotify from 'utils/spotify';
 
@@ -25,17 +25,23 @@ export default function Playlists(props) {
   const classes = useStyles();
 
   useEffect(() => {
+    let mounted = true;
     if (access_token && loadMore) {
+      console.log('load more');
       const query = nextQuery ? nextQuery.split('?')[1] : '';
-      setLoadMore(false);
       spotify(access_token).get(`me/playlists?${query}`)
       .then(res => {
-        setPlaylists(playlists => playlists.concat(res.data.items));
-        setNextQuery(res.data.next);
+        if(mounted){
+          setLoadMore(false);
+          setPlaylists(playlists => playlists.concat(res.data.items));
+          setNextQuery(res.data.next);
+        }
       }).catch( _ => {
         console.log('error');
       });
     }
+
+    return () => mounted = false;
 
   }, [access_token, playlists, setSyncer, nextQuery, loadMore]);
 
@@ -70,8 +76,13 @@ export default function Playlists(props) {
           </Box>
         ))}
       </List>
+
+      { loadMore &&
+        <CircularProgress />
+      }
+
       {
-        nextQuery && (
+        nextQuery &&
           <Box
             display="flex"
             justifyContent="center"
@@ -79,7 +90,6 @@ export default function Playlists(props) {
           >
             <Button onClick={() => setLoadMore(true)}>Load more</Button>
           </Box>
-        )
       }
     </Box>
   );

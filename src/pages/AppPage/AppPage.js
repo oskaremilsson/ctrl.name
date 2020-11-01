@@ -4,7 +4,6 @@ import { selectors, actions } from 'shared/stores';
 
 import NavBar from 'shared/components/NavBar';
 import Controller from './components/Controller';
-import SwitchCurrentMe from './components/SwitchCurrentMe';
 
 import Settings from 'pages/Settings';
 import Playlists from 'pages/Playlists';
