@@ -12,12 +12,15 @@ export default function Profile() {
   return (
     <Container maxWidth="md">
       <Box padding={2} >
+        <Box marginBottom={5}>
+          <ProfileHeader />
+        </Box>
 
-        <ProfileHeader />
+        <Box marginBottom={5}>
+          <GiveConsent />
 
-        <GiveConsent />
-
-        <CreateRequest />
+          <CreateRequest />
+        </Box>
 
         <MyRequests />
 

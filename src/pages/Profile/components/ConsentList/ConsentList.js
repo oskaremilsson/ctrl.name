@@ -10,7 +10,8 @@ import {
   ListItemText,
   Card,
   Snackbar,
-  IconButton
+  IconButton,
+  Typography
 } from '@material-ui/core';
 import { RemoveCircleOutline } from '@material-ui/icons';
 
@@ -58,6 +59,11 @@ export default function ConsentList() {
         <Card>
           <Box padding={1}>
             <List>
+              <Box paddingLeft={2}>
+                <Typography variant="h5">
+                  Given consent to ctrl
+                </Typography>
+              </Box>
               { consents.map((consent) => (
                 <ListItem key={consent}>
                   <IconButton aria-label="revoke access" onClick={() => {revokeConsent(consent)}}>

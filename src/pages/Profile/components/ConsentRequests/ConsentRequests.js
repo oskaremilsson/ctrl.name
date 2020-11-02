@@ -64,9 +64,11 @@ export default function ConsentRequests() {
           <Box padding={1}>
             
               <List>
-                <Typography variant="h5">
-                  Incoming requests
-                </Typography>
+                <Box paddingLeft={2}>
+                  <Typography variant="h5">
+                    Incoming requests
+                  </Typography>
+                </Box>
                 { requests.map((request) => (
                   <ListItem key={request}>
 

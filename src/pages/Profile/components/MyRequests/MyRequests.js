@@ -48,9 +48,11 @@ export default function MyRequests() {
         <Card>
           <Box padding={1}>
             <List>
-              <Typography variant="h5">
-                My sent requests
-              </Typography>
+              <Box paddingLeft={2}>
+                <Typography variant="h5">
+                  My sent requests
+                </Typography>
+              </Box>
               { myRequests.map((request) => (
                 <ListItem key={request}>
                   <IconButton aria-label="remove request" onClick={() => removeRequest(request)}>
