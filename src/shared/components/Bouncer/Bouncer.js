@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectors, actions } from 'shared/stores';
+import { useDispatch } from 'react-redux';
+import { actions } from 'shared/stores';
 
 import { Box } from '@material-ui/core';
 
@@ -14,15 +14,12 @@ export default function Bouncer(props) {
   const dispatch = useDispatch();
   const my_tokens = JSON.parse(localStorage.getItem('my_tokens'));
   const [loggedIn, setLoggedIn] = useState(undefined);
-  //const [me, setMe] = useState(undefined);
 
   useEffect(() => {
     if (my_tokens && !loggedIn) {
-      //verifyToken(my_tokens.access_token, setMe, setLoggedIn, props);
       spotify(my_tokens.access_token).get('me')
       .then(res => {
         setLoggedIn(true);
-        //setMe(res.data);
         dispatch(actions.setMe(res.data));
         dispatch(actions.setCurrentMe(res.data));
       }).catch(_ => {

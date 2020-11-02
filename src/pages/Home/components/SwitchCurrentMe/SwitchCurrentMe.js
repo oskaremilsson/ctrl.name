@@ -9,8 +9,11 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Avatar
+  Avatar,
+  Snackbar
 } from '@material-ui/core';
+
+import Alert from '@material-ui/lab/Alert';
 
 import { Add as AddIcon } from '@material-ui/icons';
 
@@ -32,6 +35,7 @@ export default function SwitchCurrentMe(props) {
   const currentMe = useSelector((state) => getCurrentMe(state));
   const me = useSelector((state) => getMe(state));
   const [consents, setConsents] = useState(undefined);
+  const [openFailure, setOpenFailure] = useState(undefined);
 
   const myAvatarAlt = (me && me.id) || 'current';
   const myAvatarImg = me && me.images && me.images[0] && me.images[0].url;
@@ -42,6 +46,9 @@ export default function SwitchCurrentMe(props) {
       dispatch(actions.setCurrentMe(res.data));
       setTokenFetched(false);
       setOpenSwitch(false);
+    }).catch(_ => {
+      setConsents(undefined);
+      setOpenFailure(username);
     });
   };
 
@@ -91,6 +98,24 @@ export default function SwitchCurrentMe(props) {
           </List>
         </Dialog>
       }
+
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        open={openFailure}
+        autoHideDuration={6000}
+        onClose={() => {setOpenFailure(false)}}
+      >
+        <Alert
+          elevation={6}
+          severity="error"
+          variant="filled"
+        >
+          Failed to switch ctrl.{openFailure}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
