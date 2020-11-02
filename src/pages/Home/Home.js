@@ -33,7 +33,7 @@ export default function Home(props) {
         className={classes.fab}
         aria-label="switch"
         variant="extended"
-        color="primary"
+        color="secondary"
         onClick={() => { setOpenSwitch(true) }}
       >
         <SupervisedUserCircle className={classes.fabIcon} />
