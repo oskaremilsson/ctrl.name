@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectors } from 'shared/stores';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Box, Card, CardMedia, Avatar } from '@material-ui/core';
+import { Box, Card } from '@material-ui/core';
 import { ColorExtractor } from 'react-color-extractor';
 import invert from 'invert-color';
 import hexToRgba from 'hex-to-rgba';
@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Controller(props) {
-  const { currentMe } = props;
   const theme = useTheme();
   const classes = useStyles(theme);
   const player = useSelector((state) => getSpotifyPlayer(state));

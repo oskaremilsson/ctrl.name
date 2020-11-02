@@ -1,4 +1,7 @@
 import React, {useState, useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectors, actions } from 'shared/stores';
+
 import {
   Box,
   Dialog,
@@ -14,6 +17,8 @@ import { Add as AddIcon } from '@material-ui/icons';
 import api from 'utils/api';
 import spotify from 'utils/spotify';
 
+const { getMe, getCurrentMe } = selectors;
+
 const getConsents = (setConsents) => {
   api.post('getConsents')
   .then(res => {
@@ -22,7 +27,10 @@ const getConsents = (setConsents) => {
 };
 
 export default function SwitchCurrentMe(props) {
-  const { history, me, currentMe, access_token, setCurrentMe, setTokenFetched, openSwitch, setOpenSwitch } = props;
+  const dispatch = useDispatch();
+  const { history, access_token, setTokenFetched, openSwitch, setOpenSwitch } = props;
+  const currentMe = useSelector((state) => getCurrentMe(state));
+  const me = useSelector((state) => getMe(state));
   const [consents, setConsents] = useState(undefined);
 
   const myAvatarAlt = (me && me.id) || 'current';
@@ -31,7 +39,7 @@ export default function SwitchCurrentMe(props) {
   const switched = (username) => {
     spotify(access_token).get(`users/${username}`)
     .then(res => {
-      setCurrentMe(res.data);
+      dispatch(actions.setCurrentMe(res.data));
       setTokenFetched(false);
       setOpenSwitch(false);
     });
@@ -45,42 +53,44 @@ export default function SwitchCurrentMe(props) {
 
   return (
     <Box>
-      <Dialog onClose={() => {setOpenSwitch(false)}} open={openSwitch}>
-        <List>
-          <ListItem
-            button
-            selected={me.id === currentMe.id}
-            onClick={() => switched(me.id)} key={me.id}
-          >
-            <ListItemAvatar>
-              <Avatar alt={myAvatarAlt} src={myAvatarImg} />
-            </ListItemAvatar>
-            <ListItemText primary={me.id} />
-          </ListItem>
-
-          { consents && consents.map((consent) => (
+      { me && currentMe &&
+        <Dialog onClose={() => {setOpenSwitch(false)}} open={openSwitch}>
+          <List>
             <ListItem
               button
-              selected={consent === currentMe.id}
-              onClick={() => switched(consent)} key={consent}
+              selected={me.id === currentMe.id}
+              onClick={() => switched(me.id)} key={me.id}
             >
               <ListItemAvatar>
-                <Avatar alt="consent" />
+                <Avatar alt={myAvatarAlt} src={myAvatarImg} />
               </ListItemAvatar>
-              <ListItemText primary={consent} />
+              <ListItemText primary={me.id} />
             </ListItem>
-          ))}
 
-          <ListItem button onClick={() => history.push('/profile')}>
-            <ListItemAvatar>
-              <Avatar>
-                <AddIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Create request" />
-          </ListItem>
-        </List>
-      </Dialog>
+            { consents && consents.map((consent) => (
+              <ListItem
+                button
+                selected={consent === currentMe.id}
+                onClick={() => switched(consent)} key={consent}
+              >
+                <ListItemAvatar>
+                  <Avatar alt="consent" />
+                </ListItemAvatar>
+                <ListItemText primary={consent} />
+              </ListItem>
+            ))}
+
+            <ListItem button onClick={() => history.push('/profile')}>
+              <ListItemAvatar>
+                <Avatar>
+                  <AddIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary="Create request" />
+            </ListItem>
+          </List>
+        </Dialog>
+      }
     </Box>
   );
 }

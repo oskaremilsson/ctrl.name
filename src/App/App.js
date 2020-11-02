@@ -15,7 +15,7 @@ import api from 'utils/api';
 import spotify from 'utils/spotify';
 import config from 'config/config.json';
 
-const { getSpotifyPlayerSync } = selectors;
+const { getCurrentMe, getSpotifyPlayerSync } = selectors;
 
 const getAccessToken = (dispatch, username, setAccessToken, setTokenFetched) => {
   var data = new FormData();
@@ -32,7 +32,6 @@ const getAccessToken = (dispatch, username, setAccessToken, setTokenFetched) => 
 const syncNowPlaying = (dispatch, access_token) => {
   spotify(access_token).get('me/player').then(res => {
     dispatch(actions.setSpotifyPlayerSync(false));
-    console.log(res);
     if (res.status === 200) {
       dispatch(actions.setSpotifyPlayer(res.data));
     } else {
@@ -44,11 +43,11 @@ const syncNowPlaying = (dispatch, access_token) => {
 export default function App(props) {
   const dispatch = useDispatch();
   const playerSync = useSelector((state) => getSpotifyPlayerSync(state));
+  const currentMe = useSelector((state) => getCurrentMe(state));
 
-  const { me, location } = props;
-  
+  const { location } = props;
+
   const [access_token, setAccessToken] = useState(undefined);
-  const [currentMe, setCurrentMe] = useState(me);
   const [tokenFetched, setTokenFetched] = useState(false);
   const [syncTimer, setSyncTimer] = useState(undefined);
 
@@ -94,10 +93,7 @@ export default function App(props) {
     default:
       component =
           <Home
-            me={me}
             access_token={access_token}
-            currentMe={currentMe}
-            setCurrentMe={setCurrentMe}
             setTokenFetched={setTokenFetched}
             {...props}
           />

@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectors } from 'shared/stores';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Box, CardContent, Typography, Link } from '@material-ui/core';
+import { Box, CardContent, Typography } from '@material-ui/core';
 
 import { OverflowDetector } from 'react-overflow';
 import Marquee from 'react-double-marquee';
 
 import PlayButton from './components/PlayButton';
 import SkipButton from './components/SkipButton';
+
+const { getCurrentMe } = selectors;
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -18,7 +22,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Controller(props) {
   const theme = useTheme();
   const classes = useStyles(theme);
-  const { player, textColor, currentMe } = props;
+
+  const { player, textColor } = props;
+  const currentMe = useSelector((state) => getCurrentMe(state));
 
   const [scrollTitle, setScrollTitle] = useState(false);
   const [scrollArtist, setScrollArtist] = useState(false);
