@@ -22,7 +22,7 @@ export default function GiveConsent() {
   
     api.post("giveConsent", data)
     .then(res => {
-      dispatch(actions.setConsents(null));
+      dispatch(actions.setMyConsents(null));
       if (res && res.data && res.data.Success) {
         setOpenSuccess(true);
       } else {

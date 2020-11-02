@@ -1,32 +1,31 @@
 import React from 'react';
-import { Box, Divider } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 
 import ProfileHeader from './components/ProfileHeader';
 import GiveConsent from './components/GiveConsent';
 import CreateRequest from './components/CreateRequest';
 import ConsentRequests from './components/ConsentRequests';
+import MyRequests from './components/MyRequests';
 import ConsentList from './components/ConsentList';
 
-export default function Profile(props) {
+export default function Profile() {
   return (
-    <Box padding={2} >
+    <Container maxWidth="md">
+      <Box padding={2} >
 
-      <ProfileHeader {...props} />
+        <ProfileHeader />
 
-      <GiveConsent />
+        <GiveConsent />
 
-      <Divider />
+        <CreateRequest />
 
-      <CreateRequest />
+        <MyRequests />
 
-      <Divider />
+        <ConsentRequests />
 
-      <ConsentRequests />
+        <ConsentList />
 
-      <Divider />
-
-      <ConsentList />
-
-    </Box>
+      </Box>
+    </Container>
   );
 }

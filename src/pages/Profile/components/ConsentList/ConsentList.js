@@ -3,17 +3,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectors, actions } from 'shared/stores';
 
 import api from 'utils/api';
-import { Box, List, ListItem, ListItemText,
-         CircularProgress, Snackbar, IconButton } from '@material-ui/core';
-import { Block as BlockIcon } from '@material-ui/icons';
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  Card,
+  Snackbar,
+  IconButton
+} from '@material-ui/core';
+import { RemoveCircleOutline } from '@material-ui/icons';
 
 import Alert from '@material-ui/lab/Alert';
 
-const { getConsents } = selectors;
+const { getMyConsents } = selectors;
 
 export default function ConsentList() {
   const dispatch = useDispatch();
-  const consents = useSelector((state) => getConsents(state));
+  const consents = useSelector((state) => getMyConsents(state));
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFailure, setOpenFailure] = useState(false);
   const [username, setUsername] = useState(undefined);
@@ -25,11 +32,11 @@ export default function ConsentList() {
     data.append("disallow_user", username);
 
     api.post('revokeConsent', data)
-    .then(res => {
+    .then(_ => {
       setOpenSuccess(true);
-      dispatch(actions.setConsents(null));
+      dispatch(actions.setMyConsents(null));
     }).catch(_ => {
-      dispatch(actions.setConsents(null));
+      dispatch(actions.setMyConsents(null));
       setOpenFailure(true);
     });
   };
@@ -39,31 +46,30 @@ export default function ConsentList() {
     if (!consents) {
       api.post('getMyConsents')
       .then(res => {
-        dispatch(actions.setConsents(res.data && res.data.Consents));
+        dispatch(actions.setMyConsents(res.data && res.data.Consents));
       });
     }
   }, [dispatch, consents]);
 
 
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      marginTop={2}
-    >
-      { consents ? 
-        <List>
-          { consents.map((consent) => (
-            <ListItem key={consent}>
-              <IconButton size="small" aria-label="revoke access" color="secondary" onClick={() => {revokeConsent(consent)}}>
-                <BlockIcon fontSize="small" />
-              </IconButton>
+    <Box margin={2} >
+      { consents && consents.length > 0 &&
+        <Card>
+          <Box padding={1}>
+            <List>
+              { consents.map((consent) => (
+                <ListItem key={consent}>
+                  <IconButton aria-label="revoke access" onClick={() => {revokeConsent(consent)}}>
+                    <RemoveCircleOutline />
+                  </IconButton>
 
-                <ListItemText primary={consent}/>
-            </ListItem>
-          ))}
-        </List>
-        : <CircularProgress />
+                    <ListItemText primary={consent}/>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Card>
       }
 
       <Snackbar

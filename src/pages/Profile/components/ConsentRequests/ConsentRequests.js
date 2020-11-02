@@ -1,64 +1,49 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectors, actions } from 'shared/stores';
+
+import {
+  Box,
+  Card,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  IconButton
+} from '@material-ui/core';
+
+import { Check as CheckIcon, RemoveCircleOutline } from '@material-ui/icons';
 
 import api from 'utils/api';
-import { Box, List, ListItem, ListItemText,
-         Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core';
-import { Close as CloseIcon, Check as CheckIcon, Block as BlockIcon } from '@material-ui/icons';
+
+const { getRequests } = selectors;
 
 export default function ConsentRequests() {
-  const [requests, setRequests] = useState(false);
-  const [openSuccess, setOpenSuccess] = useState(false);
-  const [username, setUsername] = useState(undefined);
-
-  const handleClose = (e, reason) => {
-    switch(reason) {
-      case 'undo':
-        var data = new FormData();
-        data.append("disallow_user", username);
-
-        api.post('revokeConsent', data)
-        .then(res => {
-          console.log(res);
-          setRequests(false);
-        });
-        break;
-      default:
-        setTimeout(() => {
-          setUsername(undefined);
-        }, 500);
-        break;
-    }
-
-    setOpenSuccess(false);
-  };
+  const dispatch = useDispatch();
+  const requests = useSelector((state) => getRequests(state));
 
   const allowRequest = (username) => {
     console.log('uploading:', username);
-    setOpenSuccess(true);
-    setUsername(username);
 
     var data = new FormData();
     data.append("allow_user", username);
 
     api.post('acceptRequest', data)
-    .then(res => {
-      console.log(res);
-      setRequests(false);
+    .then(_ => {
+      dispatch(actions.setRequests(false));
+      dispatch(actions.setMyConsents(false));
     }).catch(_ => {
-      setRequests(false);
+      dispatch(actions.setRequests(false));
     });
   };
 
   const rejectRequest = (username) => {
-    console.log('rejecting:', username);
-
     var data = new FormData();
     data.append("username", username);
 
     api.post('removeRequest', data)
-    .then(res => {
-      console.log(res);
-      setRequests(false);
+    .then(_ => {
+      dispatch(actions.setRequests(false));
     });
   }
 
@@ -66,58 +51,40 @@ export default function ConsentRequests() {
     if (!requests) {
       api.post('getRequests')
       .then(res => {
-        console.log(res);
-        setRequests(res.data && res.data.Requests);
+        dispatch(actions.setRequests(res.data && res.data.Requests));
       });
     }
-  }, [requests]);
+  }, [requests, dispatch]);
 
 
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      marginTop={2}
-    >
-      { requests ? 
-        <List>
-          { requests.map((request) => (
-            <ListItem key={request}>
-              <IconButton size="large" aria-label="reject" color="secondary" onClick={() => {rejectRequest(request)}}>
-                <BlockIcon fontSize="large" />
-              </IconButton>
+    <Box margin={2}>
+      { requests && requests.length > 0 &&
+        <Card>
+          <Box padding={1}>
+            
+              <List>
+                <Typography variant="h5">
+                  Incoming requests
+                </Typography>
+                { requests.map((request) => (
+                  <ListItem key={request}>
 
-              <IconButton size="large" aria-label="allow" color="primary" onClick={() => {allowRequest(request)}}>
-                <CheckIcon fontSize="large" />
-              </IconButton>
+                    <IconButton aria-label="allow" color="primary" onClick={() => {allowRequest(request)}}>
+                      <CheckIcon />
+                    </IconButton>
 
-              <ListItemText primary={request}/>
-            </ListItem>
-          ))}
-        </List>
-        : <CircularProgress />
+                    <IconButton aria-label="reject" onClick={() => {rejectRequest(request)}}>
+                      <RemoveCircleOutline />
+                    </IconButton>
+
+                    <ListItemText primary={request}/>
+                  </ListItem>
+                ))}
+              </List>
+          </Box>
+        </Card>
       }
-
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        open={openSuccess}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message={`You allowed ${username} access to control your spotify`}
-        action={
-          <React.Fragment>
-            <Button color="secondary" size="small" onClick={(e) => handleClose(e, 'undo')}>
-              UNDO
-            </Button>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </React.Fragment>
-        }
-      />
     </Box>
   );
 }

@@ -43,9 +43,9 @@ export default function Controller(props) {
   }
 
   const song = player && player.item;
-  const songTitle = song && song.name || "No active device found";
+  const songTitle = (song && song.name) || "No active device found";
 
-  const artists = song && song.artists && song.artists.map((artist)=> artist.name).join(', ') || "Play on Spotify to ctrl" ;
+  const artists = (song && song.artists && song.artists.map((artist)=> artist.name).join(', ')) || "Play on Spotify to ctrl" ;
 
   if (player) {
     if (oldSong !== player.item.uri) {

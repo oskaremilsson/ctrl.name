@@ -5,15 +5,36 @@ const setConsents = (payload) => ({
   payload,
 });
 
-const setConsentRequests = (payload) => ({
-  type: 'SET_CONSENT_REQUESTS',
+const setMyConsents = (payload) => ({
+  type: 'SET_MY_CONSENTS',
+  payload,
+});
+
+const setRequests = (payload) => ({
+  type: 'SET_REQUESTS',
+  payload,
+});
+
+const setMyRequests = (payload) => ({
+  type: 'SET_MY_REQUESTS',
   payload,
 });
 
 export const actions = {
+  setMyConsents,
   setConsents,
-  setConsentRequests,
+  setRequests,
+  setMyRequests,
 };
+
+function myConsents(state = {}, action = {}) {
+  switch (action.type) {
+    case 'SET_MY_CONSENTS':
+      return action.payload || null;
+    default:
+      return state;
+  }
+}
 
 function consents(state = {}, action = {}) {
   switch (action.type) {
@@ -24,9 +45,18 @@ function consents(state = {}, action = {}) {
   }
 }
 
-function consentRequests(state = {}, action = {}) {
+function requests(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_CONSENT_REQUESTS':
+    case 'SET_REQUESTS':
+      return action.payload || false;
+    default:
+      return state;
+  }
+}
+
+function myRequests(state = {}, action = {}) {
+  switch (action.type) {
+    case 'SET_MY_REQUESTS':
       return action.payload || false;
     default:
       return state;
@@ -34,13 +64,17 @@ function consentRequests(state = {}, action = {}) {
 }
 
 const reducers = combineReducers({
+  myConsents,
   consents,
-  consentRequests,
+  requests,
+  myRequests,
 });
 
 const initialState = {
+  myConsents: null,
   consents: null,
-  consentRequests: false
+  requests: null,
+  myRequests: null,
 };
 
 export const reducer = (state = initialState, action = {}) => {
@@ -48,6 +82,8 @@ export const reducer = (state = initialState, action = {}) => {
 };
 
 export const bindSelectors = (slicer) => ({
+  getMyConsents: (state) => slicer(state).myConsents || null,
   getConsents: (state) => slicer(state).consents || null,
-  getConsentRequests: (state) => slicer(state).consentRequests || false,
+  getRequests: (state) => slicer(state).requests || null,
+  getMyRequests: (state) => slicer(state).myRequests || null,
 });

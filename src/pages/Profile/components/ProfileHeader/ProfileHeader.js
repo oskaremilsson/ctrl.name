@@ -1,6 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectors } from 'shared/stores';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography, Avatar } from '@material-ui/core';
+
+const { getMe } = selectors;
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -9,10 +14,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProfileHeader(props) {
+export default function ProfileHeader() {
   const classes = useStyles();
-  const { me } = props;
+  const me = useSelector((state) => getMe(state));
 
+  const name = me && me.display_name;
   const username = (me && me.id) || 'user';
   const myAvatarImg = me && me.images && me.images[0] && me.images[0].url;
 
@@ -24,8 +30,11 @@ export default function ProfileHeader(props) {
       marginTop={2}
     >
       <Avatar alt={username} src={myAvatarImg} className={classes.avatar} />
-      <Typography variant="h5">
-        { username }
+      <Typography variant="h5" color="primary">
+        { name }
+      </Typography>
+      <Typography variant="subtitle1" color="secondary">
+        ctrl.{ username }
       </Typography>
     </Box>
   );

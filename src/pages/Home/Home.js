@@ -21,18 +21,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home(props) {
   const classes = useStyles();
-  const { currentMe } = props;
   const [openSwitch, setOpenSwitch] = useState(false);
-
-  const avatarAlt = (currentMe && currentMe.id) || 'current';
-  const avatarImg = currentMe && currentMe.images && currentMe.images[0] && currentMe.images[0].url;
 
   return (
     <Box>
       <Container maxWidth="xs">
-        <Controller
-          {...props}
-        />
+        <Controller />
       </Container>
 
       <Fab

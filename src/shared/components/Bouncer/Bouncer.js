@@ -12,6 +12,7 @@ import spotify from 'utils/spotify';
 
 export default function Bouncer(props) {
   const dispatch = useDispatch();
+  const { history } = props;
   const my_tokens = JSON.parse(localStorage.getItem('my_tokens'));
   const [loggedIn, setLoggedIn] = useState(undefined);
 
@@ -24,10 +25,10 @@ export default function Bouncer(props) {
         dispatch(actions.setCurrentMe(res.data));
       }).catch(_ => {
         localStorage.clear();
-        props.history.replace('/');
+        history.replace('/');
       });
     }
-  }, [my_tokens, loggedIn, props]);
+  }, [dispatch, my_tokens, loggedIn, history]);
 
   let component;
   if (my_tokens && !loggedIn) {

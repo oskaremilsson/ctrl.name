@@ -66,7 +66,6 @@ export default function Controller(props) {
         <CardContent
           textColor={textColor}
           player={player}
-          {...props}
         />
       </Card>
 

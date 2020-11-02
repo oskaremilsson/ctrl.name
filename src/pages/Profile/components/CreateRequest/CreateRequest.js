@@ -1,11 +1,14 @@
 import React, { useState} from 'react';
+import { useDispatch } from 'react-redux';
+import { actions } from 'shared/stores';
 
-import api from 'utils/api';
 import { Box, TextField, Button, Snackbar } from '@material-ui/core';
-
 import Alert from '@material-ui/lab/Alert';
 
+import api from 'utils/api';
+
 export default function CreateRequest() {
+  const dispatch = useDispatch();
   const [openSuccess, setOpenSuccess] = useState(false);
   const [username, setUsername] = useState(undefined);
 
@@ -23,14 +26,13 @@ export default function CreateRequest() {
     .then(res => {
       if (res && res.data && res.data.Success) {
         setOpenSuccess(true);
+        dispatch(actions.setMyRequests(false));
       } else {
         setFailureMessage(res.data.Message);
         setOpenFailure(true);
       }
-
-      console.log(res);
     }).catch((_) => {
-      setFailureMessage(`Could not create request for ${username}`);
+      setFailureMessage(`Could not request ctrl.${username}`);
       setOpenFailure(true);
     });
     e.target.reset();
@@ -74,7 +76,7 @@ export default function CreateRequest() {
           severity="success"
           variant="filled"
         >
-         { `Requested to control ${username}` }
+         { `Requested to ctrl.${username}` }
         </Alert>
       </Snackbar>
 
