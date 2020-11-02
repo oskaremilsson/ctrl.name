@@ -105,10 +105,10 @@ export default function App(props) {
   }
 
   return (
-    <Box marginBottom={5}>
+    <Box marginBottom={7}>
 
       { component }
-      
+
       <Box
         position="fixed"
         bottom={0}

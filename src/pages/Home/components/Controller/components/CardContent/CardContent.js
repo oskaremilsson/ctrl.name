@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Box, CardContent, Typography } from '@material-ui/core';
+import { Box, CardContent, Typography, Link } from '@material-ui/core';
 
 import { OverflowDetector } from 'react-overflow';
 import Marquee from 'react-double-marquee';
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Controller(props) {
   const theme = useTheme();
   const classes = useStyles(theme);
-  const { player, textColor } = props;
+  const { player, textColor, currentMe } = props;
 
   const [scrollTitle, setScrollTitle] = useState(false);
   const [scrollArtist, setScrollArtist] = useState(false);
@@ -37,9 +37,9 @@ export default function Controller(props) {
   }
 
   const song = player && player.item;
-  const songTitle = song && song.name;
+  const songTitle = song && song.name || "No active device found";
 
-  const artists = song && song.artists && song.artists.map((artist)=> artist.name).join(', ');
+  const artists = song && song.artists && song.artists.map((artist)=> artist.name).join(', ') || "Play on Spotify to ctrl" ;
 
   if (player) {
     if (oldSong !== player.item.uri) {
@@ -67,12 +67,12 @@ export default function Controller(props) {
                   delay={0}
                   direction="left"
                 >
-                  { songTitle || "No active device found" }
+                  { songTitle }
                 </Marquee>
               </Typography>
             :
               <Typography variant="h6" style={{ color: textColor }}>
-                { songTitle || "No active device found" }
+                { songTitle }
               </Typography>
           }
         </OverflowDetector>
@@ -99,6 +99,7 @@ export default function Controller(props) {
       <Box
         display="flex"
         alignItems="center"
+        justifyContent="center"
         paddingLeft={1}
         paddingBottom={1}
       >
@@ -122,6 +123,12 @@ export default function Controller(props) {
           color={textColor}
         />
       </Box>
+
+      { currentMe &&
+        <Box padding={1} color={textColor}>
+          <Typography variant="caption">ctrl.{currentMe.id}</Typography>
+        </Box>
+      }
     </Box>
   );
 }

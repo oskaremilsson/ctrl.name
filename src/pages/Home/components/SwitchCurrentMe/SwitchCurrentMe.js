@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {
   Box,
   Dialog,
-  DialogTitle,
   List,
   ListItem,
   ListItemAvatar,
@@ -23,7 +22,7 @@ const getConsents = (setConsents) => {
 };
 
 export default function SwitchCurrentMe(props) {
-  const { history, me, access_token, setCurrentMe, setTokenFetched, openSwitch, setOpenSwitch } = props;
+  const { history, me, currentMe, access_token, setCurrentMe, setTokenFetched, openSwitch, setOpenSwitch } = props;
   const [consents, setConsents] = useState(undefined);
 
   const myAvatarAlt = (me && me.id) || 'current';
@@ -47,9 +46,12 @@ export default function SwitchCurrentMe(props) {
   return (
     <Box>
       <Dialog onClose={() => {setOpenSwitch(false)}} open={openSwitch}>
-        <DialogTitle>Controlling</DialogTitle>
         <List>
-          <ListItem button onClick={() => switched(me.id)} key={me.id}>
+          <ListItem
+            button
+            selected={me.id === currentMe.id}
+            onClick={() => switched(me.id)} key={me.id}
+          >
             <ListItemAvatar>
               <Avatar alt={myAvatarAlt} src={myAvatarImg} />
             </ListItemAvatar>
@@ -57,7 +59,11 @@ export default function SwitchCurrentMe(props) {
           </ListItem>
 
           { consents && consents.map((consent) => (
-            <ListItem button onClick={() => switched(consent)} key={consent}>
+            <ListItem
+              button
+              selected={consent === currentMe.id}
+              onClick={() => switched(consent)} key={consent}
+            >
               <ListItemAvatar>
                 <Avatar alt="consent" />
               </ListItemAvatar>
