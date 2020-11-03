@@ -7,7 +7,6 @@ import NavBar from 'shared/components/NavBar';
 import Home from 'pages/Home';
 import Profile from 'pages/Profile';
 import Playlists from 'pages/Playlists';
-import Playlist from 'pages/Playlist';
 
 import { Box } from '@material-ui/core';
 
@@ -75,11 +74,6 @@ export default function App(props) {
   switch (location && location.pathname) {
     case '/profile':
       component = <Profile
-          {...props}
-        />
-      break;
-    case '/playlist':
-      component = <Playlist
           {...props}
         />
       break;

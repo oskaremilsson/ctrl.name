@@ -21,6 +21,7 @@ export default function Bouncer(props) {
       spotify(my_tokens.access_token).get('me')
       .then(res => {
         setLoggedIn(true);
+        dispatch(actions.setMeAccessToken(my_tokens.access_token));
         dispatch(actions.setMe(res.data));
         dispatch(actions.setCurrentMe(res.data));
       }).catch(_ => {

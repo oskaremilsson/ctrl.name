@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectors } from 'shared/stores';
 
-import queryString from 'query-string';
 import {
   Box,
   Button,
@@ -21,35 +20,17 @@ const { getCurrentMeAccessToken } = selectors;
 
 export default function Playlist(props) {
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
+  const { playlist, setOpenPlaylist } = props;
 
-  const { history, location } = props;
-  const query = queryString.parse(location.search);
-  const id = query && query.id;
-
-  const [playlist, setPlaylist] = useState(undefined);
   const [tracks, setTracks] = useState([]);
   const [nextQuery, setNextQuery] = useState(undefined);
-  const [loadMore, setLoadMore] = useState(false);
+  const [loadMore, setLoadMore] = useState(true);
 
   useEffect(() => {
-    if (access_token && !playlist) {
-      spotify(access_token).get(`playlists/${id}`)
-      .then(res => {
-        setPlaylist(res.data);
-        setNextQuery(res.data.tracks.next);
-        setTracks(tracks => tracks.concat(res.data.tracks.items));
-      }).catch( _ => {
-        console.log('error');
-      });
-    }
-
-  }, [access_token, playlist, id]);
-
-  useEffect(() => {
-    if (access_token && nextQuery && loadMore) {
+    if (access_token && loadMore) {
       const query = nextQuery ? nextQuery.split('?')[1] : '';
       setLoadMore(false);
-      spotify(access_token).get(`playlists/${id}/tracks?${query}`)
+      spotify(access_token).get(`playlists/${playlist.id}/tracks?${query}`)
       .then(res => {
         setTracks(tracks => tracks.concat(res.data.items));
         setNextQuery(res.data.next);
@@ -57,11 +38,11 @@ export default function Playlist(props) {
         console.log('error');
       });
     }
-  }, [access_token, id, tracks, loadMore, nextQuery]);
+  }, [access_token, playlist, tracks, loadMore, nextQuery]);
 
   return (
-    <Box marginTop={5} marginBottom={5}>
-      <IconButton onClick={ () => history.push('/') }>
+    <Box padding={2} marginBottom={5}>
+      <IconButton onClick={ () => setOpenPlaylist(false) }>
         <CloseIcon />
       </IconButton>
 

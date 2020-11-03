@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Playlist(props) {
+export default function TrackListItem(props) {
   const classes = useStyles();
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
   const player = useSelector((state) => getSpotifyPlayer(state));
