@@ -1,14 +1,31 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectors } from 'shared/stores';
+
 import queryString from 'query-string';
-import { Box, Button, IconButton, Typography,
-  List, ListItem, ListItemAvatar, ListItemText,
-  ListItemSecondaryAction, Avatar, Divider, Snackbar } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  IconButton,
+  Typography,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  ListItemSecondaryAction,
+  Avatar,
+  Divider,
+  Snackbar
+} from '@material-ui/core';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { Close as CloseIcon, QueueMusic } from '@material-ui/icons';
 
 import Alert from '@material-ui/lab/Alert';
 
 import spotify from 'utils/spotify';
+
+const { getCurrentMeAccessToken } = selectors;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,8 +40,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Playlist(props) {
   const classes = useStyles();
+  const access_token = useSelector((state) => getCurrentMeAccessToken(state));
 
-  const { history, location, access_token } = props;
+  const { history, location } = props;
   const query = queryString.parse(location.search);
   const id = query && query.id;
 

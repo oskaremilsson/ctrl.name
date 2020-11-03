@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectors } from 'shared/stores';
+
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Button,
-        List, ListItem, ListItemAvatar, ListItemText,
-        Avatar, Typography, Divider, CircularProgress } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Avatar,
+  Typography,
+  Divider,
+  CircularProgress
+} from '@material-ui/core';
 
 import spotify from 'utils/spotify';
+
+const { getCurrentMeAccessToken } = selectors;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +32,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Playlists(props) {
-  const { history, access_token, setSyncer } = props;
+  const access_token = useSelector((state) => getCurrentMeAccessToken(state));
+
+  const { history, setSyncer } = props;
   const [loadMore, setLoadMore] = useState(true);
   const [playlists, setPlaylists] = useState([]);
   const [nextQuery, setNextQuery] = useState(undefined);

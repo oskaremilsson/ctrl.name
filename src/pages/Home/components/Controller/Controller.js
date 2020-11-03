@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Controller(props) {
+export default function Controller() {
   const theme = useTheme();
   const classes = useStyles(theme);
   const player = useSelector((state) => getSpotifyPlayer(state));

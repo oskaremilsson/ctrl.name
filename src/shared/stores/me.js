@@ -5,14 +5,14 @@ const setMe = (payload) => ({
   payload,
 });
 
-const setCurrentMe = (payload) => ({
-  type: 'SET_CURRENT_ME',
+const setMeAccessToken = (payload) => ({
+  type: 'SET_ME_ACCESS_TOKEN',
   payload,
 });
 
 export const actions = {
   setMe,
-  setCurrentMe,
+  setMeAccessToken,
 };
 
 function me(state = {}, action = {}) {
@@ -24,10 +24,10 @@ function me(state = {}, action = {}) {
   }
 }
 
-function currentMe(state = {}, action = {}) {
+function meAccessToken(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_CURRENT_ME':
-      return action.payload || false;
+    case 'SET_ME_ACCESS_TOKEN':
+      return action.payload || null;
     default:
       return state;
   }
@@ -35,12 +35,12 @@ function currentMe(state = {}, action = {}) {
 
 const reducers = combineReducers({
   me,
-  currentMe,
+  meAccessToken,
 });
 
 const initialState = {
   me: null,
-  currentMe: null
+  meAccessToken: null,
 };
 
 export const reducer = (state = initialState, action = {}) => {
@@ -49,5 +49,5 @@ export const reducer = (state = initialState, action = {}) => {
 
 export const bindSelectors = (slicer) => ({
   getMe: (state) => slicer(state).me || null,
-  getCurrentMe: (state) => slicer(state).currentMe || null,
+  getMeAccessToken: (state) => slicer(state).meAccessToken || null,
 });
