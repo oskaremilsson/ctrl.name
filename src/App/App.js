@@ -11,10 +11,8 @@ import Playlists from 'pages/Playlists';
 import { Box } from '@material-ui/core';
 
 import api from 'utils/api';
-import spotify from 'utils/spotify';
-import config from 'config/config.json';
 
-const { getCurrentMe, getCurrentMeAccessToken, getSpotifyPlayerSync } = selectors;
+const { getCurrentMe } = selectors;
 
 const getAccessToken = (dispatch, username, setTokenFetched) => {
   var data = new FormData();
@@ -28,47 +26,19 @@ const getAccessToken = (dispatch, username, setTokenFetched) => {
   });
 };
 
-const syncNowPlaying = (dispatch, access_token) => {
-  spotify(access_token).get('me/player').then(res => {
-    dispatch(actions.setSpotifyPlayerSync(false));
-    if (res.status === 200) {
-      dispatch(actions.setSpotifyPlayer(res.data));
-    } else {
-      dispatch(actions.setSpotifyPlayer(undefined));
-    }
-  });
-}
-
 export default function App(props) {
   const dispatch = useDispatch();
-  const playerSync = useSelector((state) => getSpotifyPlayerSync(state));
   const currentMe = useSelector((state) => getCurrentMe(state));
-  const currentMeAccessToken = useSelector((state) => getCurrentMeAccessToken(state));
 
   const { location } = props;
 
   const [tokenFetched, setTokenFetched] = useState(false);
-  const [syncTimer, setSyncTimer] = useState(undefined);
 
   useEffect(() => {
     if (!tokenFetched && currentMe) {
       getAccessToken(dispatch, currentMe.id, setTokenFetched);
     }
   }, [dispatch, currentMe, tokenFetched]);
-
-  useEffect(() => {
-    if (currentMeAccessToken && playerSync) {
-      syncNowPlaying(dispatch, currentMeAccessToken);
-    }
-
-    if (!syncTimer) {
-      setSyncTimer(
-        setInterval(() => {
-          dispatch(actions.setSpotifyPlayerSync(true));
-        }, config.SPOTIFY_PING_INTERVAL || 30000)
-      );
-    }
-  }, [dispatch, playerSync, currentMeAccessToken, syncTimer]);
 
   let component;
   switch (location && location.pathname) {

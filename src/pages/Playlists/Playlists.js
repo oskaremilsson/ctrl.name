@@ -40,7 +40,6 @@ export default function Playlists(props) {
     }
 
     return () => mounted = false;
-
   }, [access_token, playlists, setSyncer, nextQuery, loadMore]);
 
   return (

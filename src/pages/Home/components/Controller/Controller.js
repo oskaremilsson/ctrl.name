@@ -9,6 +9,7 @@ import invert from 'invert-color';
 import hexToRgba from 'hex-to-rgba';
 
 import CardContent from './components/CardContent';
+import SyncPlayer from './components/SyncPlayer';
 
 import coverart from 'assets/coverart.png';
 
@@ -69,6 +70,7 @@ export default function Controller() {
         />
       </Card>
 
+      <SyncPlayer />
     </Box>
   );
 }
