@@ -20,14 +20,7 @@ import { Add as AddIcon } from '@material-ui/icons';
 import api from 'utils/api';
 import spotify from 'utils/spotify';
 
-const { getMeAccessToken, getMe, getCurrentMe } = selectors;
-
-const getConsents = (setConsents) => {
-  api.post('getConsents')
-  .then(res => {
-    setConsents(res.data.Consents);
-  });
-};
+const { getMeAccessToken, getMe, getCurrentMe, getConsents } = selectors;
 
 export default function SwitchCurrentMe(props) {
   const dispatch = useDispatch();
@@ -36,8 +29,8 @@ export default function SwitchCurrentMe(props) {
   const currentMe = useSelector((state) => getCurrentMe(state));
   const me = useSelector((state) => getMe(state));
   const access_token = useSelector((state) => getMeAccessToken(state));
+  const consents = useSelector((state) => getConsents(state));
 
-  const [consents, setConsents] = useState(undefined);
   const [openFailure, setOpenFailure] = useState(undefined);
 
   const myAvatarAlt = (me && me.id) || 'current';
@@ -50,16 +43,19 @@ export default function SwitchCurrentMe(props) {
       setTokenFetched(false);
       setOpenSwitch(false);
     }).catch(_ => {
-      setConsents(undefined);
+      dispatch(actions.setConsents(undefined));
       setOpenFailure(username);
     });
   };
 
   useEffect(() => {
     if (!consents) {
-      getConsents(setConsents);
+      api.post('getConsents')
+      .then(res => {
+        dispatch(actions.setConsents(res.data.Consents));
+      });
     }
-  }, [consents]);
+  }, [dispatch, consents]);
 
   return (
     <Box>
