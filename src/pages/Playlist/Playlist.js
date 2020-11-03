@@ -9,37 +9,17 @@ import {
   IconButton,
   Typography,
   List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  ListItemSecondaryAction,
-  Avatar,
   Divider,
-  Snackbar
 } from '@material-ui/core';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Close as CloseIcon, QueueMusic } from '@material-ui/icons';
+import { Close as CloseIcon } from '@material-ui/icons';
 
-import Alert from '@material-ui/lab/Alert';
-
+import TrackListItem from 'shared/components/TrackListItem';
 import spotify from 'utils/spotify';
 
 const { getCurrentMeAccessToken } = selectors;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    maxWidth: '36ch',
-    backgroundColor: theme.palette.background.paper,
-  },
-  inline: {
-    display: 'inline',
-  },
-}));
-
 export default function Playlist(props) {
-  const classes = useStyles();
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
 
   const { history, location } = props;
@@ -50,16 +30,6 @@ export default function Playlist(props) {
   const [tracks, setTracks] = useState([]);
   const [nextQuery, setNextQuery] = useState(undefined);
   const [loadMore, setLoadMore] = useState(false);
-  const [openQueueSuccess, setOpenQueueSuccess] = useState(false);
-
-  const queueTrack = (uri) => {
-    spotify(access_token).post(`me/player/queue?uri=${uri}`)
-      .then(_ => {
-        setOpenQueueSuccess(true);
-      }).catch(_ => {
-        console.log('could not queue song');
-      });
-  };
 
   useEffect(() => {
     if (access_token && !playlist) {
@@ -104,39 +74,9 @@ export default function Playlist(props) {
       <List>
         {tracks && tracks.map((track, i) => (
           <Box key={track.track.uri + i}>
-            <ListItem alignItems="center">
-              <ListItemAvatar>
-                {
-                  track.track.album.images.length > 0 ?
-                    <Avatar alt={track.track.name} src={track.track.album.images[track.track.album.images.length - 1].url} />
-                  :
-                    <Avatar alt={track.track.name} />
-                }
-              </ListItemAvatar>
-              <ListItemText
-                primary={track.track.name}
-                secondary={
-                    <Typography
-                      variant="body2"
-                      className={classes.inline}
-                      color="textPrimary"
-                    >
-                      {track.track.artists.map((artist)=> artist.name).join(', ')}
-                    </Typography>
-                }
-              />
-              <ListItemSecondaryAction>
-                <IconButton
-                  onClick={() => queueTrack(track.track.uri)}
-                  edge="end"
-                  aria-label="queue"
-                >
-                  <QueueMusic />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
+            <TrackListItem track={track} />
             <Divider />
-            </Box>
+          </Box>
         ))}
       </List>
       {
@@ -150,24 +90,6 @@ export default function Playlist(props) {
           </Box>
         )
       }
-
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        open={openQueueSuccess}
-        autoHideDuration={6000}
-        onClose={() => {setOpenQueueSuccess(false)}}
-      >
-        <Alert
-          elevation={6}
-          severity="success"
-          variant="filled"
-        >
-          Successfully queued!
-        </Alert>
-      </Snackbar>
     </Box>
   );
 }
