@@ -28,18 +28,13 @@ export default function MyRequests() {
 
     api.post('removeRequest', data)
     .then(_ => {
-      dispatch(actions.setMyRequests(false));
+      dispatch(actions.setMyRequests(null));
     });
   }
 
   useEffect(() => {
-    if (!myRequests) {
-      api.post('getMyRequests')
-      .then(res => {
-        dispatch(actions.setMyRequests(res.data && res.data.Requests));
-      });
-    }
-  }, [myRequests, dispatch]);
+    console.log(myRequests);
+  }, [myRequests]);
 
 
   return (

@@ -55,6 +55,7 @@ export default function GiveConsent() {
         setOpenFailure(true);
       }
     }).catch((_) => {
+      dispatch(actions.setMyConsents(null));
       setFailureMessage(`Could not give consent to ${username}`);
       setOpenFailure(true);
     });

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectors, actions } from 'shared/stores';
 
@@ -14,10 +14,8 @@ import {
 } from '@material-ui/core';
 
 import Alert from '@material-ui/lab/Alert';
-
 import { Add as AddIcon } from '@material-ui/icons';
 
-import api from 'utils/api';
 import spotify from 'utils/spotify';
 
 const { getMeAccessToken, getMe, getCurrentMe, getConsents } = selectors;
@@ -43,19 +41,10 @@ export default function SwitchCurrentMe(props) {
       setTokenFetched(false);
       setOpenSwitch(false);
     }).catch(_ => {
-      dispatch(actions.setConsents(undefined));
+      dispatch(actions.setConsents(null));
       setOpenFailure(username);
     });
   };
-
-  useEffect(() => {
-    if (!consents) {
-      api.post('getConsents')
-      .then(res => {
-        dispatch(actions.setConsents(res.data.Consents));
-      });
-    }
-  }, [dispatch, consents]);
 
   return (
     <Box>

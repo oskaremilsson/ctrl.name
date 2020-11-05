@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectors, actions } from 'shared/stores';
 
@@ -41,17 +41,6 @@ export default function MyConsentList() {
       setOpenFailure(true);
     });
   };
-
-
-  useEffect(() => {
-    if (!consents) {
-      api.post('getConsents')
-      .then(res => {
-        dispatch(actions.setConsents(res.data && res.data.Consents));
-      });
-    }
-  }, [dispatch, consents]);
-
 
   return (
     <Box margin={2}>

@@ -45,16 +45,17 @@ export default function CreateRequest() {
 
     api.post('createRequest', data)
     .then(res => {
+      dispatch(actions.setMyRequests(null));
       if (res && res.data && res.data.Success) {
         setSuccessMessage(`Requested to ctrl.${username}`);
         setOpenSuccess(true);
-        dispatch(actions.setMyRequests(false));
       } else {
         setFailureMessage(`Could not request ctrl.${username}`);
         setFailureMessage(res.data.Message);
         setOpenFailure(true);
       }
     }).catch((_) => {
+      dispatch(actions.setMyRequests(null));
       setFailureMessage(`Could not request ctrl.${username}`);
       setOpenFailure(true);
     });

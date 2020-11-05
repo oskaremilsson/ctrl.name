@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectors, actions } from 'shared/stores';
 
@@ -42,17 +42,6 @@ export default function MyConsentList() {
     });
   };
 
-
-  useEffect(() => {
-    if (!consents) {
-      api.post('getMyConsents')
-      .then(res => {
-        dispatch(actions.setMyConsents(res.data && res.data.Consents));
-      });
-    }
-  }, [dispatch, consents]);
-
-
   return (
     <Box margin={2} >
       { consents && consents.length > 0 &&
@@ -84,7 +73,7 @@ export default function MyConsentList() {
           horizontal: 'center',
         }}
         open={openSuccess}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={() => {setOpenSuccess(false)}}
       >
         <Alert
@@ -102,7 +91,7 @@ export default function MyConsentList() {
           horizontal: 'center',
         }}
         open={openFailure}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={() => {setOpenSuccess(false)}}
       >
         <Alert

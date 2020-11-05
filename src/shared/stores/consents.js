@@ -21,24 +21,24 @@ const setMyRequests = (payload) => ({
 });
 
 export const actions = {
-  setMyConsents,
   setConsents,
+  setMyConsents,
   setRequests,
   setMyRequests,
 };
 
-function myConsents(state = {}, action = {}) {
+function consents(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_MY_CONSENTS':
+    case 'SET_CONSENTS':
       return action.payload || null;
     default:
       return state;
   }
 }
 
-function consents(state = {}, action = {}) {
+function myConsents(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_CONSENTS':
+    case 'SET_MY_CONSENTS':
       return action.payload || null;
     default:
       return state;
@@ -57,22 +57,22 @@ function requests(state = {}, action = {}) {
 function myRequests(state = {}, action = {}) {
   switch (action.type) {
     case 'SET_MY_REQUESTS':
-      return action.payload || false;
+      return action.payload || null;
     default:
       return state;
   }
 }
 
 const reducers = combineReducers({
-  myConsents,
   consents,
+  myConsents,
   requests,
   myRequests,
 });
 
 const initialState = {
-  myConsents: null,
   consents: null,
+  myConsents: null,
   requests: null,
   myRequests: null,
 };
@@ -82,8 +82,8 @@ export const reducer = (state = initialState, action = {}) => {
 };
 
 export const bindSelectors = (slicer) => ({
-  getMyConsents: (state) => slicer(state).myConsents || null,
   getConsents: (state) => slicer(state).consents || null,
+  getMyConsents: (state) => slicer(state).myConsents || null,
   getRequests: (state) => slicer(state).requests || null,
   getMyRequests: (state) => slicer(state).myRequests || null,
 });
