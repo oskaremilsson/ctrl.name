@@ -1,8 +1,9 @@
 import React, { useState }  from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, Container, Fab } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { selectors } from 'shared/stores';
 
-import { SupervisedUserCircle } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
+import { Box, Container, Fab, Avatar } from '@material-ui/core';
 
 import Controller from './components/Controller';
 import SwitchCurrentMe from './components/SwitchCurrentMe';
@@ -14,14 +15,22 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     margin: theme.spacing(2),
   },
-  fabIcon: {
+  avatar: {
     marginRight: theme.spacing(1),
+    width: theme.spacing(3),
+    height: theme.spacing(3),
   },
 }));
+
+const { getCurrentMe } = selectors;
 
 export default function Home(props) {
   const classes = useStyles();
   const [openSwitch, setOpenSwitch] = useState(false);
+  const currentMe = useSelector((state) => getCurrentMe(state));
+
+  const myAvatarAlt = (currentMe && currentMe.id) || 'ctrl.current';
+  const myAvatarImg = currentMe && currentMe.images && currentMe.images[0] && currentMe.images[0].url;
 
   return (
     <Box>
@@ -36,7 +45,7 @@ export default function Home(props) {
         color="secondary"
         onClick={() => { setOpenSwitch(true) }}
       >
-        <SupervisedUserCircle className={classes.fabIcon} />
+        <Avatar alt={myAvatarAlt} src={myAvatarImg} className={classes.avatar}/>
         Switch ctrl
       </Fab>
 

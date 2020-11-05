@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectors, actions } from 'shared/stores';
 
 import api from 'utils/api';
+import spotify from 'utils/spotify';
 
 const {
+  getMeAccessToken,
   getConsents,
   getMyConsents,
   getRequests,
@@ -13,19 +15,32 @@ const {
 
 export default function FetchConsents() {
   const dispatch = useDispatch();
+  const accessToken = useSelector((state) => getMeAccessToken(state));
   const consents = useSelector((state) => getConsents(state));
   const myConsents = useSelector((state) => getMyConsents(state));
   const requests = useSelector((state) => getRequests(state));
   const myRequests = useSelector((state) => getMyRequests(state));
 
   useEffect(() => {
-    if (!consents) {
+    if (!consents && accessToken) {
       api.post('getConsents')
       .then(res => {
-        dispatch(actions.setConsents(res.data && res.data.Consents));
+        let consentCalls = [];
+        let populated_consents = [];
+        res.data.Consents.forEach((consent) => {
+          consentCalls.push(spotify(accessToken).get(`users/${consent}`));
+        });
+
+        Promise.all(consentCalls).then((res) => {
+          res.forEach((r) => {
+            populated_consents.push(r.data);
+          });
+          dispatch(actions.setConsents(populated_consents));
+        });
+        
       });
     }
-  }, [dispatch, consents]);
+  }, [dispatch, consents, accessToken]);
 
   useEffect(() => {
     if (!myConsents) {

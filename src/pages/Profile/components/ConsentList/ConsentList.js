@@ -54,12 +54,12 @@ export default function MyConsentList() {
                 </Typography>
               </Box>
               { consents.map((consent) => (
-                <ListItem key={consent}>
-                  <IconButton aria-label="remove consent" onClick={() => {removeConsent(consent)}}>
+                <ListItem key={consent.id}>
+                  <IconButton aria-label="remove consent" onClick={() => {removeConsent(consent.id)}}>
                     <RemoveCircleOutline />
                   </IconButton>
 
-                    <ListItemText primary={consent}/>
+                    <ListItemText primary={consent.id}/>
                 </ListItem>
               ))}
             </List>

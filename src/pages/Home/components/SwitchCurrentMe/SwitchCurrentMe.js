@@ -65,13 +65,13 @@ export default function SwitchCurrentMe(props) {
             { consents && consents.map((consent) => (
               <ListItem
                 button
-                selected={consent === currentMe.id}
-                onClick={() => switched(consent)} key={consent}
+                selected={consent.id === currentMe.id}
+                onClick={() => switched(consent.id)} key={consent.id}
               >
                 <ListItemAvatar>
-                  <Avatar alt="consent" />
+                  <Avatar alt={consent.id} src={consent && consent.images && consent.images[0].url} />
                 </ListItemAvatar>
-                <ListItemText primary={consent} />
+                <ListItemText primary={consent.id} />
               </ListItem>
             ))}
 
@@ -93,7 +93,7 @@ export default function SwitchCurrentMe(props) {
           horizontal: 'center',
         }}
         open={Boolean(openFailure)}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={() => {setOpenFailure(false)}}
       >
         <Alert

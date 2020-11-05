@@ -37,6 +37,8 @@ export default function CreateRequest(props) {
             label="username"
             variant="outlined"
             onChange={onChange}
+            autoComplete="off"
+            autoCapitalize="none"
           />
 
           <Box marginBottom={2}></Box>
