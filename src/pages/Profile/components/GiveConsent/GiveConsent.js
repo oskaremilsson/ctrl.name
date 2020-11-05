@@ -1,22 +1,45 @@
 import React, { useState} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { actions } from 'shared/stores';
 
 import api from 'utils/api';
-import { Box, TextField, Button, Snackbar } from '@material-ui/core';
+import {
+  Box,
+  Fab
+} from '@material-ui/core';
 
-import Alert from '@material-ui/lab/Alert';
+import { AddCircle } from '@material-ui/icons';
+
+import UsernameDialog from 'shared/components/UsernameDialog';
+
+const useStyles = makeStyles((theme) => ({
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(8),
+    right: 0,
+    margin: theme.spacing(2),
+  },
+  fabIcon: {
+    marginRight: theme.spacing(1),
+  },
+}));
 
 export default function GiveConsent() {
+  const classes = useStyles();
   const dispatch = useDispatch();
-  const [openSuccess, setOpenSuccess] = useState(false);
   const [username, setUsername] = useState(undefined);
 
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openSuccess, setOpenSuccess] = useState(false);
   const [openFailure, setOpenFailure] = useState(false);
   const [failureMessage, setFailureMessage] = useState(undefined);
+  const [successMessage, setSuccessMessage] = useState(undefined);
 
   const uploadConsent = (e) => {
     e.preventDefault();
+    setOpenDialog(false);
+
     var data = new FormData();
     data.append("allow_user", username);
   
@@ -25,7 +48,9 @@ export default function GiveConsent() {
       dispatch(actions.setMyConsents(null));
       if (res && res.data && res.data.Success) {
         setOpenSuccess(true);
+        setSuccessMessage(`Consent given to ${username}`);
       } else {
+        setFailureMessage(`Could not give consent to ${username}`);
         setFailureMessage(res.data.Message);
         setOpenFailure(true);
       }
@@ -33,65 +58,34 @@ export default function GiveConsent() {
       setFailureMessage(`Could not give consent to ${username}`);
       setOpenFailure(true);
     });
-    e.target.reset();
   };
 
   return (
-    <form
-      onSubmit={uploadConsent}
-      noValidate
-      autoComplete="off"
-    >
-      <Box
-        display="flex"
-        alignItems="center"
+    <Box>
+      <Fab
+        aria-label="give-consent"
+        variant="extended"
+        color="primary"
+        onClick={() => {setOpenDialog(true)}}
       >
-        <TextField
-          id="consent-username"
-          label="username"
-          variant="outlined"
-          onChange={(e) => {setUsername(e.target.value)}}
-        />
-        <Button type="submit" color="primary">
-          Give consent
-        </Button>
-      </Box>
+        <AddCircle className={classes.fabIcon} />
+        Consent
+      </Fab>
 
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        open={openSuccess}
-        autoHideDuration={6000}
-        onClose={() => {setOpenSuccess(false)}}
-      >
-        <Alert
-          elevation={6}
-          severity="success"
-          variant="filled"
-        >
-         { `You're now allowing ${username} control` }
-        </Alert>
-      </Snackbar>
-
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        open={openFailure}
-        autoHideDuration={6000}
-        onClose={() => {setOpenFailure(false)}}
-      >
-        <Alert
-          elevation={6}
-          severity="info"
-          variant="filled"
-        >
-          { failureMessage }
-        </Alert>
-      </Snackbar>
-    </form>
+      <UsernameDialog
+        open={openDialog}
+        setOpen={setOpenDialog}
+        submit={uploadConsent}
+        onChange={(e) => {setUsername(e.target.value)}}
+        buttonText="Give consent"
+        buttonColor="primary"
+        failureMessage={failureMessage}
+        successMessage={successMessage}
+        openSuccess={openSuccess}
+        setOpenSuccess={setOpenSuccess}
+        openFailure={openFailure}
+        setOpenFailure={setOpenFailure}
+      />
+    </Box>
   );
 }

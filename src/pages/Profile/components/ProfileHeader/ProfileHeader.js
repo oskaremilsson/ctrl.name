@@ -29,7 +29,9 @@ export default function ProfileHeader() {
       alignItems="center"
       marginTop={2}
     >
+      <Box marginBottom={2}>
       <Avatar alt={username} src={myAvatarImg} className={classes.avatar} />
+      </Box>
       <Typography variant="h5" color="primary">
         { name }
       </Typography>

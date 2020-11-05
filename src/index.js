@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider, CssBaseline } from '@material-ui/core';
-import { pink, orange } from '@material-ui/core/colors';
+import { pink } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
   palette: {

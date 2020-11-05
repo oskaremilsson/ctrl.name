@@ -11,15 +11,23 @@ import ConsentList from './components/ConsentList';
 export default function Profile() {
   return (
     <Container maxWidth="md">
-      <Box padding={2} >
+      <Box>
         <Box marginBottom={5}>
           <ProfileHeader />
         </Box>
 
-        <Box marginBottom={5}>
-          <GiveConsent />
+        <Box
+          display="flex"
+          justifyContent="center"
+          marginBottom={5}
+        >
+          <Box margin={1}>
+            <GiveConsent />
+          </Box>
 
-          <CreateRequest />
+          <Box margin={1}>
+            <CreateRequest />
+          </Box>
         </Box>
 
         <MyRequests />

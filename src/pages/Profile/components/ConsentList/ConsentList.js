@@ -61,7 +61,7 @@ export default function ConsentList() {
             <List>
               <Box paddingLeft={2}>
                 <Typography variant="h5">
-                  Given consent to ctrl
+                  Consent{ consents && consents.length > 1 && 's' } given to ctrl.me
                 </Typography>
               </Box>
               { consents.map((consent) => (

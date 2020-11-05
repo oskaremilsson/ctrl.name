@@ -12,7 +12,7 @@ import {
   IconButton
 } from '@material-ui/core';
 
-import { RemoveCircleOutline } from '@material-ui/icons';
+import { CancelScheduleSend } from '@material-ui/icons';
 
 import api from 'utils/api';
 
@@ -50,13 +50,13 @@ export default function MyRequests() {
             <List>
               <Box paddingLeft={2}>
                 <Typography variant="h5">
-                  My sent requests
+                  My sent request{ myRequests&& myRequests.length > 1 && 's' }
                 </Typography>
               </Box>
               { myRequests.map((request) => (
                 <ListItem key={request}>
                   <IconButton aria-label="remove request" onClick={() => removeRequest(request)}>
-                    <RemoveCircleOutline />
+                    <CancelScheduleSend />
                   </IconButton>
 
                   <ListItemText primary={request}/>

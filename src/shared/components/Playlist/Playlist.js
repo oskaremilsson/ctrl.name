@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectors } from 'shared/stores';
 
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
+  AppBar,
+  Toolbar,
   Button,
   IconButton,
   Typography,
@@ -18,7 +21,20 @@ import spotify from 'utils/spotify';
 
 const { getCurrentMeAccessToken } = selectors;
 
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    position: 'fixed',
+  },
+  title: {
+    flex: 1,
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+}));
+
 export default function Playlist(props) {
+  const classes = useStyles();
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
   const { playlist, setOpenPlaylist } = props;
 
@@ -41,36 +57,43 @@ export default function Playlist(props) {
   }, [access_token, playlist, tracks, loadMore, nextQuery]);
 
   return (
-    <Box padding={2} marginBottom={5}>
-      <IconButton onClick={ () => setOpenPlaylist(false) }>
-        <CloseIcon />
-      </IconButton>
+    <Box>
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <IconButton edge="start" color="inherit" onClick={() => setOpenPlaylist(false)} aria-label="close">
+            <CloseIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            { playlist && playlist.name }
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box
+        padding={2}
+        marginBottom={5}
+        marginTop={7}
+      >
 
-      <Box marginBottom={1}>
-        <Typography component="h5" variant="h5">
-          { playlist && playlist.name }
-        </Typography>
+        <List>
+          {tracks && tracks.map((track, i) => (
+            <Box key={track.track && track.track.uri + i}>
+              <TrackListItem track={track.track} />
+              <Divider />
+            </Box>
+          ))}
+        </List>
+        {
+          nextQuery && (
+            <Box
+              display="flex"
+              justifyContent="center"
+              padding={3}
+            >
+              <Button onClick={() => setLoadMore(true)}>Load more</Button>
+            </Box>
+          )
+        }
       </Box>
-
-      <List>
-        {tracks && tracks.map((track, i) => (
-          <Box key={track.track.uri + i}>
-            <TrackListItem track={track} />
-            <Divider />
-          </Box>
-        ))}
-      </List>
-      {
-        nextQuery && (
-          <Box
-            display="flex"
-            justifyContent="center"
-            padding={3}
-          >
-            <Button onClick={() => setLoadMore(true)}>Load more</Button>
-          </Box>
-        )
-      }
     </Box>
   );
 }

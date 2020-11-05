@@ -29,6 +29,11 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '36ch',
     backgroundColor: theme.palette.background.paper,
   },
+  title: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
   inline: {
     display: 'inline',
   },
@@ -52,32 +57,50 @@ export default function TrackListItem(props) {
       });
   };
 
+  if (!track) return (<></>);
+
   return (
     <Box>
       <ListItem alignItems="center">
         <ListItemAvatar>
           {
-            track.track.album.images.length > 0 ?
-              <Avatar alt={track.track.name} src={track.track.album.images[track.track.album.images.length - 1].url} />
+            track.album.images.length > 0 ?
+              <Avatar
+                variant="rounded"
+                alt={track.name}
+                src={track.album.images[track.album.images.length - 1].url}
+              />
             :
-              <Avatar alt={track.track.name} />
+              <Avatar
+                variant="rounded"
+                alt={track.name}
+              />
           }
         </ListItemAvatar>
         <ListItemText
-          primary={track.track.name}
+          disableTypography={true}
+          primary={
+            <Typography
+              variant="body1"
+              className={classes.title}
+              color="textPrimary"
+            >
+              { track.name }
+            </Typography>
+          }
           secondary={
               <Typography
                 variant="body2"
                 className={classes.inline}
                 color="textPrimary"
               >
-                {track.track.artists.map((artist)=> artist.name).join(', ')}
+                {track.artists.map((artist)=> artist.name).join(', ')}
               </Typography>
           }
         />
         <ListItemSecondaryAction>
           <IconButton
-            onClick={() => queueTrack(track.track.uri)}
+            onClick={() => queueTrack(track.uri)}
             edge="end"
             aria-label="queue"
             disabled={!player}

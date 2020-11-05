@@ -54,7 +54,12 @@ export default function Playlists(props) {
       </List>
 
       { loadMore &&
-        <CircularProgress />
+        <Box
+          display="flex"
+          justifyContent="center"
+        >
+          <CircularProgress />
+        </Box>
       }
 
       {

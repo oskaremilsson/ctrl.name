@@ -1,23 +1,44 @@
 import React, { useState} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { actions } from 'shared/stores';
 
-import { Box, TextField, Button, Snackbar } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-
 import api from 'utils/api';
+import {
+  Box,
+  Fab
+} from '@material-ui/core';
+
+import { Send } from '@material-ui/icons';
+
+import UsernameDialog from 'shared/components/UsernameDialog';
+
+const useStyles = makeStyles((theme) => ({
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(8),
+    right: 0,
+    margin: theme.spacing(2),
+  },
+  fabIcon: {
+    marginRight: theme.spacing(1),
+  },
+}));
 
 export default function CreateRequest() {
+  const classes = useStyles();
   const dispatch = useDispatch();
-  const [openSuccess, setOpenSuccess] = useState(false);
   const [username, setUsername] = useState(undefined);
 
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openSuccess, setOpenSuccess] = useState(false);
   const [openFailure, setOpenFailure] = useState(false);
   const [failureMessage, setFailureMessage] = useState(undefined);
+  const [successMessage, setSuccessMessage] = useState(undefined);
 
   const createRequest = (e) => {
     e.preventDefault();
-    setUsername(username);
+    setOpenDialog(false);
 
     var data = new FormData();
     data.append("requesting", username);
@@ -25,9 +46,11 @@ export default function CreateRequest() {
     api.post('createRequest', data)
     .then(res => {
       if (res && res.data && res.data.Success) {
+        setSuccessMessage(`Requested to ctrl.${username}`);
         setOpenSuccess(true);
         dispatch(actions.setMyRequests(false));
       } else {
+        setFailureMessage(`Could not request ctrl.${username}`);
         setFailureMessage(res.data.Message);
         setOpenFailure(true);
       }
@@ -35,68 +58,34 @@ export default function CreateRequest() {
       setFailureMessage(`Could not request ctrl.${username}`);
       setOpenFailure(true);
     });
-    e.target.reset();
   };
-
 
   return (
     <Box>
-      <form
-        onSubmit={createRequest}
-        noValidate
-        autoComplete="off"
+      <Fab
+        aria-label="give-consent"
+        variant="extended"
+        color="secondary"
+        onClick={() => {setOpenDialog(true)}}
       >
-        <Box
-          display="flex"
-          alignItems="center"
-        >
-          <TextField
-            id="request-username"
-            label="username"
-            variant="outlined"
-            onChange={(e) => {setUsername(e.target.value)}}
-          />
-          <Button type="submit" color="primary">
-            Request
-          </Button>
-        </Box>
-      </form>
+        <Send className={classes.fabIcon} />
+        Request
+      </Fab>
 
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        open={openSuccess}
-        autoHideDuration={6000}
-        onClose={() => {setOpenSuccess(false)}}
-      >
-        <Alert
-          elevation={6}
-          severity="success"
-          variant="filled"
-        >
-         { `Requested to ctrl.${username}` }
-        </Alert>
-      </Snackbar>
-
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        open={openFailure}
-        autoHideDuration={6000}
-        onClose={() => {setOpenFailure(false)}}
-      >
-        <Alert
-          elevation={6}
-          severity="info"
-          variant="filled"
-        >
-          { failureMessage }
-        </Alert>
-      </Snackbar>
+      <UsernameDialog
+        open={openDialog}
+        setOpen={setOpenDialog}
+        submit={createRequest}
+        onChange={(e) => {setUsername(e.target.value)}}
+        buttonText="Send request"
+        buttonColor="secondary"
+        failureMessage={failureMessage}
+        successMessage={successMessage}
+        openSuccess={openSuccess}
+        setOpenSuccess={setOpenSuccess}
+        openFailure={openFailure}
+        setOpenFailure={setOpenFailure}
+      />
     </Box>
   );
 }

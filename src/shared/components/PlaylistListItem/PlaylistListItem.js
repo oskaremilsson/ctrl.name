@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '36ch',
     backgroundColor: theme.palette.background.paper,
   },
+  title: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
   inline: {
     display: 'inline',
   },
@@ -40,20 +45,36 @@ export default function PlaylistListItem(props) {
         <ListItemAvatar>
           {
             playlist.images.length > 0 ?
-              <Avatar alt={playlist.name} src={playlist.images[playlist.images.length - 1].url} />
+              <Avatar
+                variant="rounded"
+                alt={playlist.name}
+                src={playlist.images[playlist.images.length - 1].url}
+              />
             :
-              <Avatar alt={playlist.name} />
+              <Avatar
+                variant="rounded"
+                alt={playlist.name}
+              />
           }
         </ListItemAvatar>
         <ListItemText
-          primary={playlist.name}
+          disableTypography={true}
+          primary={
+            <Typography
+              variant="body1"
+              className={classes.title}
+              color="textPrimary"
+            >
+              { playlist.name }
+            </Typography>
+          }
           secondary={
               <Typography
                 variant="body2"
                 className={classes.inline}
                 color="textPrimary"
               >
-                {playlist.tracks.total} items
+                {playlist.tracks.total} tracks
               </Typography>
           }
         />
