@@ -32,11 +32,6 @@ export default function MyRequests() {
     });
   }
 
-  useEffect(() => {
-    console.log(myRequests);
-  }, [myRequests]);
-
-
   return (
     <Box margin={2}>
       { myRequests && myRequests.length > 0 &&
