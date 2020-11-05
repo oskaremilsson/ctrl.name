@@ -17,27 +17,27 @@ import { RemoveCircleOutline } from '@material-ui/icons';
 
 import Alert from '@material-ui/lab/Alert';
 
-const { getConsents } = selectors;
+const { getMyConsents } = selectors;
 
 export default function MyConsentList() {
   const dispatch = useDispatch();
-  const consents = useSelector((state) => getConsents(state));
+  const consents = useSelector((state) => getMyConsents(state));
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFailure, setOpenFailure] = useState(false);
   const [username, setUsername] = useState(undefined);
 
-  const removeConsent = (username) => {
+  const revokeConsent = (username) => {
     setUsername(username);
 
     var data = new FormData();
-    data.append("remove_user", username);
+    data.append("disallow_user", username);
 
-    api.post('removeConsent', data)
+    api.post('revokeConsent', data)
     .then(_ => {
       setOpenSuccess(true);
-      dispatch(actions.setConsents(null));
+      dispatch(actions.setMyConsents(null));
     }).catch(_ => {
-      dispatch(actions.setConsents(null));
+      dispatch(actions.setMyConsents(null));
       setOpenFailure(true);
     });
   };
@@ -45,9 +45,9 @@ export default function MyConsentList() {
 
   useEffect(() => {
     if (!consents) {
-      api.post('getConsents')
+      api.post('getMyConsents')
       .then(res => {
-        dispatch(actions.setConsents(res.data && res.data.Consents));
+        dispatch(actions.setMyConsents(res.data && res.data.Consents));
       });
     }
   }, [dispatch, consents]);
@@ -61,12 +61,12 @@ export default function MyConsentList() {
             <List>
               <Box paddingLeft={2}>
                 <Typography variant="h5">
-                  Consent{ consents && consents.length > 1 && 's' } to ctrl.name
+                  Consent{ consents && consents.length > 1 && 's' } given to ctrl.me
                 </Typography>
               </Box>
               { consents.map((consent) => (
                 <ListItem key={consent}>
-                  <IconButton aria-label="remove consent" onClick={() => {removeConsent(consent)}}>
+                  <IconButton aria-label="revoke access" onClick={() => {revokeConsent(consent)}}>
                     <RemoveCircleOutline />
                   </IconButton>
 
@@ -84,7 +84,7 @@ export default function MyConsentList() {
           horizontal: 'center',
         }}
         open={openSuccess}
-        autoHideDuration={3000}
+        autoHideDuration={6000}
         onClose={() => {setOpenSuccess(false)}}
       >
         <Alert
@@ -92,7 +92,7 @@ export default function MyConsentList() {
           severity="success"
           variant="filled"
         >
-         { `Removed consent for ctrl.${username}` }
+         { `Revoked access for ${username}` }
         </Alert>
       </Snackbar>
 
@@ -102,7 +102,7 @@ export default function MyConsentList() {
           horizontal: 'center',
         }}
         open={openFailure}
-        autoHideDuration={3000}
+        autoHideDuration={6000}
         onClose={() => {setOpenSuccess(false)}}
       >
         <Alert
@@ -110,7 +110,7 @@ export default function MyConsentList() {
           severity="error"
           variant="filled"
         >
-         { `Could not remove consent, try again!` }
+         { `Could not revoke access, try again!` }
         </Alert>
       </Snackbar>
     </Box>

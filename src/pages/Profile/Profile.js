@@ -6,12 +6,13 @@ import GiveConsent from './components/GiveConsent';
 import CreateRequest from './components/CreateRequest';
 import ConsentRequests from './components/ConsentRequests';
 import MyRequests from './components/MyRequests';
+import MyConsentList from './components/MyConsentList';
 import ConsentList from './components/ConsentList';
 
 export default function Profile() {
   return (
     <Container maxWidth="md">
-      <Box>
+      <Box paddingBottom={3} paddingTop={3}>
         <Box marginBottom={5}>
           <ProfileHeader />
         </Box>
@@ -30,9 +31,11 @@ export default function Profile() {
           </Box>
         </Box>
 
+        <ConsentRequests />
+
         <MyRequests />
 
-        <ConsentRequests />
+        <MyConsentList />
 
         <ConsentList />
 
