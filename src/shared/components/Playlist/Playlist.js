@@ -24,6 +24,7 @@ const { getCurrentMeAccessToken } = selectors;
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'fixed',
+    background: theme.palette.background.default,
   },
   title: {
     flex: 1,
