@@ -2,7 +2,7 @@
   "name": "ctrl.name",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://oskaremilsson.github.io/ctrl.name",
+  "homepage": "https://ctrl.name",
   "dependencies": {
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
