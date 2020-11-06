@@ -39,6 +39,7 @@ jobs:
         REACT_APP_SPOTIFY_SCOPE: ${{ secrets.REACT_APP_SPOTIFY_SCOPE }}
         REACT_APP_SPOTIFY_PING_INTERVAL: ${{ secrets.REACT_APP_SPOTIFY_PING_INTERVAL }}
         github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
+        PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
         user_name: 'github-actions[bot]'
         user_email: 'github-actions[bot]@users.noreply.github.com'
         repository: ${{ github.repository }}
