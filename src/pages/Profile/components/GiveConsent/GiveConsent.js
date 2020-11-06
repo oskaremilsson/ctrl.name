@@ -77,7 +77,7 @@ export default function GiveConsent() {
         open={openDialog}
         setOpen={setOpenDialog}
         submit={uploadConsent}
-        onChange={(e) => {setUsername(e.target.value)}}
+        onChange={(e) => {setUsername(e.target.value.toLowerCase())}}
         buttonText="Give consent"
         buttonColor="primary"
         failureMessage={failureMessage}

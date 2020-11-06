@@ -77,7 +77,7 @@ export default function CreateRequest() {
         open={openDialog}
         setOpen={setOpenDialog}
         submit={createRequest}
-        onChange={(e) => {setUsername(e.target.value)}}
+        onChange={(e) => {setUsername(e.target.value.toLowerCase())}}
         buttonText="Send request"
         buttonColor="secondary"
         failureMessage={failureMessage}

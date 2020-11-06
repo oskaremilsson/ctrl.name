@@ -4,22 +4,39 @@ import { selectors, actions } from 'shared/stores';
 
 import {
   Box,
-  Card,
-  Typography,
   List,
   ListItem,
+  ListItemAvatar,
+  Avatar,
   ListItemText,
-  IconButton
+  ListItemSecondaryAction,
+  Card,
+  IconButton,
+  Typography
 } from '@material-ui/core';
 
+import { makeStyles } from '@material-ui/core/styles';
 import { Check as CheckIcon, RemoveCircleOutline } from '@material-ui/icons';
 
 import api from 'utils/api';
 
 const { getRequests } = selectors;
 
+const useStyles = makeStyles((theme) => ({
+  title: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+  inline: {
+    display: 'inline',
+  },
+}));
+
 export default function ConsentRequests() {
   const dispatch = useDispatch();
+  const classes = useStyles();
+
   const requests = useSelector((state) => getRequests(state));
 
   const allowRequest = (username) => {
@@ -70,17 +87,47 @@ export default function ConsentRequests() {
                   </Typography>
                 </Box>
                 { requests.map((request) => (
-                  <ListItem key={request}>
+                  <ListItem key={request.id}>
 
-                    <IconButton aria-label="allow" color="primary" onClick={() => {allowRequest(request)}}>
+                    <IconButton aria-label="allow" color="primary" onClick={() => {allowRequest(request.id)}}>
                       <CheckIcon />
                     </IconButton>
 
-                    <IconButton aria-label="reject" onClick={() => {rejectRequest(request)}}>
-                      <RemoveCircleOutline />
-                    </IconButton>
+                    <ListItemAvatar>
+                      <Avatar alt={request.id} src={request && request.images && request.images[0].url} />
+                    </ListItemAvatar>
 
-                    <ListItemText primary={request}/>
+                    <ListItemText
+                      disableTypography={true}
+                      primary={
+                        <Typography
+                          variant="body1"
+                          className={classes.title}
+                          color="textPrimary"
+                        >
+                          { request.display_name }
+                        </Typography>
+                      }
+                      secondary={
+                          <Typography
+                            variant="body2"
+                            className={classes.inline}
+                            color="textSecondary"
+                          >
+                            ctrl.{request.id}
+                          </Typography>
+                      }
+                    />
+
+                    <ListItemSecondaryAction>
+                      <IconButton
+                        onClick={() => rejectRequest(request.id)}
+                        edge="end"
+                        aria-label="reject request"
+                      >
+                        <RemoveCircleOutline />
+                      </IconButton>
+                    </ListItemSecondaryAction>
                   </ListItem>
                 ))}
               </List>

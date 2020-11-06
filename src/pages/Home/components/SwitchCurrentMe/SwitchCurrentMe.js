@@ -9,10 +9,12 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  Typography,
   Avatar,
   Snackbar
 } from '@material-ui/core';
 
+import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import { Add as AddIcon } from '@material-ui/icons';
 
@@ -20,8 +22,20 @@ import spotify from 'utils/spotify';
 
 const { getMeAccessToken, getMe, getCurrentMe, getConsents } = selectors;
 
+const useStyles = makeStyles((theme) => ({
+  title: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+  inline: {
+    display: 'inline',
+  },
+}));
+
 export default function SwitchCurrentMe(props) {
   const dispatch = useDispatch();
+  const classes = useStyles();
   const { history, setTokenFetched, openSwitch, setOpenSwitch } = props;
 
   const currentMe = useSelector((state) => getCurrentMe(state));
@@ -59,7 +73,27 @@ export default function SwitchCurrentMe(props) {
               <ListItemAvatar>
                 <Avatar alt={myAvatarAlt} src={myAvatarImg} />
               </ListItemAvatar>
-              <ListItemText primary={me.id} />
+              <ListItemText
+                disableTypography={true}
+                primary={
+                  <Typography
+                    variant="body1"
+                    className={classes.title}
+                    color="textPrimary"
+                  >
+                    { me.display_name || me.id }
+                  </Typography>
+                }
+                secondary={
+                    <Typography
+                      variant="body2"
+                      className={classes.inline}
+                      color="textSecondary"
+                    >
+                      ctrl.{me.id}
+                    </Typography>
+                }
+              />
             </ListItem>
 
             { consents && consents.map((consent) => (
@@ -71,7 +105,27 @@ export default function SwitchCurrentMe(props) {
                 <ListItemAvatar>
                   <Avatar alt={consent.id} src={consent && consent.images && consent.images[0].url} />
                 </ListItemAvatar>
-                <ListItemText primary={consent.id} />
+                <ListItemText
+                  disableTypography={true}
+                  primary={
+                    <Typography
+                      variant="body1"
+                      className={classes.title}
+                      color="textPrimary"
+                    >
+                      { consent.display_name || consent.id }
+                    </Typography>
+                  }
+                  secondary={
+                      <Typography
+                        variant="body2"
+                        className={classes.inline}
+                        color="textSecondary"
+                      >
+                        ctrl.{consent.id}
+                      </Typography>
+                  }
+                />
               </ListItem>
             ))}
 

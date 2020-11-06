@@ -36,38 +36,78 @@ export default function FetchConsents() {
             populated_consents.push(r.data);
           });
           dispatch(actions.setConsents(populated_consents));
+        }).catch((_) => {
+          dispatch(actions.setConsents([]));
         });
-        
       });
     }
   }, [dispatch, consents, accessToken]);
 
   useEffect(() => {
-    if (!myConsents) {
+    if (!myConsents && accessToken) {
       api.post('getMyConsents')
       .then(res => {
-        dispatch(actions.setMyConsents(res.data && res.data.Consents));
+        let consentCalls = [];
+        let populated_consents = [];
+        res.data.Consents.forEach((consent) => {
+          consentCalls.push(spotify(accessToken).get(`users/${consent}`));
+        });
+
+        Promise.all(consentCalls).then((res) => {
+          res.forEach((r) => {
+            populated_consents.push(r.data);
+          });
+          dispatch(actions.setMyConsents(populated_consents));
+        }).catch((_) => {
+          dispatch(actions.setMyConsents([]));
+        });
       });
     }
-  }, [dispatch, myConsents]);
+  }, [dispatch, myConsents, accessToken]);
 
   useEffect(() => {
-    if (!requests) {
+    if (!requests && accessToken) {
       api.post('getRequests')
       .then(res => {
-        dispatch(actions.setRequests(res.data && res.data.Requests));
+        let requestCalls = [];
+        let populated_requests = [];
+        res.data.Requests.forEach((request) => {
+          requestCalls.push(spotify(accessToken).get(`users/${request}`));
+        });
+
+        Promise.all(requestCalls).then((res) => {
+          res.forEach((r) => {
+            populated_requests.push(r.data);
+          });
+          dispatch(actions.setRequests(populated_requests));
+        }).catch((_) => {
+          dispatch(actions.setRequests([]));
+        });
       });
     }
-  }, [dispatch, requests]);
+  }, [dispatch, requests, accessToken]);
 
   useEffect(() => {
-    if (!myRequests) {
+    if (!myRequests && accessToken) {
       api.post('getMyRequests')
       .then(res => {
-        dispatch(actions.setMyRequests(res.data && res.data.Requests));
+        let requestCalls = [];
+        let populated_requests = [];
+        res.data.Requests.forEach((request) => {
+          requestCalls.push(spotify(accessToken).get(`users/${request}`));
+        });
+
+        Promise.all(requestCalls).then((res) => {
+          res.forEach((r) => {
+            populated_requests.push(r.data);
+          });
+          dispatch(actions.setMyRequests(populated_requests));
+        }).catch((_) => {
+          dispatch(actions.setMyRequests([]));
+        });
       });
     }
-  }, [dispatch, myRequests]);
+  }, [dispatch, myRequests, accessToken]);
 
   return (
     <></>

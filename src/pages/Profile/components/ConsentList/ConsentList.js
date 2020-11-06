@@ -7,20 +7,37 @@ import {
   Box,
   List,
   ListItem,
+  ListItemAvatar,
+  Avatar,
   ListItemText,
+  ListItemSecondaryAction,
   Card,
   Snackbar,
   IconButton,
   Typography
 } from '@material-ui/core';
-import { RemoveCircleOutline } from '@material-ui/icons';
 
+import { RemoveCircleOutline } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 
 const { getConsents } = selectors;
 
+const useStyles = makeStyles((theme) => ({
+  title: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+  inline: {
+    display: 'inline',
+  },
+}));
+
 export default function MyConsentList() {
   const dispatch = useDispatch();
+  const classes = useStyles();
+
   const consents = useSelector((state) => getConsents(state));
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFailure, setOpenFailure] = useState(false);
@@ -55,11 +72,41 @@ export default function MyConsentList() {
               </Box>
               { consents.map((consent) => (
                 <ListItem key={consent.id}>
-                  <IconButton aria-label="remove consent" onClick={() => {removeConsent(consent.id)}}>
-                    <RemoveCircleOutline />
-                  </IconButton>
+                  <ListItemAvatar>
+                    <Avatar alt={consent.id} src={consent && consent.images && consent.images[0].url} />
+                  </ListItemAvatar>
 
-                    <ListItemText primary={consent.id}/>
+                  <ListItemText
+                    disableTypography={true}
+                    primary={
+                      <Typography
+                        variant="body1"
+                        className={classes.title}
+                        color="textPrimary"
+                      >
+                        { consent.display_name }
+                      </Typography>
+                    }
+                    secondary={
+                        <Typography
+                          variant="body2"
+                          className={classes.inline}
+                          color="textSecondary"
+                        >
+                          ctrl.{consent.id}
+                        </Typography>
+                    }
+                  />
+
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      onClick={() => removeConsent(consent.id)}
+                      edge="end"
+                      aria-label="remove consent"
+                    >
+                      <RemoveCircleOutline />
+                    </IconButton>
+                  </ListItemSecondaryAction>
                 </ListItem>
               ))}
             </List>
