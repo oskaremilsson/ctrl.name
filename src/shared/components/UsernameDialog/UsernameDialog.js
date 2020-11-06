@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Box,
   TextField,
+  InputAdornment,
   Button,
   Dialog,
   Snackbar
@@ -37,8 +38,13 @@ export default function CreateRequest(props) {
             label="username"
             variant="outlined"
             onChange={onChange}
+            onKeyPress={(e) => { if (e.key === "Enter") { submit(e) } }}
             autoComplete="off"
             autoCapitalize="none"
+            autoFocus
+            InputProps={{
+              startAdornment: <InputAdornment position="start">ctrl.</InputAdornment>,
+            }}
           />
 
           <Box marginBottom={2}></Box>
