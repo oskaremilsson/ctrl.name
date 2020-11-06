@@ -1,18 +1,14 @@
 import axios from 'axios';
-import config from 'config/config.json';
 
 const base = () => {
   const req = axios.create({
-    baseURL: config.API_BASE_URL
+    baseURL: process.env.REACT_APP_API_BASE_URL
   });
 
   return req;
 }
 
 const post = (url, data = new FormData()) => {
-  /*if (!data) {
-    data = new FormData();
-  }*/
   const api = base();
 
   if(!data.has('code')) {

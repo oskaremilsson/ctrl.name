@@ -5,11 +5,10 @@ import { selectors, actions } from 'shared/stores';
 import { Box } from '@material-ui/core';
 
 import spotify from 'utils/spotify';
-import config from 'config/config.json';
 
 const { getCurrentMeAccessToken, getSpotifyPlayerSync } = selectors;
 
-export default function SyncPlayer(props) {
+export default function SyncPlayer() {
   const dispatch = useDispatch();
   const playerSync = useSelector((state) => getSpotifyPlayerSync(state));
   const currentMeAccessToken = useSelector((state) => getCurrentMeAccessToken(state));
@@ -32,7 +31,7 @@ export default function SyncPlayer(props) {
       setSyncTimer(
         setInterval(() => {
           dispatch(actions.setSpotifyPlayerSync(true));
-        }, config.SPOTIFY_PING_INTERVAL || 30000)
+        }, process.env.REACT_APP_SPOTIFY_PING_INTERVAL || 30000)
       );
     }
   }, [dispatch, playerSync, currentMeAccessToken, syncTimer]);

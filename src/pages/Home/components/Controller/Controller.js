@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectors } from 'shared/stores';
 
@@ -33,12 +33,18 @@ export default function Controller() {
   const classes = useStyles(theme);
   const player = useSelector((state) => getSpotifyPlayer(state));
 
-  const [color, setColor] = useState('#535b5c');
+  const [color, setColor] = useState("#535b5c");
   const textColor = invert(color, true);
 
   const album = player && player.item && player.item.album;
   const albumName = album && album.name;
   const albumCover = album && album.images && album.images[0] && album.images[0].url;
+
+  useEffect(() => {
+    if(!player) {
+      setColor("#535b5c")
+    }
+  }, [player]);
 
   return (
     <Box

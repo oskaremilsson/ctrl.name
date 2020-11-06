@@ -1,9 +1,8 @@
 import axios from 'axios';
-import config from 'config/config.json';
 
 const spotify = (access_token) => {
   const req = axios.create({
-    baseURL: config.SPOTIFY_BASE_URL
+    baseURL: process.env.REACT_APP_SPOTIFY_BASE_URL
   });
 
   req.interceptors.request.use(function (config) {
