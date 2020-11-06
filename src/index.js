@@ -28,7 +28,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route exact={true} path="/auth:code?" component={Auth} />
           <Route path="/" component={Bouncer} />
