@@ -2,40 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectors } from 'shared/stores';
 
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
-  AppBar,
-  Toolbar,
-  Button,
-  IconButton,
-  Typography,
   List,
   Divider,
+  CircularProgress
 } from '@material-ui/core';
 
-import { Close as CloseIcon } from '@material-ui/icons';
-
+import FullscreenDialog from 'shared/components/FullscreenDialog';
 import TrackListItem from 'shared/components/TrackListItem';
 import spotify from 'utils/spotify';
 
 const { getCurrentMeAccessToken } = selectors;
 
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'fixed',
-    background: theme.palette.background.default,
-  },
-  title: {
-    flex: 1,
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-  },
-}));
-
 export default function Playlist(props) {
-  const classes = useStyles();
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
   const { playlist, setOpenPlaylist } = props;
 
@@ -51,6 +31,9 @@ export default function Playlist(props) {
       .then(res => {
         setTracks(tracks => tracks.concat(res.data.items));
         setNextQuery(res.data.next);
+        if (res.data.next) {
+          setLoadMore(true);
+        }
       }).catch( _ => {
         console.log('error');
       });
@@ -59,22 +42,10 @@ export default function Playlist(props) {
 
   return (
     <Box>
-      <AppBar className={classes.appBar}>
-        <Toolbar>
-          <IconButton edge="start" color="inherit" onClick={() => setOpenPlaylist(false)} aria-label="close">
-            <CloseIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            { playlist && playlist.name }
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Box
-        padding={2}
-        marginBottom={5}
-        marginTop={7}
+      <FullscreenDialog
+        setOpen={setOpenPlaylist}
+        title={playlist && playlist.name}
       >
-
         <List>
           {tracks && tracks.map((track, i) => (
             <Box key={track.track && track.track.uri + i}>
@@ -83,18 +54,16 @@ export default function Playlist(props) {
             </Box>
           ))}
         </List>
-        {
-          nextQuery && (
-            <Box
-              display="flex"
-              justifyContent="center"
-              padding={3}
-            >
-              <Button onClick={() => setLoadMore(true)}>Load more</Button>
-            </Box>
-          )
-        }
-      </Box>
+
+        { loadMore &&
+          <Box
+            display="flex"
+            justifyContent="center"
+          >
+            <CircularProgress />
+          </Box>
+      }
+      </FullscreenDialog>
     </Box>
   );
 }
