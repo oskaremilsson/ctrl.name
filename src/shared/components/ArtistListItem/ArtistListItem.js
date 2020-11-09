@@ -12,7 +12,7 @@ import {
   Dialog
 } from '@material-ui/core';
 
-import Playlist from 'shared/components/Playlist';
+import Artist from 'shared/components/Artist';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,26 +34,26 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function PlaylistListItem(props) {
-  const { playlist } = props;
+export default function ArtistListItem(props) {
+  const { artist } = props;
   const classes = useStyles();
-  const [openPlaylist, setOpenPlaylist] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Box>
-      <ListItem button alignItems="center" onClick={()=> { setOpenPlaylist(true) }}>
+      <ListItem button alignItems="center" onClick={()=> { setOpen(true) }}>
         <ListItemAvatar>
           {
-            playlist.images.length > 0 ?
+            artist.images.length > 0 ?
               <Avatar
                 variant="rounded"
-                alt={playlist.name}
-                src={playlist.images[playlist.images.length - 1].url}
+                alt={artist.name}
+                src={artist.images[artist.images.length - 1].url}
               />
             :
               <Avatar
                 variant="rounded"
-                alt={playlist.name}
+                alt={artist.name}
               />
           }
         </ListItemAvatar>
@@ -65,7 +65,7 @@ export default function PlaylistListItem(props) {
               className={classes.title}
               color="textPrimary"
             >
-              { playlist.name }
+              { artist.name }
             </Typography>
           }
           secondary={
@@ -74,13 +74,13 @@ export default function PlaylistListItem(props) {
                 className={classes.inline}
                 color="textSecondary"
               >
-                {playlist.tracks.total} tracks
+                { artist && artist.followers && artist.followers.total && `${artist.followers.total} followers` }
               </Typography>
           }
         />
       </ListItem>
-      <Dialog fullScreen open={openPlaylist} onClose={() => { setOpenPlaylist(false) }} TransitionComponent={Transition}>
-        <Playlist playlist={playlist} setOpenPlaylist={setOpenPlaylist} />
+      <Dialog fullScreen open={open} onClose={() => { setOpen(false) }} TransitionComponent={Transition}>
+        <Artist artist={artist} setOpen={setOpen} />
       </Dialog>
     </Box>
   );

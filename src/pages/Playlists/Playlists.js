@@ -15,10 +15,9 @@ import spotify from 'utils/spotify';
 
 const { getCurrentMeAccessToken } = selectors;
 
-export default function Playlists(props) {
+export default function Playlists() {
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
 
-  const { setSyncer } = props;
   const [loadMore, setLoadMore] = useState(true);
   const [playlists, setPlaylists] = useState([]);
   const [nextQuery, setNextQuery] = useState(undefined);
@@ -40,7 +39,7 @@ export default function Playlists(props) {
     }
 
     return () => mounted = false;
-  }, [access_token, playlists, setSyncer, nextQuery, loadMore]);
+  }, [access_token, playlists, nextQuery, loadMore]);
 
   return (
     <Box padding={2}>

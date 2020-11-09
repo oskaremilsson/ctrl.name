@@ -7,6 +7,7 @@ import NavBar from 'shared/components/NavBar';
 import Home from 'pages/Home';
 import Profile from 'pages/Profile';
 import Playlists from 'pages/Playlists';
+import Search from 'pages/Search';
 
 import FetchConsents from './components/FetchConsents';
 
@@ -45,14 +46,13 @@ export default function App(props) {
   let component;
   switch (location && location.pathname) {
     case '/profile':
-      component = <Profile
-          {...props}
-        />
+      component = <Profile />
       break;
     case '/playlists':
-      component = <Playlists
-          {...props}
-        />
+      component = <Playlists />
+      break;
+    case '/search':
+      component = <Search />
       break;
     default:
       component =
