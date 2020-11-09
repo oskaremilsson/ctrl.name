@@ -7,6 +7,7 @@ import {
   Toolbar,
   IconButton,
   Typography,
+  Avatar
 } from '@material-ui/core';
 
 import { Close as CloseIcon } from '@material-ui/icons';
@@ -22,11 +23,15 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
   },
+  image: {
+    width: theme.spacing(20),
+    height: theme.spacing(20),
+  },
 }));
 
 export default function FullscreenDialog(props) {
   const classes = useStyles();
-  const { children, title, setOpen } = props;
+  const { children, setOpen, title, image, headerContent } = props;
 
   return (
     <Box>
@@ -44,6 +49,26 @@ export default function FullscreenDialog(props) {
         padding={2}
         marginBottom={5}
       >
+        <Box
+          display="flex"
+          justifyContent="center"
+        >
+          { image &&
+            <Avatar
+              className={classes.image}
+              alt={title}
+              src={image}
+              variant="rounded"
+            />
+          }
+
+          { headerContent &&
+            <Typography>
+              { headerContent }
+            </Typography>
+          }
+
+        </Box>
         { children }
       </Box>
     </Box>

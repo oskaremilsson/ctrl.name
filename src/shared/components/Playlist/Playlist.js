@@ -6,6 +6,7 @@ import {
   Box,
   List,
   Divider,
+  Button,
   CircularProgress
 } from '@material-ui/core';
 
@@ -24,20 +25,22 @@ export default function Playlist(props) {
   const [loadMore, setLoadMore] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
     if (access_token && loadMore) {
-      const query = nextQuery ? nextQuery.split('?')[1] : '';
-      setLoadMore(false);
-      spotify(access_token).get(`playlists/${playlist.id}/tracks?${query}`)
+      const query = nextQuery ? nextQuery.split('?')[1] : 'limit=50';
+      spotify(access_token).get(`playlists/${playlist.id}/tracks?limit=50&${query}`)
       .then(res => {
-        setTracks(tracks => tracks.concat(res.data.items));
-        setNextQuery(res.data.next);
-        if (res.data.next) {
-          setLoadMore(true);
+        if(mounted){
+          setLoadMore(false);
+          setTracks(tracks => tracks.concat(res.data.items));
+          setNextQuery(res.data.next);
         }
       }).catch( _ => {
         console.log('error');
       });
     }
+
+    return () => mounted = false;
   }, [access_token, playlist, tracks, loadMore, nextQuery]);
 
   return (
@@ -45,6 +48,7 @@ export default function Playlist(props) {
       <FullscreenDialog
         setOpen={setOpenPlaylist}
         title={playlist && playlist.name}
+        image={playlist && playlist.images && playlist.images.length > 0 && playlist.images[0].url}
       >
         <List>
           {tracks && tracks.map((track, i) => (
@@ -62,7 +66,18 @@ export default function Playlist(props) {
           >
             <CircularProgress />
           </Box>
-      }
+        }
+
+        {
+          nextQuery &&
+          <Box
+            display="flex"
+            justifyContent="center"
+            padding={3}
+          >
+            <Button onClick={() => setLoadMore(true)}>Load more</Button>
+          </Box>
+        }
       </FullscreenDialog>
     </Box>
   );
