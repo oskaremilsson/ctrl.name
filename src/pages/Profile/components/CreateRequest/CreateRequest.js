@@ -77,6 +77,7 @@ export default function CreateRequest() {
         open={openDialog}
         setOpen={setOpenDialog}
         submit={createRequest}
+        inputColor="secondary"
         onChange={(e) => {setUsername(e.target.value.toLowerCase())}}
         buttonText="Send request"
         buttonColor="secondary"

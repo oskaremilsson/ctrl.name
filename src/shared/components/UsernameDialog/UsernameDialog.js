@@ -23,7 +23,8 @@ export default function CreateRequest(props) {
     openSuccess,
     setOpenSuccess,
     openFailure,
-    setOpenFailure
+    setOpenFailure,
+    inputColor
   } = props;
 
   return (
@@ -45,6 +46,7 @@ export default function CreateRequest(props) {
             InputProps={{
               startAdornment: <InputAdornment position="start">ctrl.</InputAdornment>,
             }}
+            color={inputColor || 'primary'}
           />
 
           <Box marginBottom={2}></Box>
