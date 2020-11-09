@@ -7,12 +7,11 @@ import {
   ListItemAvatar,
   ListItemText,
   Avatar,
-  Typography,
-  Slide,
-  Dialog
+  Typography
 } from '@material-ui/core';
 
 import Playlist from 'shared/components/Playlist';
+import FullscreenDialog from 'shared/components/FullscreenDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,18 +29,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 export default function PlaylistListItem(props) {
   const { playlist } = props;
   const classes = useStyles();
-  const [openPlaylist, setOpenPlaylist] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Box>
-      <ListItem button alignItems="center" onClick={()=> { setOpenPlaylist(true) }}>
+      <ListItem button alignItems="center" onClick={()=> { setOpen(true) }}>
         <ListItemAvatar>
           {
             playlist.images.length > 0 ?
@@ -79,9 +74,14 @@ export default function PlaylistListItem(props) {
           }
         />
       </ListItem>
-      <Dialog fullScreen open={openPlaylist} onClose={() => { setOpenPlaylist(false) }} TransitionComponent={Transition}>
-        <Playlist playlist={playlist} setOpenPlaylist={setOpenPlaylist} />
-      </Dialog>
+      <FullscreenDialog
+        open={open}
+        setOpen={setOpen}
+        title={playlist && playlist.name}
+        image={playlist && playlist.images && playlist.images.length > 0 && playlist.images[0].url}
+      >
+        <Playlist playlist={playlist} />
+      </FullscreenDialog>
     </Box>
   );
 }

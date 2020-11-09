@@ -10,15 +10,13 @@ import {
   CircularProgress
 } from '@material-ui/core';
 
-import FullscreenDialog from 'shared/components/FullscreenDialog';
 import TrackListItem from 'shared/components/TrackListItem';
 import spotify from 'utils/spotify';
 
 const { getCurrentMeAccessToken } = selectors;
 
-export default function Playlist(props) {
+export default function Playlist({ playlist }) {
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
-  const { playlist, setOpenPlaylist } = props;
 
   const [tracks, setTracks] = useState([]);
   const [nextQuery, setNextQuery] = useState(undefined);
@@ -45,40 +43,34 @@ export default function Playlist(props) {
 
   return (
     <Box>
-      <FullscreenDialog
-        setOpen={setOpenPlaylist}
-        title={playlist && playlist.name}
-        image={playlist && playlist.images && playlist.images.length > 0 && playlist.images[0].url}
-      >
-        <List>
-          {tracks && tracks.map((track, i) => (
-            <Box key={track.track && track.track.uri + i}>
-              <TrackListItem track={track.track} />
-              <Divider />
-            </Box>
-          ))}
-        </List>
-
-        { loadMore &&
-          <Box
-            display="flex"
-            justifyContent="center"
-          >
-            <CircularProgress />
+      <List>
+        {tracks && tracks.map((track, i) => (
+          <Box key={track.track && track.track.uri + i}>
+            <TrackListItem track={track.track} />
+            <Divider />
           </Box>
-        }
+        ))}
+      </List>
 
-        {
-          nextQuery &&
-          <Box
-            display="flex"
-            justifyContent="center"
-            padding={3}
-          >
-            <Button onClick={() => setLoadMore(true)}>Load more</Button>
-          </Box>
-        }
-      </FullscreenDialog>
+      { loadMore &&
+        <Box
+          display="flex"
+          justifyContent="center"
+        >
+          <CircularProgress />
+        </Box>
+      }
+
+      {
+        nextQuery &&
+        <Box
+          display="flex"
+          justifyContent="center"
+          padding={3}
+        >
+          <Button onClick={() => setLoadMore(true)}>Load more</Button>
+        </Box>
+      }
     </Box>
   );
 }

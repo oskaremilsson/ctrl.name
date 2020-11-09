@@ -7,12 +7,11 @@ import {
   ListItemAvatar,
   ListItemText,
   Avatar,
-  Typography,
-  Slide,
-  Dialog
+  Typography
 } from '@material-ui/core';
 
 import Artist from 'shared/components/Artist';
+import FullscreenDialog from 'shared/components/FullscreenDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,10 +28,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline',
   },
 }));
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 export default function ArtistListItem(props) {
   const { artist } = props;
@@ -79,9 +74,14 @@ export default function ArtistListItem(props) {
           }
         />
       </ListItem>
-      <Dialog fullScreen open={open} onClose={() => { setOpen(false) }} TransitionComponent={Transition}>
-        <Artist artist={artist} setOpen={setOpen} />
-      </Dialog>
+      <FullscreenDialog
+        open={open}
+        setOpen={setOpen}
+        title={artist && artist.name}
+        image={artist && artist.images && artist.images.length > 0 && artist.images[0].url}
+      >
+        <Artist artist={artist} />
+      </FullscreenDialog>
     </Box>
   );
 }

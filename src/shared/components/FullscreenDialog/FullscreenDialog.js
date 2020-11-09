@@ -3,6 +3,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
+  Dialog,
+  Slide,
   AppBar,
   Toolbar,
   IconButton,
@@ -29,12 +31,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 export default function FullscreenDialog(props) {
   const classes = useStyles();
-  const { children, setOpen, title, image, headerContent } = props;
+  const { children, open, setOpen, title, image, headerContent } = props;
 
   return (
-    <Box>
+    <Dialog fullScreen open={open} onClose={() => { setOpen(false) }} TransitionComponent={Transition}>
       <AppBar className={classes.appBar}>
         <Toolbar>
           <IconButton edge="start" color="inherit" onClick={() => setOpen(false)} aria-label="close">
@@ -71,6 +77,6 @@ export default function FullscreenDialog(props) {
         </Box>
         { children }
       </Box>
-    </Box>
+    </Dialog>
   );
 }
