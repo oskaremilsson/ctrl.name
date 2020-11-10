@@ -8,12 +8,11 @@ import { IconButton } from '@material-ui/core';
 
 const { getCurrentMeAccessToken, getSpotifyPlayer } = selectors;
 
-export default function SkipButton(props) {
+export default function SkipButton({ action, color }) {
   const dispatch = useDispatch();
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
   const player = useSelector((state) => getSpotifyPlayer(state));
 
-  const { action, color } = props;
   const [execute, setExecute] = useState(false);
 
   useEffect(() => {

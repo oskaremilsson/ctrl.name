@@ -10,6 +10,7 @@ import Marquee from 'react-double-marquee';
 
 import PlayButton from './components/PlayButton';
 import SkipButton from './components/SkipButton';
+import Seeker from './components/Seeker';
 
 const { getCurrentMe } = selectors;
 
@@ -102,6 +103,8 @@ export default function Controller(props) {
         </OverflowDetector>
       </CardContent>
 
+      <Seeker color={textColor} />
+
       <Box
         display="flex"
         alignItems="center"
@@ -110,22 +113,14 @@ export default function Controller(props) {
         paddingBottom={1}
       >
         <SkipButton
-          {...props}
-          player={player}
           action={"previous"}
-          icon={"skip_previous"}
           color={textColor}
         />
         <PlayButton
-          {...props}
-          player={player}
           color={textColor}
         />
         <SkipButton
-          {...props}
-          player={player}
           action={"next"}
-          icon={"skip_next"}
           color={textColor}
         />
       </Box>

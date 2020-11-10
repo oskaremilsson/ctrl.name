@@ -8,12 +8,11 @@ import { Box, IconButton } from '@material-ui/core';
 
 const { getCurrentMeAccessToken, getSpotifyPlayer } = selectors;
 
-export default function PlayButton(props) {
+export default function PlayButton({ color }) {
   const dispatch = useDispatch();
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
   const player = useSelector((state) => getSpotifyPlayer(state));
 
-  const { color } = props;
   const isPlaying = player && player.is_playing;
   const [action, setAction] = useState(false);
 
