@@ -1,22 +1,109 @@
-import React from 'react';
-/* import { useSelector } from 'react-redux';
-import { selectors } from 'shared/stores'; */
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectors } from 'shared/stores';
 
 import {
   Box,
+  List,
+  ListSubheader,
+  Divider
 } from '@material-ui/core';
 
-// import TrackListItem from 'shared/components/TrackListItem';
-// import spotify from 'utils/spotify';
+import TrackListItem from 'shared/components/TrackListItem';
+import AlbumListItem from 'shared/components/AlbumListItem';
+import spotify from 'utils/spotify';
 
-// const { getCurrentMeAccessToken } = selectors;
+const { getCurrentMeAccessToken } = selectors;
 
 export default function Artist({ artist }) {
-  // const access_token = useSelector((state) => getCurrentMeAccessToken(state));
+  const access_token = useSelector((state) => getCurrentMeAccessToken(state));
+  const [tracks, setTracks] = useState(undefined);
+  const [albums, setAlbums] = useState(undefined);
+  const [singles, setSingles] = useState(undefined);
+
+  useEffect(() => {
+    let mounted = true;
+    if (access_token && !tracks) {
+      spotify(access_token).get(`artists/${artist.id}/top-tracks?country=from_token`)
+      .then(res => {
+        if (mounted) {
+          setTracks(res.data.tracks);
+        }
+      }).catch(_ => {
+        console.log('error', _);
+      });
+    }
+
+    return () => mounted = false;
+  }, [access_token, artist, tracks]);
+
+  useEffect(() => {
+    let mounted = true;
+    if (access_token && !albums) {
+      spotify(access_token).get(`artists/${artist.id}/albums?country=from_token&include_groups=album`)
+      .then(res => {
+        if (mounted) {
+          setAlbums(res.data.items);
+        }
+      }).catch(_ => {
+        console.log('error', _);
+      });
+    }
+
+    return () => mounted = false;
+  }, [access_token, artist, albums]);
+
+  useEffect(() => {
+    let mounted = true;
+    if (access_token && !singles) {
+      spotify(access_token).get(`artists/${artist.id}/albums?country=from_token&include_groups=single`)
+      .then(res => {
+        if (mounted) {
+          setSingles(res.data.items);
+        }
+      }).catch(_ => {
+        console.log('error', _);
+      });
+    }
+
+    return () => mounted = false;
+  }, [access_token, artist, singles]);
 
   return (
     <Box>
-      
+      <List>
+        { tracks && <ListSubheader>Top Tracks</ListSubheader> }
+        { tracks && tracks.map((track, i) => (
+          <Box key={track && track.uri + i}>
+            <TrackListItem track={track} />
+            <Divider />
+          </Box>
+        ))}
+
+        { albums && <ListSubheader>Albums</ListSubheader> }
+        { albums && albums.map((album, i) => (
+          <Box key={album && album.uri + i}>
+            <AlbumListItem
+              album={album}
+              subTitle={album.release_date}
+              subTitleColor="textSecondary"
+          />
+            <Divider />
+          </Box>
+        ))}
+
+        { singles && <ListSubheader>Singles & EPs</ListSubheader> }
+        { singles && singles.map((single, i) => (
+          <Box key={single && single.uri + i}>
+            <AlbumListItem
+              album={single}
+              subTitle={single.release_date}
+              subTitleColor="textSecondary"
+            />
+            <Divider />
+          </Box>
+        ))}
+      </List>
     </Box>
   );
 }

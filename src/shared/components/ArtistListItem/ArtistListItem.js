@@ -29,8 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ArtistListItem(props) {
-  const { artist } = props;
+export default function ArtistListItem({ artist }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -41,13 +40,13 @@ export default function ArtistListItem(props) {
           {
             artist.images.length > 0 ?
               <Avatar
-                variant="rounded"
+                variant="circle"
                 alt={artist.name}
                 src={artist.images[artist.images.length - 1].url}
               />
             :
               <Avatar
-                variant="rounded"
+                variant="circle"
                 alt={artist.name}
               />
           }
@@ -79,6 +78,7 @@ export default function ArtistListItem(props) {
         setOpen={setOpen}
         title={artist && artist.name}
         image={artist && artist.images && artist.images.length > 0 && artist.images[0].url}
+        avatarVariant={"circle"}
       >
         <Artist artist={artist} />
       </FullscreenDialog>
