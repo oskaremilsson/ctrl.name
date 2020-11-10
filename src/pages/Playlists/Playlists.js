@@ -104,28 +104,34 @@ export default function Playlists() {
 
   return (
     <Box padding={2}>
-      <ToggleButtonGroup
-        value={selectedPlaylists}
-        exclusive
-        onChange={(_, value) => {
-          if (value !== null) {
-            setSelectedPlaylists(value);
-            setPlaylists([]);
-            setAccessToken(undefined);
-            setNextQuery(undefined);
-          }
-        }}
-        aria-label="playlist selector"
+      <Box
+        display="flex"
+        justifyContent="center"
       >
-        <ToggleButton value="me" aria-label="my playlists">
-          <Avatar alt={meAvatarAlt} src={meAvatarImg} />
-        </ToggleButton>
-        { currentMe && me && currentMe.id !== me.id &&
-          <ToggleButton value="currentMe" aria-label="currentme playlists">
-            <Avatar alt={currentMeAvatarAlt} src={currentMeAvatarImg} />
+        <ToggleButtonGroup
+          value={selectedPlaylists}
+          exclusive
+          onChange={(_, value) => {
+            if (value !== null) {
+              setSelectedPlaylists(value);
+              setPlaylists([]);
+              setAccessToken(undefined);
+              setNextQuery(undefined);
+            }
+          }}
+          aria-label="playlist selector"
+        >
+          <ToggleButton value="me" aria-label="my playlists">
+            <Avatar alt={meAvatarAlt} src={meAvatarImg} />
           </ToggleButton>
-        }
-      </ToggleButtonGroup>
+          { currentMe && me && currentMe.id !== me.id &&
+            <ToggleButton value="currentMe" aria-label="currentme playlists">
+              <Avatar alt={currentMeAvatarAlt} src={currentMeAvatarImg} />
+            </ToggleButton>
+          }
+        </ToggleButtonGroup>
+      </Box>
+
       <List>
         {playlists && playlists.map((playlist, i) => (
           <Box key={playlist.id + i}>
