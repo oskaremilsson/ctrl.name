@@ -15,6 +15,7 @@ import {
 import TrackListItem from 'shared/components/TrackListItem';
 import PlaylistListItem from 'shared/components/PlaylistListItem';
 import ArtistListItem from 'shared/components/ArtistListItem';
+import AlbumListItem from 'shared/components/AlbumListItem';
 
 import spotify from 'utils/spotify';
 
@@ -88,6 +89,16 @@ export default function Search() {
         { artists.map((artist, i) => (
           <Box key={artist.uri + i}>
             <ArtistListItem artist={artist} />
+            <Divider />
+          </Box>
+        ))}
+
+        { albums.length > 0 &&
+          <ListSubheader>Albums</ListSubheader>
+        }
+        { albums.map((album, i) => (
+          <Box key={album.uri + i}>
+            <AlbumListItem album={album} />
             <Divider />
           </Box>
         ))}
