@@ -37,7 +37,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function FullscreenDialog(props) {
   const classes = useStyles();
-  const { children, open, setOpen, title, image, headerContent } = props;
+  const { children, open, setOpen, title, image, headerContent, avatarVariant} = props;
 
   return (
     <Dialog fullScreen open={open} onClose={() => { setOpen(false) }} TransitionComponent={Transition}>
@@ -53,7 +53,6 @@ export default function FullscreenDialog(props) {
       </AppBar>
       <Box
         padding={2}
-        marginBottom={5}
       >
         <Box
           display="flex"
@@ -64,7 +63,7 @@ export default function FullscreenDialog(props) {
               className={classes.image}
               alt={title}
               src={image}
-              variant="rounded"
+              variant={avatarVariant || "rounded"}
             />
           }
 
