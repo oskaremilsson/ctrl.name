@@ -9,12 +9,6 @@ import Controller from './components/Controller';
 import SwitchCurrentMe from './components/SwitchCurrentMe';
 
 const useStyles = makeStyles((theme) => ({
-  fab: {
-    position: 'fixed',
-    bottom: theme.spacing(8),
-    right: 0,
-    margin: theme.spacing(2),
-  },
   avatar: {
     marginRight: theme.spacing(1),
     width: theme.spacing(3),
@@ -34,20 +28,25 @@ export default function Home(props) {
 
   return (
     <Box>
+      <Box
+        display="flex"
+        flexDirection="row-reverse"
+        padding={4}
+      >
+        <Fab
+          aria-label="switch"
+          variant="extended"
+          color="secondary"
+          onClick={() => { setOpenSwitch(true) }}
+        >
+          <Avatar alt={myAvatarAlt} src={myAvatarImg} className={classes.avatar}/>
+          Switch ctrl
+        </Fab>
+      </Box>
+
       <Container maxWidth="xs">
         <Controller />
       </Container>
-
-      <Fab
-        className={classes.fab}
-        aria-label="switch"
-        variant="extended"
-        color="secondary"
-        onClick={() => { setOpenSwitch(true) }}
-      >
-        <Avatar alt={myAvatarAlt} src={myAvatarImg} className={classes.avatar}/>
-        Switch ctrl
-      </Fab>
 
       <SwitchCurrentMe
         openSwitch={openSwitch}
