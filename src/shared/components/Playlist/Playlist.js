@@ -25,8 +25,8 @@ export default function Playlist({ playlist }) {
   useEffect(() => {
     let mounted = true;
     if (access_token && loadMore) {
-      const query = nextQuery ? nextQuery.split('?')[1] : 'limit=50';
-      spotify(access_token).get(`playlists/${playlist.id}/tracks?limit=50&${query}`)
+      const query = nextQuery ? nextQuery.split('?')[1] : '';
+      spotify(access_token).get(`playlists/${playlist.id}/tracks?${query}`)
       .then(res => {
         if(mounted){
           setLoadMore(false);
