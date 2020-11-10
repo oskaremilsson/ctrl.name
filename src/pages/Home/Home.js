@@ -7,6 +7,7 @@ import { Box, Container, Fab, Avatar } from '@material-ui/core';
 
 import Controller from './components/Controller';
 import SwitchCurrentMe from './components/SwitchCurrentMe';
+import TopTracks from './components/TopTracks';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -47,6 +48,8 @@ export default function Home(props) {
       <Container maxWidth="xs">
         <Controller />
       </Container>
+
+      <TopTracks />
 
       <SwitchCurrentMe
         openSwitch={openSwitch}
