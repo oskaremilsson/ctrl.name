@@ -42,8 +42,8 @@ export default function Playlists() {
   const meAvatarAlt = (me && me.id) || 'me';
   const meAvatarImg = me && me.images && me.images[0] && me.images[0].url;
 
-  const currentMeAvatarAlt = (me && me.id) || 'current';
-  const currentMeAvatarImg = me && me.images && me.images[0] && me.images[0].url;
+  const currentMeAvatarAlt = (currentMe && currentMe.id) || 'current';
+  const currentMeAvatarImg = currentMe && currentMe.images && currentMe.images[0] && currentMe.images[0].url;
 
   useEffect(() => {
     if (meAccessToken && currentMeAccessToken && storedPlaylists && currentMe && me && selectedPlaylists && !accessToken) {
@@ -120,9 +120,11 @@ export default function Playlists() {
         <ToggleButton value="me" aria-label="my playlists">
           <Avatar alt={meAvatarAlt} src={meAvatarImg} />
         </ToggleButton>
-        <ToggleButton value="currentMe" aria-label="currentme playlists">
-          <Avatar alt={currentMeAvatarAlt} src={currentMeAvatarImg} />
-        </ToggleButton>
+        { currentMe && me && currentMe.id !== me.id &&
+          <ToggleButton value="currentMe" aria-label="currentme playlists">
+            <Avatar alt={currentMeAvatarAlt} src={currentMeAvatarImg} />
+          </ToggleButton>
+        }
       </ToggleButtonGroup>
       <List>
         {playlists && playlists.map((playlist, i) => (
