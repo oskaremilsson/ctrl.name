@@ -41,10 +41,7 @@ export default function Seeker({ color }) {
   }, [dispatch, access_token, seek]);
 
   const progress = (player && player.progress_ms) || 0;
-  const progressText = mstoMSS(progress)
-
   const duration = (player && player.item && player.item.duration_ms) || 0;
-  const durationText = mstoMSS(duration);
 
   return (
     <Box>
@@ -58,8 +55,6 @@ export default function Seeker({ color }) {
           step={1000}
           aria-labelledby="seek-track"
           disabled={!player}
-          valueLabelDisplay="auto"
-          valueLabelFormat={mstoMSS(tempValue || progress)}
         />
       </Box>
 
@@ -73,10 +68,10 @@ export default function Seeker({ color }) {
           color={color}
         >
           <Typography variant="caption">
-            { progressText }
+            { mstoMSS(tempValue || progress) }
           </Typography>
           <Typography variant="caption">
-            { durationText }
+            { mstoMSS(duration) }
           </Typography>
         </Box>
       }
