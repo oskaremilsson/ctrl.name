@@ -11,7 +11,8 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   Avatar,
-  Snackbar
+  Snackbar,
+  Slide
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -39,42 +40,57 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function TransitionDown(props) {
+  return <Slide {...props} direction="down" />;
+}
+
 export default function TrackListItem(props) {
   const classes = useStyles();
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
   const player = useSelector((state) => getSpotifyPlayer(state));
 
-  const { track } = props;
-  const [openQueueSuccess, setOpenQueueSuccess] = useState(false);
-  const [openQueueFailure, setOpenQueueFailure] = useState(false);
+  const { track, avatarVariant } = props;
+
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackMessage, setSnackMessage] = useState(false);
+  const [snackSeverity, setSnackSeverity] = useState(false);
 
   const queueTrack = (uri) => {
     spotify(access_token).post(`me/player/queue?uri=${uri}`)
       .then(_ => {
-        setOpenQueueSuccess(true);
+        setSnackMessage('Added to queue!');
+        setSnackSeverity('success');
+        setOpenSnack(true);
       }).catch(_ => {
-        setOpenQueueFailure(true);
+        setSnackMessage('Failed to queue!');
+        setSnackSeverity('error');
+        setOpenSnack(true);
       });
   };
 
   if (!track) return (<></>);
+
+  let image;
+  if (track.album) {
+    image = track.album.images[track.album.images.length - 1].url;
+  }
 
   return (
     <Box>
       <ListItem alignItems="center">
         <ListItemAvatar>
           {
-            track.album.images.length > 0 ?
+            image ?
               <Avatar
-                variant="rounded"
+                variant={avatarVariant || "rounded"}
                 alt={track.name}
-                src={track.album.images[track.album.images.length - 1].url}
+                src={image}
               />
             :
               <Avatar
-                variant="rounded"
+                variant={avatarVariant || "rounded"}
                 alt={track.name}
-              />
+              >{track.track_number}</Avatar>
           }
         </ListItemAvatar>
         <ListItemText
@@ -115,34 +131,18 @@ export default function TrackListItem(props) {
           vertical: 'top',
           horizontal: 'center',
         }}
-        open={openQueueSuccess}
-        autoHideDuration={6000}
-        onClose={() => {setOpenQueueSuccess(false)}}
+        open={openSnack}
+        autoHideDuration={1500}
+        onClose={() => { setOpenSnack(false) }}
+        TransitionComponent={TransitionDown}
       >
         <Alert
+          onClose={() => {setOpenSnack(false)}}
           elevation={6}
-          severity="success"
+          severity={snackSeverity}
           variant="filled"
         >
-          Successfully queued!
-        </Alert>
-      </Snackbar>
-
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        open={openQueueFailure}
-        autoHideDuration={6000}
-        onClose={() => {setOpenQueueFailure(false)}}
-      >
-        <Alert
-          elevation={6}
-          severity="error"
-          variant="filled"
-        >
-          Failed to queue.
+          { snackMessage }
         </Alert>
       </Snackbar>
     </Box>
