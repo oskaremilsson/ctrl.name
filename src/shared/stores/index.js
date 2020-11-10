@@ -19,6 +19,12 @@ import {
 } from './spotifyPlayer';
 
 import {
+  reducer as playlists,
+  actions as playlistsActions,
+  bindSelectors as bindPlaylistsSelectors,
+} from './playlists';
+
+import {
   reducer as consents,
   actions as consentsActions,
   bindSelectors as bindConsentsSelectors,
@@ -28,6 +34,7 @@ const appReducer = combineReducers({
   me,
   currentMe,
   spotifyPlayer,
+  playlists,
   consents,
 });
 
@@ -35,6 +42,7 @@ export const actions = {
   ...meActions,
   ...currentMeActions,
   ...spotifyPlayerActions,
+  ...playlistsActions,
   ...consentsActions,
 };
 
@@ -42,6 +50,7 @@ export const selectors = {
   ...bindMeSelectors((state) => state.me),
   ...bindCurrentMeSelectors((state) => state.currentMe),
   ...bindSpotifyPlayerSelectors((state) => state.spotifyPlayer),
+  ...bindPlaylistsSelectors((state) => state.playlists),
   ...bindConsentsSelectors((state) => state.consents),
 };
 
