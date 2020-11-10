@@ -39,9 +39,13 @@ export default function CreateRequest() {
   const createRequest = (e) => {
     e.preventDefault();
     setOpenDialog(false);
+    if (!username) {
+      return;
+    }
 
     var data = new FormData();
     data.append("requesting", username);
+    setUsername(undefined);
 
     api.post('createRequest', data)
     .then(res => {

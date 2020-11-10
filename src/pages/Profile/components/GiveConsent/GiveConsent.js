@@ -39,10 +39,14 @@ export default function GiveConsent() {
   const uploadConsent = (e) => {
     e.preventDefault();
     setOpenDialog(false);
+    if (!username) {
+      return;
+    }
 
     var data = new FormData();
     data.append("allow_user", username);
-  
+    setUsername(undefined);
+
     api.post("giveConsent", data)
     .then(res => {
       dispatch(actions.setMyConsents(null));
