@@ -58,23 +58,21 @@ export default function Seeker({ color }) {
         />
       </Box>
 
-      { player &&
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          paddingLeft={2}
-          paddingRight={2}
-          marginTop={-1}
-          color={color}
-        >
-          <Typography variant="caption">
-            { mstoMSS(tempValue || progress) }
-          </Typography>
-          <Typography variant="caption">
-            { mstoMSS(duration) }
-          </Typography>
-        </Box>
-      }
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        paddingLeft={2}
+        paddingRight={2}
+        marginTop={-1}
+        color={color}
+      >
+        <Typography variant="caption">
+          { mstoMSS(tempValue || progress) }
+        </Typography>
+        <Typography variant="caption">
+          { mstoMSS(duration) }
+        </Typography>
+      </Box>
     </Box>
   );
 }
