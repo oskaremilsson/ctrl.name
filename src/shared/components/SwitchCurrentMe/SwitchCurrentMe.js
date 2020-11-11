@@ -1,4 +1,5 @@
 import React, {useState } from 'react';
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { selectors, actions } from 'shared/stores';
 
@@ -36,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SwitchCurrentMe(props) {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { history, setTokenFetched, openSwitch, setOpenSwitch } = props;
+  const history = useHistory();
+  const { open, setOpen } = props;
 
   const currentMe = useSelector((state) => getCurrentMe(state));
   const me = useSelector((state) => getMe(state));
@@ -52,9 +54,10 @@ export default function SwitchCurrentMe(props) {
     spotify(access_token).get(`users/${username}`)
     .then(res => {
       dispatch(actions.setCurrentMe(res.data));
-      setTokenFetched(false);
-      setOpenSwitch(false);
+      dispatch(actions.setCurrentMeAccessToken(undefined));
+      setOpen(false);
     }).catch(_ => {
+      console.log(_);
       dispatch(actions.setConsents(null));
       setOpenFailure(username);
     });
@@ -63,7 +66,7 @@ export default function SwitchCurrentMe(props) {
   return (
     <Box>
       { me && currentMe &&
-        <Dialog onClose={() => {setOpenSwitch(false)}} open={openSwitch}>
+        <Dialog onClose={() => {setOpen(false)}} open={open}>
           <List>
             <ListItem
               button

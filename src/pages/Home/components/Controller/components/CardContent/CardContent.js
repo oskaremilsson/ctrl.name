@@ -3,7 +3,13 @@ import { useSelector } from 'react-redux';
 import { selectors } from 'shared/stores';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Box, CardContent, Typography } from '@material-ui/core';
+import {
+  Box,
+  CardContent,
+  Typography,
+  Chip,
+  Avatar
+} from '@material-ui/core';
 
 import { OverflowDetector } from 'react-overflow';
 import Marquee from 'react-double-marquee';
@@ -11,6 +17,9 @@ import Marquee from 'react-double-marquee';
 import PlayButton from './components/PlayButton';
 import SkipButton from './components/SkipButton';
 import Seeker from './components/Seeker';
+import SwitchCurrentMe from 'shared/components/SwitchCurrentMe';
+
+import { SwapHoriz as SwapHorizIcon } from '@material-ui/icons';
 
 const { getCurrentMe } = selectors;
 
@@ -26,6 +35,7 @@ export default function Controller(props) {
 
   const { player, textColor } = props;
   const currentMe = useSelector((state) => getCurrentMe(state));
+  const [openSwitch, setOpenSwitch] = useState(false);
 
   const [scrollTitle, setScrollTitle] = useState(false);
   const [scrollArtist, setScrollArtist] = useState(false);
@@ -47,6 +57,10 @@ export default function Controller(props) {
   const songTitle = (song && song.name) || "No active device found";
 
   const artists = (song && song.artists && song.artists.map((artist)=> artist.name).join(', ')) || "Play on Spotify to ctrl" ;
+
+  const switchAvatarAlt = (currentMe && currentMe.id) || 'ctrl.current';
+  const switchAvatarImg = currentMe && currentMe.images && currentMe.images[0] && currentMe.images[0].url;
+  const ctrlName = currentMe && `ctrl.${currentMe.id}`;
 
   if (player) {
     if (oldSong !== player.item.uri) {
@@ -126,10 +140,32 @@ export default function Controller(props) {
       </Box>
 
       { currentMe &&
-        <Box padding={1} color={textColor}>
-          <Typography variant="caption">ctrl.{currentMe.id}</Typography>
+      <Box
+        display="flex"
+        justifyContent="flex-end"
+        padding={1}
+      >
+        <Chip
+          avatar={<Avatar
+              alt={switchAvatarAlt}
+              src={switchAvatarImg}>{switchAvatarAlt}
+          </Avatar>}
+          label={ctrlName}
+
+          size="small"
+          clickable
+          color="secondary"
+          onClick={() => { setOpenSwitch(true) }}
+          onDelete={() => { setOpenSwitch(true) }}
+          deleteIcon={<SwapHorizIcon />}
+        />
         </Box>
       }
+
+      <SwitchCurrentMe
+        open={openSwitch}
+        setOpen={setOpenSwitch}
+      />
     </Box>
   );
 }

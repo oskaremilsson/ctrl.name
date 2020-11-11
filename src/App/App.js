@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectors, actions } from 'shared/stores';
 
@@ -15,33 +16,31 @@ import { Box } from '@material-ui/core';
 
 import api from 'utils/api';
 
-const { getCurrentMe } = selectors;
+const { getCurrentMe, getCurrentMeAccessToken } = selectors;
 
-const getAccessToken = (dispatch, username, setTokenFetched) => {
+const getAccessToken = (dispatch, username) => {
   var data = new FormData();
   data.append("username", username);
 
   api.post('getAccessToken', data)
   .then(res => {
     dispatch(actions.setCurrentMeAccessToken(res.data.Access_token));
-    setTokenFetched(true);
     dispatch(actions.setSpotifyPlayerSync(true));
   });
 };
 
 export default function App(props) {
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const currentMe = useSelector((state) => getCurrentMe(state));
-
-  const { location } = props;
-
-  const [tokenFetched, setTokenFetched] = useState(false);
+  const currentMeAccessToken = useSelector((state) => getCurrentMeAccessToken(state));
 
   useEffect(() => {
-    if (!tokenFetched && currentMe) {
-      getAccessToken(dispatch, currentMe.id, setTokenFetched);
+    if (!currentMeAccessToken && currentMe) {
+      getAccessToken(dispatch, currentMe.id);
     }
-  }, [dispatch, currentMe, tokenFetched]);
+  }, [dispatch, currentMe, currentMeAccessToken]);
 
   let component;
   switch (location && location.pathname) {
@@ -56,10 +55,7 @@ export default function App(props) {
       break;
     default:
       component =
-          <Home
-            setTokenFetched={setTokenFetched}
-            {...props}
-          />
+          <Home />
       break;
   }
 
