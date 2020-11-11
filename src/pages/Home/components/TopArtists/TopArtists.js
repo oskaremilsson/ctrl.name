@@ -23,7 +23,7 @@ export default function TopArtists() {
   useEffect(() => {
     let mounted = true;
     if (accessToken && !artists) {
-      spotify(accessToken).get(`me/top/artists?limit=10&time_range=short_term`)
+      spotify(accessToken).get(`me/top/artists?limit=5&time_range=short_term`)
         .then(res => {
           if (mounted) {
             setArtists(res.data.items);

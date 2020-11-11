@@ -23,7 +23,7 @@ export default function TopTracks() {
   useEffect(() => {
     let mounted = true;
     if (accessToken && !tracks) {
-      spotify(accessToken).get(`me/top/tracks?limit=10&time_range=short_term`)
+      spotify(accessToken).get(`me/top/tracks?limit=20&time_range=short_term`)
         .then(res => {
           if (mounted) {
             setTracks(res.data.items);

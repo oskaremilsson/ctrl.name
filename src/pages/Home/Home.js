@@ -15,8 +15,8 @@ export default function Home() {
         <Controller />
       </Container>
 
-      <TopTracks />
       <TopArtists />
+      <TopTracks />
     </Box>
   );
 }
