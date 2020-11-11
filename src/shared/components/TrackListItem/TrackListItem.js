@@ -71,8 +71,10 @@ export default function TrackListItem(props) {
   if (!track) return (<></>);
 
   let image;
-  if (track.album) {
-    image = track.album.images[track.album.images.length - 1].url;
+  if (track.album && track.album.images) {
+    if (track.album.images.length > 1) {
+      image = track.album.images[track.album.images.length - 1].url;
+    }
   }
 
   return (
