@@ -85,7 +85,7 @@ export default function Artist({ artist }) {
           <Box key={album && album.uri + i}>
             <AlbumListItem
               album={album}
-              subTitle={album.release_date}
+              subTitle={album.release_date && album.release_date.split('-')[0]}
               subTitleColor="textSecondary"
           />
             <Divider />
@@ -97,7 +97,7 @@ export default function Artist({ artist }) {
           <Box key={single && single.uri + i}>
             <AlbumListItem
               album={single}
-              subTitle={single.release_date}
+              subTitle={single.release_date && single.release_date.split('-')[0]}
               subTitleColor="textSecondary"
             />
             <Divider />
