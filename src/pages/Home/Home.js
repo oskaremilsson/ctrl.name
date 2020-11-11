@@ -6,6 +6,7 @@ import {
 
 import Controller from './components/Controller';
 import TopTracks from './components/TopTracks';
+import TopArtists from './components/TopArtists';
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       </Container>
 
       <TopTracks />
+      <TopArtists />
     </Box>
   );
 }
