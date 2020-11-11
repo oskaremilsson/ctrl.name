@@ -62,6 +62,7 @@ export default function Search() {
       <Box padding={2}>
         <TextField
           onChange={(e) => { setSearchQuery(e.target.value) }}
+          onKeyPress={(e) => { if (e.key === "Enter") { e.target.blur(); }}}
           fullWidth
           margin="normal"
           label="Search"
