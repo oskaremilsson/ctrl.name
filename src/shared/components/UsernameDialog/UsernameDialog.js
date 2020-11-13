@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 import {
   Box,
@@ -6,9 +6,9 @@ import {
   InputAdornment,
   Button,
   Dialog,
-  Snackbar
-} from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
+  Snackbar,
+} from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 export default function CreateRequest(props) {
   const {
@@ -24,14 +24,16 @@ export default function CreateRequest(props) {
     setOpenSuccess,
     openFailure,
     setOpenFailure,
-    inputColor
+    inputColor,
   } = props;
 
   return (
     <Box>
       <Dialog
         open={open}
-        onClose={() => {setOpen(false)}}
+        onClose={() => {
+          setOpen(false);
+        }}
       >
         <Box display="flex" padding={3} flexDirection="column">
           <TextField
@@ -39,61 +41,59 @@ export default function CreateRequest(props) {
             label="username"
             variant="outlined"
             onChange={onChange}
-            onKeyPress={(e) => { if (e.key === "Enter") { submit(e) } }}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                submit(e);
+              }
+            }}
             autoComplete="off"
             autoCapitalize="none"
             autoFocus
             InputProps={{
-              startAdornment: <InputAdornment position="start">ctrl.</InputAdornment>,
+              startAdornment: (
+                <InputAdornment position="start">ctrl.</InputAdornment>
+              ),
             }}
-            color={inputColor || 'primary'}
+            color={inputColor || "primary"}
           />
 
           <Box marginBottom={2}></Box>
 
-          <Button
-            variant="contained"
-            color={buttonColor}
-            onClick={submit}
-          >
-            { buttonText }
+          <Button variant="contained" color={buttonColor} onClick={submit}>
+            {buttonText}
           </Button>
         </Box>
       </Dialog>
 
       <Snackbar
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
+          vertical: "top",
+          horizontal: "center",
         }}
         open={openSuccess}
         autoHideDuration={3000}
-        onClose={() => {setOpenSuccess(false)}}
+        onClose={() => {
+          setOpenSuccess(false);
+        }}
       >
-        <Alert
-          elevation={6}
-          severity="success"
-          variant="filled"
-        >
-         { successMessage }
+        <Alert elevation={6} severity="success" variant="filled">
+          {successMessage}
         </Alert>
       </Snackbar>
 
       <Snackbar
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
+          vertical: "top",
+          horizontal: "center",
         }}
         open={openFailure}
         autoHideDuration={3000}
-        onClose={() => {setOpenFailure(false)}}
+        onClose={() => {
+          setOpenFailure(false);
+        }}
       >
-        <Alert
-          elevation={6}
-          severity="error"
-          variant="filled"
-        >
-          { failureMessage }
+        <Alert elevation={6} severity="error" variant="filled">
+          {failureMessage}
         </Alert>
       </Snackbar>
     </Box>

@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectors, actions  } from 'shared/stores';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { selectors, actions } from "shared/stores";
 
 import {
   Box,
   List,
   Divider,
   CircularProgress,
-  Avatar
-} from '@material-ui/core';
+  Avatar,
+} from "@material-ui/core";
 
-import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
+import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 
-import PlaylistListItem from 'shared/components/PlaylistListItem';
-import spotify from 'utils/spotify';
+import PlaylistListItem from "shared/components/PlaylistListItem";
+import spotify from "utils/spotify";
 
 const {
   getPlaylists,
@@ -25,30 +25,44 @@ const {
 
 export default function Playlists() {
   const dispatch = useDispatch();
-  const currentMeAccessToken = useSelector((state) => getCurrentMeAccessToken(state));
+  const currentMeAccessToken = useSelector((state) =>
+    getCurrentMeAccessToken(state)
+  );
   const currentMe = useSelector((state) => getCurrentMe(state));
   const me = useSelector((state) => getMe(state));
   const meAccessToken = useSelector((state) => getMeAccessToken(state));
 
   const storedPlaylists = useSelector((state) => getPlaylists(state));
 
-  const [selectedPlaylists, setSelectedPlaylists] = useState('me');
+  const [selectedPlaylists, setSelectedPlaylists] = useState("me");
   const [accessToken, setAccessToken] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
   const [playlists, setPlaylists] = useState([]);
   const [nextQuery, setNextQuery] = useState(undefined);
   const [allLoaded, setAllLoaded] = useState(false);
 
-  const meAvatarAlt = (me && me.id) || 'me';
+  const meAvatarAlt = (me && me.id) || "me";
   const meAvatarImg = me && me.images && me.images[0] && me.images[0].url;
 
-  const currentMeAvatarAlt = (currentMe && currentMe.id) || 'current';
-  const currentMeAvatarImg = currentMe && currentMe.images && currentMe.images[0] && currentMe.images[0].url;
+  const currentMeAvatarAlt = (currentMe && currentMe.id) || "current";
+  const currentMeAvatarImg =
+    currentMe &&
+    currentMe.images &&
+    currentMe.images[0] &&
+    currentMe.images[0].url;
 
   useEffect(() => {
-    if (meAccessToken && currentMeAccessToken && storedPlaylists && currentMe && me && selectedPlaylists && !accessToken) {
+    if (
+      meAccessToken &&
+      currentMeAccessToken &&
+      storedPlaylists &&
+      currentMe &&
+      me &&
+      selectedPlaylists &&
+      !accessToken
+    ) {
       let selectedId;
-      if (selectedPlaylists === 'me') {
+      if (selectedPlaylists === "me") {
         selectedId = me.id;
         setAccessToken(meAccessToken);
       } else {
@@ -62,17 +76,26 @@ export default function Playlists() {
         setPlaylists(storedPlaylists[selectedId]);
       }
     }
-  }, [accessToken, selectedPlaylists, storedPlaylists, currentMe, currentMeAccessToken, me, meAccessToken]);
+  }, [
+    accessToken,
+    selectedPlaylists,
+    storedPlaylists,
+    currentMe,
+    currentMeAccessToken,
+    me,
+    meAccessToken,
+  ]);
 
   useEffect(() => {
     let mounted = true;
     if (accessToken && loadMore) {
-      const query = nextQuery ? nextQuery.split('?')[1] : '';
-      spotify(accessToken).get(`me/playlists?${query}`)
-        .then(res => {
+      const query = nextQuery ? nextQuery.split("?")[1] : "";
+      spotify(accessToken)
+        .get(`me/playlists?${query}`)
+        .then((res) => {
           if (mounted) {
             setLoadMore(false);
-            setPlaylists(playlists => playlists.concat(res.data.items));
+            setPlaylists((playlists) => playlists.concat(res.data.items));
             setNextQuery(res.data.next);
 
             if (res.data.next) {
@@ -81,33 +104,51 @@ export default function Playlists() {
               setAllLoaded(true);
             }
           }
-        }).catch(_ => {
-          console.log('error');
+        })
+        .catch((_) => {
+          console.log("error");
         });
     }
 
-    return () => mounted = false;
+    return () => (mounted = false);
   }, [accessToken, playlists, nextQuery, loadMore, currentMe]);
 
   useEffect(() => {
-    if (me && currentMe && selectedPlaylists && allLoaded && playlists && storedPlaylists) {
+    if (
+      me &&
+      currentMe &&
+      selectedPlaylists &&
+      allLoaded &&
+      playlists &&
+      storedPlaylists
+    ) {
       let selectedId;
-      if (selectedPlaylists === 'me') {
+      if (selectedPlaylists === "me") {
         selectedId = me.id;
       } else {
         selectedId = currentMe.id;
       }
       setAllLoaded(false);
-      dispatch(actions.setPlaylists({ ...storedPlaylists, ...{ [selectedId]: playlists } }));
+      dispatch(
+        actions.setPlaylists({
+          ...storedPlaylists,
+          ...{ [selectedId]: playlists },
+        })
+      );
     }
-  }, [dispatch, me, currentMe, selectedPlaylists, allLoaded, playlists, storedPlaylists]);
+  }, [
+    dispatch,
+    me,
+    currentMe,
+    selectedPlaylists,
+    allLoaded,
+    playlists,
+    storedPlaylists,
+  ]);
 
   return (
     <Box padding={2}>
-      <Box
-        display="flex"
-        justifyContent="center"
-      >
+      <Box display="flex" justifyContent="center">
         <ToggleButtonGroup
           value={selectedPlaylists}
           exclusive
@@ -124,31 +165,29 @@ export default function Playlists() {
           <ToggleButton value="me" aria-label="my playlists">
             <Avatar alt={meAvatarAlt} src={meAvatarImg} />
           </ToggleButton>
-          { currentMe && me && currentMe.id !== me.id &&
+          {currentMe && me && currentMe.id !== me.id && (
             <ToggleButton value="currentMe" aria-label="currentme playlists">
               <Avatar alt={currentMeAvatarAlt} src={currentMeAvatarImg} />
             </ToggleButton>
-          }
+          )}
         </ToggleButtonGroup>
       </Box>
 
       <List>
-        {playlists && playlists.map((playlist, i) => (
-          <Box key={playlist.id + i}>
-            <PlaylistListItem playlist={playlist} />
-            <Divider />
-          </Box>
-        ))}
+        {playlists &&
+          playlists.map((playlist, i) => (
+            <Box key={playlist.id + i}>
+              <PlaylistListItem playlist={playlist} />
+              <Divider />
+            </Box>
+          ))}
       </List>
 
-      { (loadMore || (playlists && playlists.length < 1)) &&
-        <Box
-          display="flex"
-          justifyContent="center"
-        >
+      {(loadMore || (playlists && playlists.length < 1)) && (
+        <Box display="flex" justifyContent="center">
           <CircularProgress />
         </Box>
-      }
+      )}
     </Box>
   );
 }

@@ -1,1 +1,1 @@
-export { default } from './FetchConsents';
+export { default } from "./FetchConsents";

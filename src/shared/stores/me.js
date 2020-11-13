@@ -1,12 +1,12 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 const setMe = (payload) => ({
-  type: 'SET_ME',
+  type: "SET_ME",
   payload,
 });
 
 const setMeAccessToken = (payload) => ({
-  type: 'SET_ME_ACCESS_TOKEN',
+  type: "SET_ME_ACCESS_TOKEN",
   payload,
 });
 
@@ -17,7 +17,7 @@ export const actions = {
 
 function me(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_ME':
+    case "SET_ME":
       return action.payload || null;
     default:
       return state;
@@ -26,7 +26,7 @@ function me(state = {}, action = {}) {
 
 function meAccessToken(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_ME_ACCESS_TOKEN':
+    case "SET_ME_ACCESS_TOKEN":
       return action.payload || null;
     default:
       return state;

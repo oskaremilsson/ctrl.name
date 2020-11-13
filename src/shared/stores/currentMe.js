@@ -1,12 +1,12 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 const setCurrentMe = (payload) => ({
-  type: 'SET_CURRENT_ME',
+  type: "SET_CURRENT_ME",
   payload,
 });
 
 const setCurrentMeAccessToken = (payload) => ({
-  type: 'SET_CURRENT_ME_ACCESS_TOKEN',
+  type: "SET_CURRENT_ME_ACCESS_TOKEN",
   payload,
 });
 
@@ -17,7 +17,7 @@ export const actions = {
 
 function currentMe(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_CURRENT_ME':
+    case "SET_CURRENT_ME":
       return action.payload || false;
     default:
       return state;
@@ -26,7 +26,7 @@ function currentMe(state = {}, action = {}) {
 
 function currentMeAccessToken(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_CURRENT_ME_ACCESS_TOKEN':
+    case "SET_CURRENT_ME_ACCESS_TOKEN":
       return action.payload || false;
     default:
       return state;
@@ -49,5 +49,6 @@ export const reducer = (state = initialState, action = {}) => {
 
 export const bindSelectors = (slicer) => ({
   getCurrentMe: (state) => slicer(state).currentMe || null,
-  getCurrentMeAccessToken: (state) => slicer(state).currentMeAccessToken || null,
+  getCurrentMeAccessToken: (state) =>
+    slicer(state).currentMeAccessToken || null,
 });

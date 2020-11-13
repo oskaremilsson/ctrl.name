@@ -1,13 +1,13 @@
-import React from 'react';
-import { Box, Container } from '@material-ui/core';
+import React from "react";
+import { Box, Container } from "@material-ui/core";
 
-import ProfileHeader from './components/ProfileHeader';
-import GiveConsent from './components/GiveConsent';
-import CreateRequest from './components/CreateRequest';
-import ConsentRequests from './components/ConsentRequests';
-import MyRequests from './components/MyRequests';
-import MyConsentList from './components/MyConsentList';
-import ConsentList from './components/ConsentList';
+import ProfileHeader from "./components/ProfileHeader";
+import GiveConsent from "./components/GiveConsent";
+import CreateRequest from "./components/CreateRequest";
+import ConsentRequests from "./components/ConsentRequests";
+import MyRequests from "./components/MyRequests";
+import MyConsentList from "./components/MyConsentList";
+import ConsentList from "./components/ConsentList";
 
 export default function Profile() {
   return (
@@ -17,11 +17,7 @@ export default function Profile() {
           <ProfileHeader />
         </Box>
 
-        <Box
-          display="flex"
-          justifyContent="center"
-          marginBottom={5}
-        >
+        <Box display="flex" justifyContent="center" marginBottom={5}>
           <Box margin={1}>
             <GiveConsent />
           </Box>
@@ -38,7 +34,6 @@ export default function Profile() {
         <MyConsentList />
 
         <ConsentList />
-
       </Box>
     </Container>
   );

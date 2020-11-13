@@ -1,1 +1,1 @@
-export { default } from './SkipButton';
+export { default } from "./SkipButton";

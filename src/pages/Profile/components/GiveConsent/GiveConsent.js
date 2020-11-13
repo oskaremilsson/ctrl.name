@@ -1,21 +1,18 @@
-import React, { useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux';
-import { actions } from 'shared/stores';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch } from "react-redux";
+import { actions } from "shared/stores";
 
-import api from 'utils/api';
-import {
-  Box,
-  Fab
-} from '@material-ui/core';
+import api from "utils/api";
+import { Box, Fab } from "@material-ui/core";
 
-import { AddCircle } from '@material-ui/icons';
+import { AddCircle } from "@material-ui/icons";
 
-import UsernameDialog from 'shared/components/UsernameDialog';
+import UsernameDialog from "shared/components/UsernameDialog";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
-    position: 'fixed',
+    position: "fixed",
     bottom: theme.spacing(8),
     right: 0,
     margin: theme.spacing(2),
@@ -47,22 +44,24 @@ export default function GiveConsent() {
     data.append("allow_user", username);
     setUsername(undefined);
 
-    api.post("giveConsent", data)
-    .then(res => {
-      dispatch(actions.setMyConsents(null));
-      if (res && res.data && res.data.Success) {
-        setOpenSuccess(true);
-        setSuccessMessage(`Consent given to ${username}`);
-      } else {
+    api
+      .post("giveConsent", data)
+      .then((res) => {
+        dispatch(actions.setMyConsents(null));
+        if (res && res.data && res.data.Success) {
+          setOpenSuccess(true);
+          setSuccessMessage(`Consent given to ${username}`);
+        } else {
+          setFailureMessage(`Could not give consent to ${username}`);
+          setFailureMessage(res.data.Message);
+          setOpenFailure(true);
+        }
+      })
+      .catch((_) => {
+        dispatch(actions.setMyConsents(null));
         setFailureMessage(`Could not give consent to ${username}`);
-        setFailureMessage(res.data.Message);
         setOpenFailure(true);
-      }
-    }).catch((_) => {
-      dispatch(actions.setMyConsents(null));
-      setFailureMessage(`Could not give consent to ${username}`);
-      setOpenFailure(true);
-    });
+      });
   };
 
   return (
@@ -71,7 +70,9 @@ export default function GiveConsent() {
         aria-label="give-consent"
         variant="extended"
         color="primary"
-        onClick={() => {setOpenDialog(true)}}
+        onClick={() => {
+          setOpenDialog(true);
+        }}
       >
         <AddCircle className={classes.fabIcon} />
         Consent
@@ -81,7 +82,9 @@ export default function GiveConsent() {
         open={openDialog}
         setOpen={setOpenDialog}
         submit={uploadConsent}
-        onChange={(e) => {setUsername(e.target.value.toLowerCase())}}
+        onChange={(e) => {
+          setUsername(e.target.value.toLowerCase());
+        }}
         buttonText="Give consent"
         buttonColor="primary"
         failureMessage={failureMessage}

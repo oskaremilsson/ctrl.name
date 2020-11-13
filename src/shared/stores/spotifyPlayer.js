@@ -1,12 +1,12 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 const setSpotifyPlayer = (payload) => ({
-  type: 'SET_SPOTIFY_PLAYER',
+  type: "SET_SPOTIFY_PLAYER",
   payload,
 });
 
 const setSpotifyPlayerSync = (payload) => ({
-  type: 'SET_SPOTIFY_PLAYER_SYNC',
+  type: "SET_SPOTIFY_PLAYER_SYNC",
   payload,
 });
 
@@ -17,7 +17,7 @@ export const actions = {
 
 function spotifyPlayer(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_SPOTIFY_PLAYER':
+    case "SET_SPOTIFY_PLAYER":
       return action.payload || null;
     default:
       return state;
@@ -26,7 +26,7 @@ function spotifyPlayer(state = {}, action = {}) {
 
 function spotifyPlayerSync(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_SPOTIFY_PLAYER_SYNC':
+    case "SET_SPOTIFY_PLAYER_SYNC":
       return action.payload || false;
     default:
       return state;
@@ -40,7 +40,7 @@ const reducers = combineReducers({
 
 const initialState = {
   spotifyPlayer: null,
-  spotifyPlayerSync: false
+  spotifyPlayerSync: false,
 };
 
 export const reducer = (state = initialState, action = {}) => {

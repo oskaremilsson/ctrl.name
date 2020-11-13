@@ -1,21 +1,18 @@
-import React, { useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux';
-import { actions } from 'shared/stores';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch } from "react-redux";
+import { actions } from "shared/stores";
 
-import api from 'utils/api';
-import {
-  Box,
-  Fab
-} from '@material-ui/core';
+import api from "utils/api";
+import { Box, Fab } from "@material-ui/core";
 
-import { Send } from '@material-ui/icons';
+import { Send } from "@material-ui/icons";
 
-import UsernameDialog from 'shared/components/UsernameDialog';
+import UsernameDialog from "shared/components/UsernameDialog";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
-    position: 'fixed',
+    position: "fixed",
     bottom: theme.spacing(8),
     right: 0,
     margin: theme.spacing(2),
@@ -47,22 +44,24 @@ export default function CreateRequest() {
     data.append("requesting", username);
     setUsername(undefined);
 
-    api.post('createRequest', data)
-    .then(res => {
-      dispatch(actions.setMyRequests(null));
-      if (res && res.data && res.data.Success) {
-        setSuccessMessage(`Requested to ctrl.${username}`);
-        setOpenSuccess(true);
-      } else {
+    api
+      .post("createRequest", data)
+      .then((res) => {
+        dispatch(actions.setMyRequests(null));
+        if (res && res.data && res.data.Success) {
+          setSuccessMessage(`Requested to ctrl.${username}`);
+          setOpenSuccess(true);
+        } else {
+          setFailureMessage(`Could not request ctrl.${username}`);
+          setFailureMessage(res.data.Message);
+          setOpenFailure(true);
+        }
+      })
+      .catch((_) => {
+        dispatch(actions.setMyRequests(null));
         setFailureMessage(`Could not request ctrl.${username}`);
-        setFailureMessage(res.data.Message);
         setOpenFailure(true);
-      }
-    }).catch((_) => {
-      dispatch(actions.setMyRequests(null));
-      setFailureMessage(`Could not request ctrl.${username}`);
-      setOpenFailure(true);
-    });
+      });
   };
 
   return (
@@ -71,7 +70,9 @@ export default function CreateRequest() {
         aria-label="give-consent"
         variant="extended"
         color="secondary"
-        onClick={() => {setOpenDialog(true)}}
+        onClick={() => {
+          setOpenDialog(true);
+        }}
       >
         <Send className={classes.fabIcon} />
         Request
@@ -82,7 +83,9 @@ export default function CreateRequest() {
         setOpen={setOpenDialog}
         submit={createRequest}
         inputColor="secondary"
-        onChange={(e) => {setUsername(e.target.value.toLowerCase())}}
+        onChange={(e) => {
+          setUsername(e.target.value.toLowerCase());
+        }}
         buttonText="Send request"
         buttonColor="secondary"
         failureMessage={failureMessage}

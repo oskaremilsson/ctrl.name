@@ -1,28 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Bouncer from './shared/components/Bouncer';
-import Auth from './shared/components/Auth';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import Bouncer from "./shared/components/Bouncer";
+import Auth from "./shared/components/Auth";
+import * as serviceWorker from "./serviceWorker";
 
-import rootReducer from './shared/stores';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import rootReducer from "./shared/stores";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { createMuiTheme, ThemeProvider, CssBaseline } from '@material-ui/core';
-import { pink } from '@material-ui/core/colors';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
+import { pink } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
   palette: {
-    type: 'dark',
+    type: "dark",
     primary: pink,
     secondary: {
-      main: '#009688',
+      main: "#009688",
     },
   },
 });
 
-const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
   <Provider store={store}>
@@ -36,7 +39,7 @@ ReactDOM.render(
       </BrowserRouter>
     </ThemeProvider>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

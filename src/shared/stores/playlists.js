@@ -1,7 +1,7 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 const setPlaylists = (payload) => ({
-  type: 'SET_PLAYLISTS',
+  type: "SET_PLAYLISTS",
   payload,
 });
 
@@ -11,7 +11,7 @@ export const actions = {
 
 function playlists(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_PLAYLISTS':
+    case "SET_PLAYLISTS":
       return action.payload || {};
     default:
       return state;

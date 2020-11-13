@@ -1,1 +1,1 @@
-export { default } from './SyncPlayer';
+export { default } from "./SyncPlayer";

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
+import React, { useEffect, useState } from "react";
+import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 
 import {
-  Home as HomeIcon, 
+  Home as HomeIcon,
   AccountCircle as AccountCircleIcon,
   ArtTrack as ArtTrackIcon,
-  Search as SearchIcon
-} from '@material-ui/icons';
+  Search as SearchIcon,
+} from "@material-ui/icons";
 
 export default function NavBar(props) {
   const { history, location } = props;
@@ -14,7 +14,7 @@ export default function NavBar(props) {
 
   const navigate = (_, newValue) => {
     history.push(newValue);
-  }
+  };
 
   useEffect(() => {
     if (location && location.pathname) {
@@ -23,15 +23,23 @@ export default function NavBar(props) {
   }, [location]);
 
   return (
-    <BottomNavigation
-      value={value}
-      onChange={navigate}
-      showLabels
-    >
+    <BottomNavigation value={value} onChange={navigate} showLabels>
       <BottomNavigationAction value="/" label="Home" icon={<HomeIcon />} />
-      <BottomNavigationAction value="/playlists" label="Playlists" icon={<ArtTrackIcon />} />
-      <BottomNavigationAction value="/search" label="Search" icon={<SearchIcon />} />
-      <BottomNavigationAction value="/profile" label="Profile" icon={<AccountCircleIcon />} />
+      <BottomNavigationAction
+        value="/playlists"
+        label="Playlists"
+        icon={<ArtTrackIcon />}
+      />
+      <BottomNavigationAction
+        value="/search"
+        label="Search"
+        icon={<SearchIcon />}
+      />
+      <BottomNavigationAction
+        value="/profile"
+        label="Profile"
+        icon={<AccountCircleIcon />}
+      />
     </BottomNavigation>
   );
 }

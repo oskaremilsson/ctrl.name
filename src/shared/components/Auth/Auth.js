@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import queryString from 'query-string';
-import { Box, CircularProgress } from '@material-ui/core';
+import React, { useState, useEffect } from "react";
+import queryString from "query-string";
+import { Box, CircularProgress } from "@material-ui/core";
 
-import api from 'utils/api';
+import api from "utils/api";
 
 export default function Auth(props) {
   const { location } = props;
@@ -19,13 +19,16 @@ export default function Auth(props) {
       let data = new FormData();
       data.append("code", code);
 
-      api.post('codeExchange', data).then(res => {
+      api.post("codeExchange", data).then((res) => {
         setLoaded(true);
 
-        localStorage.setItem('my_tokens', JSON.stringify({
-          refresh_token: res.data.Refresh_token,
-          access_token: res.data.Access_token
-        }));
+        localStorage.setItem(
+          "my_tokens",
+          JSON.stringify({
+            refresh_token: res.data.Refresh_token,
+            access_token: res.data.Access_token,
+          })
+        );
 
         setRefreshToken(res.data.Refresh_token);
       });
@@ -35,10 +38,10 @@ export default function Auth(props) {
       let data = new FormData();
       data.append("refresh_token", refreshToken);
 
-      api.post('storeRefreshToken', data).then(res => {
+      api.post("storeRefreshToken", data).then((res) => {
         setUploaded(true);
 
-        props.history.replace('/');
+        props.history.replace("/");
       });
     }
   }, [code, loaded, props.history, refreshToken, uploaded]);

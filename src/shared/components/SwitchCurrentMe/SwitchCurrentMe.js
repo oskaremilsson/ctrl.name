@@ -1,7 +1,7 @@
-import React, {useState } from 'react';
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
-import { selectors, actions } from 'shared/stores';
+import { useSelector, useDispatch } from "react-redux";
+import { selectors, actions } from "shared/stores";
 
 import {
   Box,
@@ -12,25 +12,25 @@ import {
   ListItemText,
   Typography,
   Avatar,
-  Snackbar
-} from '@material-ui/core';
+  Snackbar,
+} from "@material-ui/core";
 
-import { makeStyles } from '@material-ui/core/styles';
-import Alert from '@material-ui/lab/Alert';
-import { Add as AddIcon } from '@material-ui/icons';
+import { makeStyles } from "@material-ui/core/styles";
+import Alert from "@material-ui/lab/Alert";
+import { Add as AddIcon } from "@material-ui/icons";
 
-import spotify from 'utils/spotify';
+import spotify from "utils/spotify";
 
 const { getMeAccessToken, getMe, getCurrentMe, getConsents } = selectors;
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
   },
   inline: {
-    display: 'inline',
+    display: "inline",
   },
 }));
 
@@ -47,31 +47,39 @@ export default function SwitchCurrentMe(props) {
 
   const [openFailure, setOpenFailure] = useState(undefined);
 
-  const myAvatarAlt = (me && me.id) || 'current';
+  const myAvatarAlt = (me && me.id) || "current";
   const myAvatarImg = me && me.images && me.images[0] && me.images[0].url;
 
   const switched = (username) => {
-    spotify(access_token).get(`users/${username}`)
-    .then(res => {
-      dispatch(actions.setCurrentMe(res.data));
-      dispatch(actions.setCurrentMeAccessToken(undefined));
-      setOpen(false);
-    }).catch(_ => {
-      console.log(_);
-      dispatch(actions.setConsents(null));
-      setOpenFailure(username);
-    });
+    spotify(access_token)
+      .get(`users/${username}`)
+      .then((res) => {
+        dispatch(actions.setCurrentMe(res.data));
+        dispatch(actions.setCurrentMeAccessToken(undefined));
+        setOpen(false);
+      })
+      .catch((_) => {
+        console.log(_);
+        dispatch(actions.setConsents(null));
+        setOpenFailure(username);
+      });
   };
 
   return (
     <Box>
-      { me && currentMe &&
-        <Dialog onClose={() => {setOpen(false)}} open={open}>
+      {me && currentMe && (
+        <Dialog
+          onClose={() => {
+            setOpen(false);
+          }}
+          open={open}
+        >
           <List>
             <ListItem
               button
               selected={me.id === currentMe.id}
-              onClick={() => switched(me.id)} key={me.id}
+              onClick={() => switched(me.id)}
+              key={me.id}
             >
               <ListItemAvatar>
                 <Avatar alt={myAvatarAlt} src={myAvatarImg} />
@@ -84,42 +92,47 @@ export default function SwitchCurrentMe(props) {
                     className={classes.title}
                     color="textPrimary"
                   >
-                    { me.display_name || me.id }
+                    {me.display_name || me.id}
                   </Typography>
                 }
                 secondary={
-                    <Typography
-                      variant="body2"
-                      className={classes.inline}
-                      color="textSecondary"
-                    >
-                      ctrl.{me.id}
-                    </Typography>
+                  <Typography
+                    variant="body2"
+                    className={classes.inline}
+                    color="textSecondary"
+                  >
+                    ctrl.{me.id}
+                  </Typography>
                 }
               />
             </ListItem>
 
-            { consents && consents.map((consent) => (
-              <ListItem
-                button
-                selected={consent.id === currentMe.id}
-                onClick={() => switched(consent.id)} key={consent.id}
-              >
-                <ListItemAvatar>
-                  <Avatar alt={consent.id} src={consent && consent.images && consent.images[0].url} />
-                </ListItemAvatar>
-                <ListItemText
-                  disableTypography={true}
-                  primary={
-                    <Typography
-                      variant="body1"
-                      className={classes.title}
-                      color="textPrimary"
-                    >
-                      { consent.display_name || consent.id }
-                    </Typography>
-                  }
-                  secondary={
+            {consents &&
+              consents.map((consent) => (
+                <ListItem
+                  button
+                  selected={consent.id === currentMe.id}
+                  onClick={() => switched(consent.id)}
+                  key={consent.id}
+                >
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={consent.id}
+                      src={consent && consent.images && consent.images[0].url}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    disableTypography={true}
+                    primary={
+                      <Typography
+                        variant="body1"
+                        className={classes.title}
+                        color="textPrimary"
+                      >
+                        {consent.display_name || consent.id}
+                      </Typography>
+                    }
+                    secondary={
                       <Typography
                         variant="body2"
                         className={classes.inline}
@@ -127,12 +140,12 @@ export default function SwitchCurrentMe(props) {
                       >
                         ctrl.{consent.id}
                       </Typography>
-                  }
-                />
-              </ListItem>
-            ))}
+                    }
+                  />
+                </ListItem>
+              ))}
 
-            <ListItem button onClick={() => history.push('/profile')}>
+            <ListItem button onClick={() => history.push("/profile")}>
               <ListItemAvatar>
                 <Avatar>
                   <AddIcon />
@@ -142,22 +155,20 @@ export default function SwitchCurrentMe(props) {
             </ListItem>
           </List>
         </Dialog>
-      }
+      )}
 
       <Snackbar
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
+          vertical: "top",
+          horizontal: "center",
         }}
         open={Boolean(openFailure)}
         autoHideDuration={3000}
-        onClose={() => {setOpenFailure(false)}}
+        onClose={() => {
+          setOpenFailure(false);
+        }}
       >
-        <Alert
-          elevation={6}
-          severity="error"
-          variant="filled"
-        >
+        <Alert elevation={6} severity="error" variant="filled">
           Failed to switch ctrl.{openFailure}
         </Alert>
       </Snackbar>

@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectors  } from 'shared/stores';
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectors } from "shared/stores";
 
-import {
-  Box,
-  List,
-  Divider,
-  Card,
-  ListSubheader
-} from '@material-ui/core';
+import { Box, List, Divider, Card, ListSubheader } from "@material-ui/core";
 
-import TrackListItem from 'shared/components/TrackListItem';
-import spotify from 'utils/spotify';
+import TrackListItem from "shared/components/TrackListItem";
+import spotify from "utils/spotify";
 
 const { getMeAccessToken } = selectors;
 
@@ -23,17 +17,19 @@ export default function TopTracks() {
   useEffect(() => {
     let mounted = true;
     if (accessToken && !tracks) {
-      spotify(accessToken).get(`me/top/tracks?limit=20&time_range=short_term`)
-        .then(res => {
+      spotify(accessToken)
+        .get(`me/top/tracks?limit=20&time_range=short_term`)
+        .then((res) => {
           if (mounted) {
             setTracks(res.data.items);
           }
-        }).catch(_ => {
-          console.log('error');
+        })
+        .catch((_) => {
+          console.log("error");
         });
     }
 
-    return () => mounted = false;
+    return () => (mounted = false);
   }, [accessToken, tracks]);
 
   return (
@@ -42,12 +38,13 @@ export default function TopTracks() {
         <Box padding={2}>
           <List>
             <ListSubheader>My Top Tracks</ListSubheader>
-            {tracks && tracks.map((track, i) => (
-              <Box key={track.id + i}>
-                <TrackListItem track={track} />
-                <Divider />
-              </Box>
-            ))}
+            {tracks &&
+              tracks.map((track, i) => (
+                <Box key={track.id + i}>
+                  <TrackListItem track={track} />
+                  <Divider />
+                </Box>
+              ))}
           </List>
         </Box>
       </Card>

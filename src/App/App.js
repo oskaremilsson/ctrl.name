@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectors, actions } from 'shared/stores';
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { selectors, actions } from "shared/stores";
 
-import NavBar from 'shared/components/NavBar';
+import NavBar from "shared/components/NavBar";
 
-import Home from 'pages/Home';
-import Profile from 'pages/Profile';
-import Playlists from 'pages/Playlists';
-import Search from 'pages/Search';
+import Home from "pages/Home";
+import Profile from "pages/Profile";
+import Playlists from "pages/Playlists";
+import Search from "pages/Search";
 
-import FetchConsents from './components/FetchConsents';
+import FetchConsents from "./components/FetchConsents";
 
-import { Box } from '@material-ui/core';
+import { Box } from "@material-ui/core";
 
-import api from 'utils/api';
+import api from "utils/api";
 
 const { getCurrentMe, getCurrentMeAccessToken } = selectors;
 
@@ -22,8 +22,7 @@ const getAccessToken = (dispatch, username) => {
   var data = new FormData();
   data.append("username", username);
 
-  api.post('getAccessToken', data)
-  .then(res => {
+  api.post("getAccessToken", data).then((res) => {
     dispatch(actions.setCurrentMeAccessToken(res.data.Access_token));
     dispatch(actions.setSpotifyPlayerSync(true));
   });
@@ -34,7 +33,9 @@ export default function App(props) {
   const location = useLocation();
 
   const currentMe = useSelector((state) => getCurrentMe(state));
-  const currentMeAccessToken = useSelector((state) => getCurrentMeAccessToken(state));
+  const currentMeAccessToken = useSelector((state) =>
+    getCurrentMeAccessToken(state)
+  );
 
   useEffect(() => {
     if (!currentMeAccessToken && currentMe) {
@@ -44,32 +45,25 @@ export default function App(props) {
 
   let component;
   switch (location && location.pathname) {
-    case '/profile':
-      component = <Profile />
+    case "/profile":
+      component = <Profile />;
       break;
-    case '/playlists':
-      component = <Playlists />
+    case "/playlists":
+      component = <Playlists />;
       break;
-    case '/search':
-      component = <Search />
+    case "/search":
+      component = <Search />;
       break;
     default:
-      component =
-          <Home />
+      component = <Home />;
       break;
   }
 
   return (
     <Box marginBottom={7}>
+      {component}
 
-      { component }
-
-      <Box
-        position="fixed"
-        bottom={0}
-        width="100%"
-        zIndex={2}
-      >
+      <Box position="fixed" bottom={0} width="100%" zIndex={2}>
         <NavBar {...props} />
       </Box>
       <FetchConsents />

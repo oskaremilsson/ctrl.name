@@ -1,22 +1,22 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 const setConsents = (payload) => ({
-  type: 'SET_CONSENTS',
+  type: "SET_CONSENTS",
   payload,
 });
 
 const setMyConsents = (payload) => ({
-  type: 'SET_MY_CONSENTS',
+  type: "SET_MY_CONSENTS",
   payload,
 });
 
 const setRequests = (payload) => ({
-  type: 'SET_REQUESTS',
+  type: "SET_REQUESTS",
   payload,
 });
 
 const setMyRequests = (payload) => ({
-  type: 'SET_MY_REQUESTS',
+  type: "SET_MY_REQUESTS",
   payload,
 });
 
@@ -29,7 +29,7 @@ export const actions = {
 
 function consents(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_CONSENTS':
+    case "SET_CONSENTS":
       return action.payload || null;
     default:
       return state;
@@ -38,7 +38,7 @@ function consents(state = {}, action = {}) {
 
 function myConsents(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_MY_CONSENTS':
+    case "SET_MY_CONSENTS":
       return action.payload || null;
     default:
       return state;
@@ -47,7 +47,7 @@ function myConsents(state = {}, action = {}) {
 
 function requests(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_REQUESTS':
+    case "SET_REQUESTS":
       return action.payload || false;
     default:
       return state;
@@ -56,7 +56,7 @@ function requests(state = {}, action = {}) {
 
 function myRequests(state = {}, action = {}) {
   switch (action.type) {
-    case 'SET_MY_REQUESTS':
+    case "SET_MY_REQUESTS":
       return action.payload || null;
     default:
       return state;

@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectors  } from 'shared/stores';
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectors } from "shared/stores";
 
-import {
-  Box,
-  List,
-  Divider,
-  Card,
-  ListSubheader
-} from '@material-ui/core';
+import { Box, List, Divider, Card, ListSubheader } from "@material-ui/core";
 
-import ArtistListItem from 'shared/components/ArtistListItem';
-import spotify from 'utils/spotify';
+import ArtistListItem from "shared/components/ArtistListItem";
+import spotify from "utils/spotify";
 
 const { getMeAccessToken } = selectors;
 
@@ -23,17 +17,19 @@ export default function TopArtists() {
   useEffect(() => {
     let mounted = true;
     if (accessToken && !artists) {
-      spotify(accessToken).get(`me/top/artists?limit=5&time_range=short_term`)
-        .then(res => {
+      spotify(accessToken)
+        .get(`me/top/artists?limit=5&time_range=short_term`)
+        .then((res) => {
           if (mounted) {
             setArtists(res.data.items);
           }
-        }).catch(_ => {
-          console.log('error');
+        })
+        .catch((_) => {
+          console.log("error");
         });
     }
 
-    return () => mounted = false;
+    return () => (mounted = false);
   }, [accessToken, artists]);
 
   return (
@@ -42,12 +38,13 @@ export default function TopArtists() {
         <Box padding={2}>
           <List>
             <ListSubheader>My Top Artists</ListSubheader>
-            {artists && artists.map((artist, i) => (
-              <Box key={artist.uri + i}>
-                <ArtistListItem artist={artist} />
-                <Divider />
-              </Box>
-            ))}
+            {artists &&
+              artists.map((artist, i) => (
+                <Box key={artist.uri + i}>
+                  <ArtistListItem artist={artist} />
+                  <Divider />
+                </Box>
+              ))}
           </List>
         </Box>
       </Card>

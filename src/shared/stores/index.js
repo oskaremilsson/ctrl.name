@@ -1,34 +1,34 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
 import {
   reducer as me,
   actions as meActions,
   bindSelectors as bindMeSelectors,
-} from './me';
+} from "./me";
 
 import {
   reducer as currentMe,
   actions as currentMeActions,
   bindSelectors as bindCurrentMeSelectors,
-} from './currentMe';
+} from "./currentMe";
 
 import {
   reducer as spotifyPlayer,
   actions as spotifyPlayerActions,
   bindSelectors as bindSpotifyPlayerSelectors,
-} from './spotifyPlayer';
+} from "./spotifyPlayer";
 
 import {
   reducer as playlists,
   actions as playlistsActions,
   bindSelectors as bindPlaylistsSelectors,
-} from './playlists';
+} from "./playlists";
 
 import {
   reducer as consents,
   actions as consentsActions,
   bindSelectors as bindConsentsSelectors,
-} from './consents';
+} from "./consents";
 
 const appReducer = combineReducers({
   me,
@@ -55,7 +55,7 @@ export const selectors = {
 };
 
 const rootReducer = (state, action) => {
-  if (action.type === 'RESET_STORE') {
+  if (action.type === "RESET_STORE") {
     state = {};
   }
 

@@ -1,1 +1,1 @@
-export { default } from './ConsentList';
+export { default } from "./ConsentList";
