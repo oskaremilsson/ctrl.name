@@ -29,8 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PlaylistListItem(props) {
-  const { playlist } = props;
+export default function PlaylistListItem({ playlist }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 

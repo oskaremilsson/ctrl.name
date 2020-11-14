@@ -23,11 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Controller(props) {
+export default function Controller({ player, textColor }) {
   const theme = useTheme();
   const classes = useStyles(theme);
 
-  const { player, textColor } = props;
   const currentMe = useSelector((state) => getCurrentMe(state));
   const [openSwitch, setOpenSwitch] = useState(false);
 

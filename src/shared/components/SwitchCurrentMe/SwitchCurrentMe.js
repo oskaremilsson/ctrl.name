@@ -34,11 +34,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SwitchCurrentMe(props) {
+export default function SwitchCurrentMe({ open, setOpen }) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
-  const { open, setOpen } = props;
 
   const currentMe = useSelector((state) => getCurrentMe(state));
   const me = useSelector((state) => getMe(state));
