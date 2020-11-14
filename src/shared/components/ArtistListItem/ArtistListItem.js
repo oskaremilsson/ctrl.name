@@ -29,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 export default function ArtistListItem({ artist }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -73,7 +77,7 @@ export default function ArtistListItem({ artist }) {
               {artist &&
                 artist.followers &&
                 artist.followers.total &&
-                `${artist.followers.total} followers`}
+                `${numberWithCommas(artist.followers.total)} followers`}
             </Typography>
           }
         />
