@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -16,9 +17,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar(props) {
+export default function NavBar() {
   const classes = useStyles();
-  const { history, location } = props;
+  const history = useHistory();
+  const location = useLocation();
   const [value, setValue] = useState();
 
   const navigate = (_, newValue) => {

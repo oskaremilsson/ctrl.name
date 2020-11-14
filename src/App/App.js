@@ -64,7 +64,7 @@ export default function App(props) {
       {component}
 
       <Box position="fixed" bottom={0} width="100%" zIndex={2}>
-        <NavBar {...props} />
+        <NavBar />
       </Box>
       <FetchConsents />
     </Box>
