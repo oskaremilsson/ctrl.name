@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { actions } from "shared/stores";
 
@@ -10,9 +11,9 @@ import LoadingPage from "pages/LoadingPage";
 
 import spotify from "utils/spotify";
 
-export default function Bouncer(props) {
+export default function Bouncer() {
   const dispatch = useDispatch();
-  const { history } = props;
+  const history = useHistory();
   const my_tokens = JSON.parse(localStorage.getItem("my_tokens"));
   const [loggedIn, setLoggedIn] = useState(undefined);
 
@@ -35,11 +36,11 @@ export default function Bouncer(props) {
 
   let component;
   if (my_tokens && !loggedIn) {
-    component = <LoadingPage {...props} />;
+    component = <LoadingPage />;
   } else if (loggedIn) {
-    component = <App {...props} />;
+    component = <App />;
   } else {
-    component = <LandingPage {...props} />;
+    component = <LandingPage />;
   }
 
   return <Box>{component}</Box>;
