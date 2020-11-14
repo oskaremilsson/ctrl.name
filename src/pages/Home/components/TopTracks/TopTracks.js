@@ -6,13 +6,20 @@ import { Box, List, Divider, Card, ListSubheader } from "@material-ui/core";
 
 import TrackListItem from "shared/components/TrackListItem";
 import spotify from "utils/spotify";
+import { sameDay } from "utils/utils";
 
 const { getMeAccessToken } = selectors;
 
 export default function TopTracks() {
   const accessToken = useSelector((state) => getMeAccessToken(state));
 
-  const [tracks, setTracks] = useState(false);
+  const storedTopTracks = JSON.parse(localStorage.getItem("top_tracks"));
+  let tracksDefaultState = false;
+  if (storedTopTracks && sameDay(new Date(storedTopTracks.timestamp), new Date())) {
+    tracksDefaultState = storedTopTracks.tracks;
+  }
+
+  const [tracks, setTracks] = useState(tracksDefaultState);
 
   useEffect(() => {
     let mounted = true;
@@ -22,6 +29,10 @@ export default function TopTracks() {
         .then((res) => {
           if (mounted) {
             setTracks(res.data.items);
+            localStorage.setItem("top_tracks", JSON.stringify({
+              timestamp: new Date(),
+              tracks: res.data.items,
+            }));
           }
         })
         .catch((_) => {

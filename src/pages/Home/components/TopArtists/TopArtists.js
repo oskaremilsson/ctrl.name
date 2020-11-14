@@ -6,13 +6,20 @@ import { Box, List, Divider, Card, ListSubheader } from "@material-ui/core";
 
 import ArtistListItem from "shared/components/ArtistListItem";
 import spotify from "utils/spotify";
+import { sameDay } from "utils/utils";
 
 const { getMeAccessToken } = selectors;
 
 export default function TopArtists() {
   const accessToken = useSelector((state) => getMeAccessToken(state));
 
-  const [artists, setArtists] = useState(false);
+  const storedTopArtists = JSON.parse(localStorage.getItem("top_tracks"));
+  let artistsDefaultState = false;
+  if (storedTopArtists && sameDay(new Date(storedTopArtists.timestamp), new Date())) {
+    artistsDefaultState = storedTopArtists.artists;
+  }
+
+  const [artists, setArtists] = useState(artistsDefaultState);
 
   useEffect(() => {
     let mounted = true;
@@ -22,6 +29,10 @@ export default function TopArtists() {
         .then((res) => {
           if (mounted) {
             setArtists(res.data.items);
+            localStorage.setItem("top_artists", JSON.stringify({
+              timestamp: new Date(),
+              artists: res.data.items,
+            }));
           }
         })
         .catch((_) => {
