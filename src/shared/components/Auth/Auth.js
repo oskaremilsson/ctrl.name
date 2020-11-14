@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useHistory } from "react-router-dom";
 import queryString from "query-string";
 import { Box, CircularProgress } from "@material-ui/core";
 
 import api from "utils/api";
 
-export default function Auth(props) {
-  const { location } = props;
+export default function Auth() {
+  const location = useLocation();
+  const history = useHistory();
 
   const query = queryString.parse(location.search);
   const code = query && query.code;
@@ -41,10 +43,10 @@ export default function Auth(props) {
       api.post("storeRefreshToken", data).then((res) => {
         setUploaded(true);
 
-        props.history.replace("/");
+        history.replace("/");
       });
     }
-  }, [code, loaded, props.history, refreshToken, uploaded]);
+  }, [code, loaded, history, refreshToken, uploaded]);
 
   return (
     <Box

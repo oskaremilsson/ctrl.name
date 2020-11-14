@@ -28,7 +28,7 @@ const getAccessToken = (dispatch, username) => {
   });
 };
 
-export default function App(props) {
+export default function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
