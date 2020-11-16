@@ -55,7 +55,7 @@ export const selectors = {
 };
 
 const rootReducer = (state, action) => {
-  if (action.type === "RESET_STORE") {
+  if (action.type === "LOGOUT") {
     state = {};
   }
 

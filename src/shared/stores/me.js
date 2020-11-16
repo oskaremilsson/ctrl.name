@@ -10,9 +10,14 @@ const setMeAccessToken = (payload) => ({
   payload,
 });
 
+const logout = () => ({
+  type: "LOGOUT",
+});
+
 export const actions = {
   setMe,
   setMeAccessToken,
+  logout,
 };
 
 function me(state = {}, action = {}) {

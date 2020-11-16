@@ -9,10 +9,16 @@ import MyRequests from "./components/MyRequests";
 import MyConsentList from "./components/MyConsentList";
 import ConsentList from "./components/ConsentList";
 
+import Logout from "./components/Logout";
+
 export default function Profile() {
   return (
     <Container maxWidth="md">
       <Box paddingBottom={3} paddingTop={3}>
+        <Box textAlign="right">
+          <Logout />
+        </Box>
+
         <Box marginBottom={5}>
           <ProfileHeader />
         </Box>
