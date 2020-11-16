@@ -25,7 +25,7 @@ _Saved in local storage in order to only fetch once per day_
 ### Playlists
 _Saved in redux state in order to only fetch once per app-launch_
 * See your Spotify playlists
-* See Spotify playlists for the current ctrl.name
+* See public Spotify playlists for the current ctrl.name
 ---
 ### Search
 Free text search Spotify for:
@@ -39,6 +39,7 @@ Free text search Spotify for:
 * Send request to get consent from a ctrl.name user
 * See and manage list of consents
 * See and manage list of requests
+* Logout
 
 ---
 ---
