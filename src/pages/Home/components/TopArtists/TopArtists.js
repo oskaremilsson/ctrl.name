@@ -13,7 +13,7 @@ const { getMeAccessToken } = selectors;
 export default function TopArtists() {
   const accessToken = useSelector((state) => getMeAccessToken(state));
 
-  const storedTopArtists = JSON.parse(localStorage.getItem("top_tracks"));
+  const storedTopArtists = JSON.parse(localStorage.getItem("top_artists"));
   let artistsDefaultState = false;
   if (storedTopArtists && sameDay(new Date(storedTopArtists.timestamp), new Date())) {
     artistsDefaultState = storedTopArtists.artists;
