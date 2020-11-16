@@ -8,6 +8,7 @@ import {
   Divider,
   CircularProgress,
   Avatar,
+  Typography,
 } from "@material-ui/core";
 
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
@@ -18,24 +19,19 @@ import spotify from "utils/spotify";
 const {
   getPlaylists,
   getCurrentMe,
-  getCurrentMeAccessToken,
   getMe,
   getMeAccessToken,
 } = selectors;
 
 export default function Playlists() {
   const dispatch = useDispatch();
-  const currentMeAccessToken = useSelector((state) =>
-    getCurrentMeAccessToken(state)
-  );
   const currentMe = useSelector((state) => getCurrentMe(state));
   const me = useSelector((state) => getMe(state));
   const meAccessToken = useSelector((state) => getMeAccessToken(state));
 
   const storedPlaylists = useSelector((state) => getPlaylists(state));
 
-  const [selectedPlaylists, setSelectedPlaylists] = useState("me");
-  const [accessToken, setAccessToken] = useState(false);
+  const [selectedPlaylists, setSelectedPlaylists] = useState(undefined);
   const [loadMore, setLoadMore] = useState(false);
   const [playlists, setPlaylists] = useState([]);
   const [nextQuery, setNextQuery] = useState(undefined);
@@ -50,54 +46,35 @@ export default function Playlists() {
     currentMe.images &&
     currentMe.images[0] &&
     currentMe.images[0].url;
+  
+  useEffect(() => {
+    if (me) {
+      setSelectedPlaylists(me.id);
+    }
+  }, [me]);
 
   useEffect(() => {
-    if (
-      meAccessToken &&
-      currentMeAccessToken &&
-      storedPlaylists &&
-      currentMe &&
-      me &&
-      selectedPlaylists &&
-      !accessToken
-    ) {
-      let selectedId;
-      if (selectedPlaylists === "me") {
-        selectedId = me.id;
-        setAccessToken(meAccessToken);
-      } else {
-        selectedId = currentMe.id;
-        setAccessToken(currentMeAccessToken);
-      }
-
-      if (!storedPlaylists[selectedId]) {
+    if (storedPlaylists && selectedPlaylists) {
+      if (!storedPlaylists[selectedPlaylists]) {
         setLoadMore(true);
       } else {
-        setPlaylists(storedPlaylists[selectedId]);
+        setPlaylists(storedPlaylists[selectedPlaylists]);
       }
     }
-  }, [
-    accessToken,
-    selectedPlaylists,
-    storedPlaylists,
-    currentMe,
-    currentMeAccessToken,
-    me,
-    meAccessToken,
-  ]);
+  }, [selectedPlaylists, storedPlaylists]);
 
   useEffect(() => {
     let mounted = true;
-    if (accessToken && loadMore) {
+    if (meAccessToken && loadMore && me && selectedPlaylists) {
       const query = nextQuery ? nextQuery.split("?")[1] : "";
-      spotify(accessToken)
-        .get(`me/playlists?${query}`)
+      const user = selectedPlaylists === me.id ? "me" : `users/${selectedPlaylists}`
+      spotify(meAccessToken)
+        .get(`${user}/playlists?${query}`)
         .then((res) => {
           if (mounted) {
             setLoadMore(false);
             setPlaylists((playlists) => playlists.concat(res.data.items));
             setNextQuery(res.data.next);
-
             if (res.data.next) {
               setLoadMore(true);
             } else {
@@ -111,35 +88,25 @@ export default function Playlists() {
     }
 
     return () => (mounted = false);
-  }, [accessToken, playlists, nextQuery, loadMore, currentMe]);
+  }, [meAccessToken, playlists, nextQuery, loadMore, me, selectedPlaylists]);
 
   useEffect(() => {
     if (
-      me &&
-      currentMe &&
       selectedPlaylists &&
       allLoaded &&
       playlists &&
       storedPlaylists
     ) {
-      let selectedId;
-      if (selectedPlaylists === "me") {
-        selectedId = me.id;
-      } else {
-        selectedId = currentMe.id;
-      }
       setAllLoaded(false);
       dispatch(
         actions.setPlaylists({
           ...storedPlaylists,
-          ...{ [selectedId]: playlists },
+          ...{ [selectedPlaylists]: playlists },
         })
       );
     }
   }, [
     dispatch,
-    me,
-    currentMe,
     selectedPlaylists,
     allLoaded,
     playlists,
@@ -156,21 +123,28 @@ export default function Playlists() {
             if (value !== null) {
               setSelectedPlaylists(value);
               setPlaylists([]);
-              setAccessToken(undefined);
               setNextQuery(undefined);
             }
           }}
           aria-label="playlist selector"
         >
-          <ToggleButton value="me" aria-label="my playlists">
-            <Avatar alt={meAvatarAlt} src={meAvatarImg} />
-          </ToggleButton>
-          {currentMe && me && currentMe.id !== me.id && (
-            <ToggleButton value="currentMe" aria-label="currentme playlists">
+          {me &&
+            <ToggleButton value={me.id} aria-label="my playlists">
+              <Avatar alt={meAvatarAlt} src={meAvatarImg} />
+            </ToggleButton>
+          }
+          {currentMe && me && currentMe.id !== me.id &&
+            <ToggleButton value={currentMe.id} aria-label="currentMe playlists">
               <Avatar alt={currentMeAvatarAlt} src={currentMeAvatarImg} />
             </ToggleButton>
-          )}
+          }
         </ToggleButtonGroup>
+      </Box>
+
+      <Box padding={2} textAlign="center">
+        <Typography color="primary">
+          ctrl.{ selectedPlaylists }
+        </Typography>
       </Box>
 
       <List>
