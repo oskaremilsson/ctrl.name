@@ -1,5 +1,5 @@
 # ctrl.name - Shared Spotify control
-ReactJS app powered by [spotify-tokenshark](https://github.com/oskaremilsson/spotify-tokenshark).
+ReactJS app powered by [spotify-tokenshark](https://github.com/oskaremilsson/spotify-tokenshark)
 
 ## Features
 ### Global
