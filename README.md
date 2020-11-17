@@ -50,7 +50,7 @@ Free text search Spotify for:
 * node _(14)_
 * yarn
 * [Spotify API](https://developer.spotify.com/) app
-* [spotify-controller](https://github.com/oskaremilsson/spotify-controller) running
+* [spotify-tokenshark](https://github.com/oskaremilsson/spotify-tokenshark) running
 
 ### First time setup
 * `cp env.example .env`
