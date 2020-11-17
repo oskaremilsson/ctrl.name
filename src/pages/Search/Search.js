@@ -77,7 +77,7 @@ export default function Search() {
           }}
           fullWidth
           margin="normal"
-          label="Search"
+          label="Search Spotify"
           InputLabelProps={{
             shrink: true,
           }}
