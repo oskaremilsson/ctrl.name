@@ -45,6 +45,7 @@ export default function DeleteMyData() {
 
       <Dialog
         open={warning}
+        onClose={() => { setWarning(false) }}
       >
         <Box padding={2}>
           <Typography>
