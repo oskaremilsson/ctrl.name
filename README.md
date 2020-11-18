@@ -13,7 +13,7 @@ ReactJS app powered by [spotify-tokenshark](https://github.com/oskaremilsson/spo
 * Play/Pause
 * Skip track
 * Seek in track
-* Switch ctrl
+* Switch user to control
 * Background color based on album art
 * Text/icon color based on background color
 
