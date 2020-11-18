@@ -10,12 +10,14 @@ import MyConsentList from "./components/MyConsentList";
 import ConsentList from "./components/ConsentList";
 
 import Logout from "./components/Logout";
+import DeleteMyData from "./components/DeleteMyData";
 
 export default function Profile() {
   return (
     <Container maxWidth="md">
       <Box paddingBottom={3} paddingTop={3}>
-        <Box textAlign="right">
+        <Box display="flex" justifyContent="space-between">
+          <DeleteMyData />
           <Logout />
         </Box>
 

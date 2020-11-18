@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectors, actions } from "shared/stores";
 
@@ -18,19 +18,10 @@ import api from "utils/api";
 
 const { getCurrentMe, getCurrentMeAccessToken } = selectors;
 
-const getAccessToken = (dispatch, username) => {
-  var data = new FormData();
-  data.append("username", username);
-
-  api.post("getAccessToken", data).then((res) => {
-    dispatch(actions.setCurrentMeAccessToken(res.data.Access_token));
-    dispatch(actions.setSpotifyPlayerSync(true));
-  });
-};
-
 export default function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
 
   const currentMe = useSelector((state) => getCurrentMe(state));
   const currentMeAccessToken = useSelector((state) =>
@@ -39,9 +30,20 @@ export default function App() {
 
   useEffect(() => {
     if (!currentMeAccessToken && currentMe) {
-      getAccessToken(dispatch, currentMe.id);
+      let data = new FormData();
+      data.append("username", currentMe.id);
+
+      api.post("getAccessToken", data).then((res) => {
+        dispatch(actions.setCurrentMeAccessToken(res.data.Access_token));
+        dispatch(actions.setSpotifyPlayerSync(true));
+      }).catch((_) => {
+        dispatch(actions.logout());
+        localStorage.clear();
+        history.replace("/");
+        window.location.reload();
+      });
     }
-  }, [dispatch, currentMe, currentMeAccessToken]);
+  }, [dispatch, history, currentMe, currentMeAccessToken]);
 
   let component;
   switch (location && location.pathname) {

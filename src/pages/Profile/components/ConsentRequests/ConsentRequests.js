@@ -69,6 +69,8 @@ export default function ConsentRequests() {
     if (!requests) {
       api.post("getRequests").then((res) => {
         dispatch(actions.setRequests(res.data && res.data.Requests));
+      }).catch(_ => {
+        
       });
     }
   }, [requests, dispatch]);

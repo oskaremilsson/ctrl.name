@@ -13,7 +13,9 @@ const post = (url, data = new FormData()) => {
 
   if (!data.has("code")) {
     const my_tokens = JSON.parse(localStorage.getItem("my_tokens"));
-    data.append("refresh_token", my_tokens.refresh_token);
+    if (my_tokens) {
+      data.append("refresh_token", my_tokens.refresh_token);
+    }
   }
 
   api.interceptors.request.use(function (config) {
