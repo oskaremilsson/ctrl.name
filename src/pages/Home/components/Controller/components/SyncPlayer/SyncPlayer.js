@@ -23,7 +23,7 @@ export default function SyncPlayer() {
       spotify(currentMeAccessToken)
         .get("me/player")
         .then((res) => {
-          if (res.status === 200) {
+          if (res.status === 200 && res?.data?.currently_playing_type === "track") {
             dispatch(actions.setSpotifyPlayer(res.data));
           } else {
             dispatch(actions.setSpotifyPlayer(undefined));
