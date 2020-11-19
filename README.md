@@ -47,7 +47,7 @@ Free text search Spotify for:
 # Development
 
 ### Prerequisites
-* node _(14)_
+* node
 * yarn
 * [Spotify API](https://developer.spotify.com/) app
 * [spotify-tokenshark](https://github.com/oskaremilsson/spotify-tokenshark) running
