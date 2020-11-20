@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { actions } from "shared/stores";
 
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Button } from "@material-ui/core";
 import { ExitToApp } from "@material-ui/icons";
 
 export default function Logout() {
@@ -23,7 +23,14 @@ export default function Logout() {
 
   return (
     <Box display="flex">
-      <Button variant="contained" color="primary" fullWidth="true">
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth={true}
+        onClick={() => {
+          setExecute(true);
+        }}
+      >
         <ExitToApp /> Logout
       </Button>
     </Box>

@@ -13,7 +13,7 @@ import Settings from "./components/Settings";
 import { Settings as SettingsIcon } from "@material-ui/icons";
 
 export default function Profile() {
-  const [settingsOpen, setSettingsOpen] = useState(true);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
     <Container maxWidth="md">
