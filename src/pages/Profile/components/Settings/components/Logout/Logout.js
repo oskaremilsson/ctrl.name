@@ -25,13 +25,14 @@ export default function Logout() {
     <Box display="flex">
       <Button
         variant="contained"
-        color="primary"
+        color="secondary"
         fullWidth={true}
         onClick={() => {
           setExecute(true);
         }}
+        startIcon={<ExitToApp />}
       >
-        <ExitToApp /> Logout
+        Logout
       </Button>
     </Box>
   );

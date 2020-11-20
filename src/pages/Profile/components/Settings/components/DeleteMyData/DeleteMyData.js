@@ -2,7 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { actions } from "shared/stores";
 
-import { Box, Dialog, Typography, Button, Link } from "@material-ui/core";
+import {
+  Box,
+  Dialog,
+  Typography,
+  Button,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Divider,
+} from "@material-ui/core";
+
+import { DeleteForever } from "@material-ui/icons";
 
 import api from "utils/api";
 
@@ -29,10 +41,23 @@ export default function DeleteMyData() {
   }, [dispatch, execute]);
 
   return (
-    <Box display="flex" justifyContent="center">
-      <Link onClick={() => setWarning(true)} component="div">
-        Delete all my data
-      </Link>
+    <Box>
+      <List>
+        <ListItem button onClick={() => setWarning(true)}>
+          <ListItemAvatar>
+            <DeleteForever color="primary" />
+          </ListItemAvatar>
+          <ListItemText
+            disableTypography={true}
+            primary={
+              <Typography variant="body1" color="primary">
+                Delete all my data
+              </Typography>
+            }
+          />
+        </ListItem>
+        <Divider />
+      </List>
 
       <Dialog
         open={warning}
@@ -41,19 +66,30 @@ export default function DeleteMyData() {
         }}
       >
         <Box padding={2}>
+          <Typography variant="h5" paragraph>
+            Delete all my data stored by ctrl.name
+          </Typography>
           <Typography>
-            We will delete all data stored connected to your username. You are
-            free to login again in future.
+            It's possible to change your mind in the future, simply login again!
           </Typography>
 
-          <Box marginTop={2}>
+          <Box marginTop={2} display="flex" justifyContent="space-between">
             <Button
               color="primary"
               onClick={() => {
                 setExecute(true);
               }}
             >
-              Delete all my data
+              Delete data
+            </Button>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => {
+                setWarning(false);
+              }}
+            >
+              Keep data
             </Button>
           </Box>
         </Box>
