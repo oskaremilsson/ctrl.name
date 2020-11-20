@@ -9,8 +9,8 @@ const { getMe } = selectors;
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    width: theme.spacing(10),
-    height: theme.spacing(10),
+    width: theme.spacing(20),
+    height: theme.spacing(20),
   },
 }));
 
@@ -32,12 +32,10 @@ export default function ProfileHeader() {
       <Box marginBottom={2}>
         <Avatar alt={username} src={myAvatarImg} className={classes.avatar} />
       </Box>
-      <Typography variant="h5" color="primary">
-        {name}
+      <Typography variant="h4" color="primary">
+        {name || username}
       </Typography>
-      <Typography variant="subtitle1" color="secondary">
-        ctrl.{username}
-      </Typography>
+      <Typography color="secondary">ctrl.{username}</Typography>
     </Box>
   );
 }
