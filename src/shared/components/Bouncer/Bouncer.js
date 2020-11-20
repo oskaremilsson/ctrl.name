@@ -43,9 +43,7 @@ export default function Bouncer() {
         .get("me")
         .then((res) => {
           setLoggedIn(true);
-
           dispatch(actions.setMe(res.data));
-
           dispatch(actions.setCurrentMe(res.data));
         })
         .catch((_) => {

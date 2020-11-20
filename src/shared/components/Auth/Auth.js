@@ -28,25 +28,25 @@ export default function Auth() {
           "my_tokens",
           JSON.stringify({
             refresh_token: res.data.Refresh_token,
-            access_token: res.data.Access_token,
           })
         );
 
         setRefreshToken(res.data.Refresh_token);
       });
     }
+  }, [code, loaded]);
 
+  useEffect(() => {
     if (refreshToken && !uploaded) {
       let data = new FormData();
       data.append("refresh_token", refreshToken);
 
-      api.post("storeRefreshToken", data).then((res) => {
+      api.post("storeRefreshToken", data).then((_) => {
         setUploaded(true);
-
         history.replace("/");
       });
     }
-  }, [code, loaded, history, refreshToken, uploaded]);
+  }, [refreshToken, uploaded, history]);
 
   return (
     <Box
