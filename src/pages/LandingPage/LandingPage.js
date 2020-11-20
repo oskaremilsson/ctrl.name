@@ -11,22 +11,19 @@ export default function LandingPage() {
       alignItems="center"
       justifyContent="center"
       minHeight="100vh"
+      flexDirection="column"
     >
-      <Box
-        maxWidth="600px"
-        display="flex"
-        justifyContent="center"
-        flexDirection="column"
-      >
+      <Box maxWidth="600px">
         <img src={headerImage} alt="header_img" width="100%" />
-        <Button
-          variant="contained"
-          color="primary"
-          href={`https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_SPOTIFY_REDIRECT_URI}&scope=${process.env.REACT_APP_SPOTIFY_SCOPE}`}
-        >
-          Login
-        </Button>
       </Box>
+
+      <Button
+        variant="contained"
+        color="primary"
+        href={`https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_SPOTIFY_REDIRECT_URI}&scope=${process.env.REACT_APP_SPOTIFY_SCOPE}`}
+      >
+        Login
+      </Button>
     </Box>
   );
 }
