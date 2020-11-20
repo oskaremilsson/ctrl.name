@@ -1,5 +1,5 @@
 ![ctrl.name](/public/share_img.jpg?raw=true "ctrl.name")
-# ctrl.name - Shared Spotify control
+# ctrl.name - Share Spotify control
 ReactJS app powered by [spotify-tokenshark](https://github.com/oskaremilsson/spotify-tokenshark)
 
 ## Features
