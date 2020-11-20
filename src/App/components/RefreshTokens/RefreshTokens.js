@@ -50,7 +50,7 @@ export default function RefreshTokens() {
       setRefreshTimer(
         setInterval(() => {
           setExecute(true);
-        }, process.env.REACT_APP_TOKEN_REFRESH_MS_TIME || 1800000)
+        }, process.env.REACT_APP_TOKEN_REFRESH_MS_TIME || 900000)
       );
     }
   }, [dispatch, my_tokens, history, me, currentMe, refreshTimer, execute]);
