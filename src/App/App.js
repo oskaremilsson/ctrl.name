@@ -11,6 +11,7 @@ import Playlists from "pages/Playlists";
 import Search from "pages/Search";
 
 import FetchConsents from "./components/FetchConsents";
+import RefreshTokens from "./components/RefreshTokens";
 
 import { Box } from "@material-ui/core";
 
@@ -36,7 +37,7 @@ export default function App() {
       api
         .post("getAccessToken", data)
         .then((res) => {
-          dispatch(actions.setCurrentMeAccessToken(res.data.Access_token));
+          dispatch(actions.setCurrentMeAccessToken(res?.data?.Access_token));
           dispatch(actions.setSpotifyPlayerSync(true));
         })
         .catch((_) => {
@@ -72,6 +73,7 @@ export default function App() {
         <NavBar />
       </Box>
       <FetchConsents />
+      <RefreshTokens />
     </Box>
   );
 }
