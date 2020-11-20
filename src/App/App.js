@@ -33,15 +33,18 @@ export default function App() {
       let data = new FormData();
       data.append("username", currentMe.id);
 
-      api.post("getAccessToken", data).then((res) => {
-        dispatch(actions.setCurrentMeAccessToken(res.data.Access_token));
-        dispatch(actions.setSpotifyPlayerSync(true));
-      }).catch((_) => {
-        dispatch(actions.logout());
-        localStorage.clear();
-        history.replace("/");
-        window.location.reload();
-      });
+      api
+        .post("getAccessToken", data)
+        .then((res) => {
+          dispatch(actions.setCurrentMeAccessToken(res.data.Access_token));
+          dispatch(actions.setSpotifyPlayerSync(true));
+        })
+        .catch((_) => {
+          dispatch(actions.logout());
+          localStorage.clear();
+          history.replace("/");
+          window.location.reload();
+        });
     }
   }, [dispatch, history, currentMe, currentMeAccessToken]);
 

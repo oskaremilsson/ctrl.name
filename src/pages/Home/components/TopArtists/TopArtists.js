@@ -15,7 +15,10 @@ export default function TopArtists() {
 
   const storedTopArtists = JSON.parse(localStorage.getItem("top_artists"));
   let artistsDefaultState = false;
-  if (storedTopArtists && sameDay(new Date(storedTopArtists.timestamp), new Date())) {
+  if (
+    storedTopArtists &&
+    sameDay(new Date(storedTopArtists.timestamp), new Date())
+  ) {
     artistsDefaultState = storedTopArtists.artists;
   }
 
@@ -29,10 +32,13 @@ export default function TopArtists() {
         .then((res) => {
           if (mounted) {
             setArtists(res.data.items);
-            localStorage.setItem("top_artists", JSON.stringify({
-              timestamp: new Date(),
-              artists: res.data.items,
-            }));
+            localStorage.setItem(
+              "top_artists",
+              JSON.stringify({
+                timestamp: new Date(),
+                artists: res.data.items,
+              })
+            );
           }
         })
         .catch((_) => {

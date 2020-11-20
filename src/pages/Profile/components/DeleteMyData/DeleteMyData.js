@@ -16,15 +16,16 @@ export default function DeleteMyData() {
 
   useEffect(() => {
     if (execute) {
-      api.post("deleteMyData")
-      .then((_) => {
-        dispatch(actions.logout());
-        localStorage.clear();
-        setDone(true);
-      })
-      .catch((_) => {
-        console.log(_);
-      });
+      api
+        .post("deleteMyData")
+        .then((_) => {
+          dispatch(actions.logout());
+          localStorage.clear();
+          setDone(true);
+        })
+        .catch((_) => {
+          console.log(_);
+        });
     }
   }, [dispatch, execute]);
 
@@ -37,7 +38,7 @@ export default function DeleteMyData() {
           </IconButton>
           <Box marginTop={-1}>
             <Typography variant="caption" color="textSecondary">
-                Delete my data
+              Delete my data
             </Typography>
           </Box>
         </Box>
@@ -45,43 +46,54 @@ export default function DeleteMyData() {
 
       <Dialog
         open={warning}
-        onClose={() => { setWarning(false) }}
+        onClose={() => {
+          setWarning(false);
+        }}
       >
         <Box padding={2}>
           <Typography>
-            We will delete all data stored connected to your username. You are free to login again in future.
-          </Typography> 
+            We will delete all data stored connected to your username. You are
+            free to login again in future.
+          </Typography>
 
           <Box marginTop={2}>
             <Button
               variant="contained"
               color="primary"
-              onClick={() => { setExecute(true) }}
+              onClick={() => {
+                setExecute(true);
+              }}
             >
-                Delete all my data
+              Delete all my data
             </Button>
           </Box>
         </Box>
       </Dialog>
 
-      <Dialog
-        fullScreen
-        open={done}
-      >
+      <Dialog fullScreen open={done}>
         <Box padding={3}>
           <Box marginBottom={5}>
-            <Typography variant="h2" color="primary" paragraph>Sad to see you go</Typography>
-            <Typography variant="h5" paragraph>All your data stored by ctrl.name have been deleted.</Typography>
-            <Typography variant="h5" color="secondary"> See you later aligator!</Typography>
+            <Typography variant="h2" color="primary" paragraph>
+              Sad to see you go
+            </Typography>
+            <Typography variant="h5" paragraph>
+              All your data stored by ctrl.name have been deleted.
+            </Typography>
+            <Typography variant="h5" color="secondary">
+              {" "}
+              See you later aligator!
+            </Typography>
           </Box>
 
           <Box>
             <Button
               variant="contained"
               color="primary"
-              onClick={() => { window.location.reload(); }}
+              onClick={() => {
+                window.location.reload();
+              }}
             >
-                Bye, bye
+              Bye, bye
             </Button>
           </Box>
         </Box>

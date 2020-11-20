@@ -16,12 +16,7 @@ import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import PlaylistListItem from "shared/components/PlaylistListItem";
 import spotify from "utils/spotify";
 
-const {
-  getPlaylists,
-  getCurrentMe,
-  getMe,
-  getMeAccessToken,
-} = selectors;
+const { getPlaylists, getCurrentMe, getMe, getMeAccessToken } = selectors;
 
 export default function Playlists() {
   const dispatch = useDispatch();
@@ -46,7 +41,7 @@ export default function Playlists() {
     currentMe.images &&
     currentMe.images[0] &&
     currentMe.images[0].url;
-  
+
   useEffect(() => {
     if (me) {
       setSelectedPlaylists(me.id);
@@ -67,7 +62,8 @@ export default function Playlists() {
     let mounted = true;
     if (meAccessToken && loadMore && me && selectedPlaylists) {
       const query = nextQuery ? nextQuery.split("?")[1] : "";
-      const user = selectedPlaylists === me.id ? "me" : `users/${selectedPlaylists}`
+      const user =
+        selectedPlaylists === me.id ? "me" : `users/${selectedPlaylists}`;
       spotify(meAccessToken)
         .get(`${user}/playlists?${query}`)
         .then((res) => {
@@ -91,12 +87,7 @@ export default function Playlists() {
   }, [meAccessToken, playlists, nextQuery, loadMore, me, selectedPlaylists]);
 
   useEffect(() => {
-    if (
-      selectedPlaylists &&
-      allLoaded &&
-      playlists &&
-      storedPlaylists
-    ) {
+    if (selectedPlaylists && allLoaded && playlists && storedPlaylists) {
       setAllLoaded(false);
       dispatch(
         actions.setPlaylists({
@@ -105,13 +96,7 @@ export default function Playlists() {
         })
       );
     }
-  }, [
-    dispatch,
-    selectedPlaylists,
-    allLoaded,
-    playlists,
-    storedPlaylists,
-  ]);
+  }, [dispatch, selectedPlaylists, allLoaded, playlists, storedPlaylists]);
 
   return (
     <Box padding={2}>
@@ -128,23 +113,21 @@ export default function Playlists() {
           }}
           aria-label="playlist selector"
         >
-          {me &&
+          {me && (
             <ToggleButton value={me.id} aria-label="my playlists">
               <Avatar alt={meAvatarAlt} src={meAvatarImg} />
             </ToggleButton>
-          }
-          {currentMe && me && currentMe.id !== me.id &&
+          )}
+          {currentMe && me && currentMe.id !== me.id && (
             <ToggleButton value={currentMe.id} aria-label="currentMe playlists">
               <Avatar alt={currentMeAvatarAlt} src={currentMeAvatarImg} />
             </ToggleButton>
-          }
+          )}
         </ToggleButtonGroup>
       </Box>
 
       <Box padding={2} textAlign="center">
-        <Typography color="primary">
-          ctrl.{ selectedPlaylists }
-        </Typography>
+        <Typography color="primary">ctrl.{selectedPlaylists}</Typography>
       </Box>
 
       <List>

@@ -15,7 +15,10 @@ export default function TopTracks() {
 
   const storedTopTracks = JSON.parse(localStorage.getItem("top_tracks"));
   let tracksDefaultState = false;
-  if (storedTopTracks && sameDay(new Date(storedTopTracks.timestamp), new Date())) {
+  if (
+    storedTopTracks &&
+    sameDay(new Date(storedTopTracks.timestamp), new Date())
+  ) {
     tracksDefaultState = storedTopTracks.tracks;
   }
 
@@ -29,10 +32,13 @@ export default function TopTracks() {
         .then((res) => {
           if (mounted) {
             setTracks(res.data.items);
-            localStorage.setItem("top_tracks", JSON.stringify({
-              timestamp: new Date(),
-              tracks: res.data.items,
-            }));
+            localStorage.setItem(
+              "top_tracks",
+              JSON.stringify({
+                timestamp: new Date(),
+                tracks: res.data.items,
+              })
+            );
           }
         })
         .catch((_) => {

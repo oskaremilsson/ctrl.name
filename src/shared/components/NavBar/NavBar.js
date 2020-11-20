@@ -34,7 +34,12 @@ export default function NavBar() {
   }, [location]);
 
   return (
-    <BottomNavigation className={classes.root} value={value} onChange={navigate} showLabels>
+    <BottomNavigation
+      className={classes.root}
+      value={value}
+      onChange={navigate}
+      showLabels
+    >
       <BottomNavigationAction value="/" label="Home" icon={<HomeIcon />} />
       <BottomNavigationAction
         value="/playlists"

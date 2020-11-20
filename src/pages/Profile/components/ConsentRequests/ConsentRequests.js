@@ -67,11 +67,12 @@ export default function ConsentRequests() {
 
   useEffect(() => {
     if (!requests) {
-      api.post("getRequests").then((res) => {
-        dispatch(actions.setRequests(res.data && res.data.Requests));
-      }).catch(_ => {
-        
-      });
+      api
+        .post("getRequests")
+        .then((res) => {
+          dispatch(actions.setRequests(res.data && res.data.Requests));
+        })
+        .catch((_) => {});
     }
   }, [requests, dispatch]);
 

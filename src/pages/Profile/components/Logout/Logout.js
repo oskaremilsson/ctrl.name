@@ -28,9 +28,7 @@ export default function Logout() {
           <ExitToApp />
         </IconButton>
         <Box marginTop={-1}>
-          <Typography variant="caption">
-              Logout
-          </Typography>
+          <Typography variant="caption">Logout</Typography>
         </Box>
       </Box>
     </Box>

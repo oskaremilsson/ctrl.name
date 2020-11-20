@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const numberWithCommas = (x) => {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
 export default function ArtistListItem({ artist }) {
   const classes = useStyles();
