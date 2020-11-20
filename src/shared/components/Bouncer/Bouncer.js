@@ -17,12 +17,12 @@ const { getMeAccessToken } = selectors;
 export default function Bouncer() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const my_tokens = JSON.parse(localStorage.getItem("my_tokens"));
+  const refresh_token = localStorage.getItem("refresh_token");
   const accessToken = useSelector((state) => getMeAccessToken(state));
   const [loggedIn, setLoggedIn] = useState(undefined);
 
   useEffect(() => {
-    if (my_tokens && !loggedIn && !accessToken) {
+    if (refresh_token && !loggedIn && !accessToken) {
       api
         .post("/getAccessToken")
         .then((res) => {
@@ -35,7 +35,7 @@ export default function Bouncer() {
           history.replace("/");
         });
     }
-  }, [dispatch, my_tokens, loggedIn, history, accessToken]);
+  }, [dispatch, refresh_token, loggedIn, history, accessToken]);
 
   useEffect(() => {
     if (accessToken && !loggedIn) {
@@ -54,7 +54,7 @@ export default function Bouncer() {
   }, [dispatch, accessToken, loggedIn, history]);
 
   let component;
-  if (my_tokens && !loggedIn) {
+  if (refresh_token && !loggedIn) {
     component = <LoadingPage />;
   } else if (loggedIn) {
     component = <App />;

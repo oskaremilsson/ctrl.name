@@ -12,9 +12,9 @@ const post = (url, data = new FormData()) => {
   const api = base();
 
   if (!data.has("code")) {
-    const my_tokens = JSON.parse(localStorage.getItem("my_tokens"));
-    if (my_tokens) {
-      data.append("refresh_token", my_tokens.refresh_token);
+    const refresh_token = localStorage.getItem("refresh_token");
+    if (refresh_token) {
+      data.append("refresh_token", refresh_token);
     }
   }
 

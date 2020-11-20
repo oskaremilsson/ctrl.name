@@ -10,14 +10,14 @@ const { getMe, getCurrentMe } = selectors;
 export default function RefreshTokens() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const my_tokens = JSON.parse(localStorage.getItem("my_tokens"));
+  const refresh_token = localStorage.getItem("refresh_token");
   const me = useSelector((state) => getMe(state));
   const currentMe = useSelector((state) => getCurrentMe(state));
   const [execute, setExecute] = useState(true);
   const [refreshTimer, setRefreshTimer] = useState(undefined);
 
   useEffect(() => {
-    if (my_tokens && me && currentMe && execute) {
+    if (refresh_token && me && currentMe && execute) {
       setExecute(false);
       api
         .post("/getAccessToken")
@@ -53,7 +53,7 @@ export default function RefreshTokens() {
         }, process.env.REACT_APP_TOKEN_REFRESH_MS_TIME || 900000)
       );
     }
-  }, [dispatch, my_tokens, history, me, currentMe, refreshTimer, execute]);
+  }, [dispatch, refresh_token, history, me, currentMe, refreshTimer, execute]);
 
   return <></>;
 }

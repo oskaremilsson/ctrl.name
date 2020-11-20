@@ -23,14 +23,7 @@ export default function Auth() {
 
       api.post("codeExchange", data).then((res) => {
         setLoaded(true);
-
-        localStorage.setItem(
-          "my_tokens",
-          JSON.stringify({
-            refresh_token: res.data.Refresh_token,
-          })
-        );
-
+        localStorage.setItem("refresh_token", res.data.Refresh_token);
         setRefreshToken(res.data.Refresh_token);
       });
     }
