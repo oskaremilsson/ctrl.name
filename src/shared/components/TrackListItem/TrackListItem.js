@@ -101,7 +101,7 @@ export default function TrackListItem(props) {
             <Typography
               variant="body1"
               className={classes.title}
-              color="textPrimary"
+              color={track.is_playable ? "textPrimary" : "textSecondary"}
             >
               {track.name}
             </Typography>
@@ -110,7 +110,7 @@ export default function TrackListItem(props) {
             <Typography
               variant="body2"
               className={classes.inline}
-              color="textPrimary"
+              color={track.is_playable ? "textPrimary" : "textSecondary"}
             >
               {track.artists.map((artist) => artist.name).join(", ")}
             </Typography>
@@ -121,7 +121,7 @@ export default function TrackListItem(props) {
             onClick={() => queueTrack(track.uri)}
             edge="end"
             aria-label="queue"
-            disabled={!player}
+            disabled={!player || !track.is_playable}
           >
             <QueueMusic />
           </IconButton>
