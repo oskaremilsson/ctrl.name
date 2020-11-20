@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { actions } from "shared/stores";
+import { useSelector, useDispatch } from "react-redux";
+import { selectors, actions } from "shared/stores";
 
 import { Box } from "@material-ui/core";
 
@@ -10,21 +10,42 @@ import LandingPage from "pages/LandingPage";
 import LoadingPage from "pages/LoadingPage";
 
 import spotify from "utils/spotify";
+import api from "utils/api";
+
+const { getMeAccessToken } = selectors;
 
 export default function Bouncer() {
   const dispatch = useDispatch();
   const history = useHistory();
   const my_tokens = JSON.parse(localStorage.getItem("my_tokens"));
+  const accessToken = useSelector((state) => getMeAccessToken(state));
   const [loggedIn, setLoggedIn] = useState(undefined);
 
   useEffect(() => {
-    if (my_tokens && !loggedIn) {
-      spotify(my_tokens.access_token)
+    if (my_tokens && !loggedIn && !accessToken) {
+      api
+        .post("/getAccessToken")
+        .then((res) => {
+          dispatch(actions.setMeAccessToken(res?.data?.Access_token));
+          dispatch(actions.setCurrentMeAccessToken(res?.data?.Access_token));
+        })
+        .catch((_) => {
+          console.log(_);
+          localStorage.clear();
+          history.replace("/");
+        });
+    }
+  }, [dispatch, my_tokens, loggedIn, history, accessToken]);
+
+  useEffect(() => {
+    if (accessToken && !loggedIn) {
+      spotify(accessToken)
         .get("me")
         .then((res) => {
           setLoggedIn(true);
-          dispatch(actions.setMeAccessToken(my_tokens.access_token));
+
           dispatch(actions.setMe(res.data));
+
           dispatch(actions.setCurrentMe(res.data));
         })
         .catch((_) => {
@@ -32,7 +53,7 @@ export default function Bouncer() {
           history.replace("/");
         });
     }
-  }, [dispatch, my_tokens, loggedIn, history]);
+  }, [dispatch, accessToken, loggedIn, history]);
 
   let component;
   if (my_tokens && !loggedIn) {
