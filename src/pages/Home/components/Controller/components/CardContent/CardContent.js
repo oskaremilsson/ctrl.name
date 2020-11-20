@@ -49,7 +49,8 @@ export default function Controller({ player, textColor }) {
   const song = player?.item;
   const songTitle = song?.name || "No track is playing";
 
-  const artists = song?.artists?.map((artist) => artist.name).join(", ") ||
+  const artists =
+    song?.artists?.map((artist) => artist.name).join(", ") ||
     "Play on Spotify to ctrl";
 
   const switchAvatarAlt = (currentMe && currentMe.id) || "ctrl.current";
