@@ -27,7 +27,7 @@ function spotifyPlayer(state = {}, action = {}) {
 function spotifyPlayerSync(state = {}, action = {}) {
   switch (action.type) {
     case "SET_SPOTIFY_PLAYER_SYNC":
-      return action.payload || false;
+      return action.payload || true;
     default:
       return state;
   }
@@ -40,7 +40,7 @@ const reducers = combineReducers({
 
 const initialState = {
   spotifyPlayer: null,
-  spotifyPlayerSync: false,
+  spotifyPlayerSync: true,
 };
 
 export const reducer = (state = initialState, action = {}) => {
@@ -49,5 +49,5 @@ export const reducer = (state = initialState, action = {}) => {
 
 export const bindSelectors = (slicer) => ({
   getSpotifyPlayer: (state) => slicer(state).spotifyPlayer || null,
-  getSpotifyPlayerSync: (state) => slicer(state).spotifyPlayerSync || false,
+  getSpotifyPlayerSync: (state) => slicer(state).spotifyPlayerSync || true,
 });
