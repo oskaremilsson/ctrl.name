@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { actions } from "shared/stores";
 
-import { Box, IconButton, Typography } from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 import { ExitToApp } from "@material-ui/icons";
 
 export default function Logout() {
@@ -22,15 +22,10 @@ export default function Logout() {
   }, [dispatch, history, execute]);
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="flex-end">
-      <Box display="flex" flexDirection="column" alignItems="center">
-        <IconButton onClick={() => setExecute(true)}>
-          <ExitToApp />
-        </IconButton>
-        <Box marginTop={-1}>
-          <Typography variant="caption">Logout</Typography>
-        </Box>
-      </Box>
+    <Box display="flex">
+      <Button variant="contained" color="primary" fullWidth="true">
+        <ExitToApp /> Logout
+      </Button>
     </Box>
   );
 }

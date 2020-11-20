@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { actions } from "shared/stores";
 
-import { Box, IconButton, Dialog, Typography, Button } from "@material-ui/core";
-import { DeleteForever } from "@material-ui/icons";
+import { Box, Dialog, Typography, Button, Link } from "@material-ui/core";
 
 import api from "utils/api";
 
@@ -30,19 +29,10 @@ export default function DeleteMyData() {
   }, [dispatch, execute]);
 
   return (
-    <Box>
-      <Box display="flex" flexDirection="column" alignItems="flex-end">
-        <Box display="flex" flexDirection="column" alignItems="center">
-          <IconButton onClick={() => setWarning(true)} color="inherit">
-            <DeleteForever />
-          </IconButton>
-          <Box marginTop={-1}>
-            <Typography variant="caption" color="textSecondary">
-              Delete my data
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
+    <Box display="flex" justifyContent="center">
+      <Link onClick={() => setWarning(true)} component="div">
+        Delete all my data
+      </Link>
 
       <Dialog
         open={warning}
@@ -58,7 +48,6 @@ export default function DeleteMyData() {
 
           <Box marginTop={2}>
             <Button
-              variant="contained"
               color="primary"
               onClick={() => {
                 setExecute(true);

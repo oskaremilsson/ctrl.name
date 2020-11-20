@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Container } from "@material-ui/core";
+import React, { useState } from "react";
+import { Box, Container, IconButton } from "@material-ui/core";
 
 import ProfileHeader from "./components/ProfileHeader";
 import GiveConsent from "./components/GiveConsent";
@@ -8,18 +8,19 @@ import ConsentRequests from "./components/ConsentRequests";
 import MyRequests from "./components/MyRequests";
 import MyConsentList from "./components/MyConsentList";
 import ConsentList from "./components/ConsentList";
+import Settings from "./components/Settings";
 
-import Logout from "./components/Logout";
-import DeleteMyData from "./components/DeleteMyData";
+import { Settings as SettingsIcon } from "@material-ui/icons";
 
 export default function Profile() {
+  const [settingsOpen, setSettingsOpen] = useState(true);
+
   return (
     <Container maxWidth="md">
       <Box paddingBottom={3} paddingTop={3}>
-        <Box display="flex" justifyContent="space-between">
-          <DeleteMyData />
-          <Logout />
-        </Box>
+        <IconButton onClick={() => setSettingsOpen(true)} color="inherit">
+          <SettingsIcon />
+        </IconButton>
 
         <Box marginBottom={5}>
           <ProfileHeader />
@@ -43,6 +44,8 @@ export default function Profile() {
 
         <ConsentList />
       </Box>
+
+      <Settings open={settingsOpen} setOpen={setSettingsOpen} />
     </Container>
   );
 }
