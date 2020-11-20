@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import queryString from "query-string";
-import { Box, CircularProgress } from "@material-ui/core";
+import { Box, CircularProgress, Typography } from "@material-ui/core";
 
 import api from "utils/api";
 
@@ -54,8 +54,10 @@ export default function Auth() {
       alignItems="center"
       justifyContent="center"
       minHeight="100vh"
+      flexDirection="column"
     >
       <CircularProgress />
+      <Typography>Waking up server...</Typography>
     </Box>
   );
 }
