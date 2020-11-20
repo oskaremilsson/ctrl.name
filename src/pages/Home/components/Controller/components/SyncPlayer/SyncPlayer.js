@@ -35,6 +35,8 @@ export default function SyncPlayer() {
     }
 
     if (!syncTimer) {
+      dispatch(actions.setSpotifyPlayerSync(true));
+
       setSyncTimer(
         setInterval(() => {
           dispatch(actions.setSpotifyPlayerSync(true));
