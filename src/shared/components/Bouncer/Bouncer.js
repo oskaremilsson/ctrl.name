@@ -27,7 +27,6 @@ export default function Bouncer() {
         .post("/getAccessToken")
         .then((res) => {
           dispatch(actions.setMeAccessToken(res?.data?.Access_token));
-          dispatch(actions.setCurrentMeAccessToken(res?.data?.Access_token));
         })
         .catch((_) => {
           console.log(_);
@@ -44,7 +43,10 @@ export default function Bouncer() {
         .then((res) => {
           setLoggedIn(true);
           dispatch(actions.setMe(res.data));
-          dispatch(actions.setCurrentMe(res.data));
+
+          const selectedMe =
+            JSON.parse(localStorage.getItem("selected_me")) || res.data;
+          dispatch(actions.setCurrentMe(selectedMe));
         })
         .catch((_) => {
           localStorage.clear();

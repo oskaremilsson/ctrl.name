@@ -53,6 +53,7 @@ export default function SwitchCurrentMe({ open, setOpen }) {
     spotify(access_token)
       .get(`users/${username}`)
       .then((res) => {
+        localStorage.setItem("selected_me", JSON.stringify(res.data));
         dispatch(actions.setCurrentMe(res.data));
         dispatch(actions.setCurrentMeAccessToken(undefined));
         setOpen(false);
