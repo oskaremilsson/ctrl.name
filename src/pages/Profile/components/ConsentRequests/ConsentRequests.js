@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Check as CheckIcon, RemoveCircleOutline } from "@material-ui/icons";
+import { CheckCircle as CheckIcon, HighlightOff } from "@material-ui/icons";
 
 import api from "utils/api";
 
@@ -87,16 +87,6 @@ export default function ConsentRequests() {
               </Box>
               {requests.map((request) => (
                 <ListItem key={request.id}>
-                  <IconButton
-                    aria-label="allow"
-                    color="primary"
-                    onClick={() => {
-                      allowRequest(request.id);
-                    }}
-                  >
-                    <CheckIcon />
-                  </IconButton>
-
                   <ListItemAvatar>
                     <Avatar
                       alt={request.id}
@@ -126,13 +116,23 @@ export default function ConsentRequests() {
                     }
                   />
 
+                  <IconButton
+                    onClick={() => rejectRequest(request.id)}
+                    aria-label="reject request"
+                  >
+                    <HighlightOff />
+                  </IconButton>
+
                   <ListItemSecondaryAction>
                     <IconButton
-                      onClick={() => rejectRequest(request.id)}
+                      aria-label="allow"
                       edge="end"
-                      aria-label="reject request"
+                      color="secondary"
+                      onClick={() => {
+                        allowRequest(request.id);
+                      }}
                     >
-                      <RemoveCircleOutline />
+                      <CheckIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>
