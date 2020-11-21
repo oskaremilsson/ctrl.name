@@ -161,6 +161,7 @@ export default function Playlists() {
             open={currentMeInfoOpen}
             title={`Controlling ${currentMe?.display_name}`}
             placement="left"
+            arrow
           >
             <Badge
               color="secondary"
