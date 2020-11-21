@@ -9,6 +9,9 @@ import {
   CircularProgress,
   Avatar,
   Typography,
+  Badge,
+  ClickAwayListener,
+  Tooltip,
 } from "@material-ui/core";
 
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
@@ -31,6 +34,7 @@ export default function Playlists() {
   const [playlists, setPlaylists] = useState([]);
   const [nextQuery, setNextQuery] = useState(undefined);
   const [allLoaded, setAllLoaded] = useState(false);
+  const [currentMeInfoOpen, setCurrentMeInfoOpen] = useState(false);
 
   const meAvatarAlt = (me && me.id) || "me";
   const meAvatarImg = me && me.images && me.images[0] && me.images[0].url;
@@ -127,7 +131,11 @@ export default function Playlists() {
       </Box>
 
       <Box padding={2} textAlign="center">
-        <Typography color="primary">ctrl.{selectedPlaylists}</Typography>
+        {selectedPlaylists && (
+          <Typography color="primary">
+            ctrl.{selectedPlaylists}'s playlists
+          </Typography>
+        )}
       </Box>
 
       <List>
@@ -145,6 +153,39 @@ export default function Playlists() {
           <CircularProgress />
         </Box>
       )}
+
+      <Box position="fixed" bottom={72} right={24}>
+        <ClickAwayListener onClickAway={() => setCurrentMeInfoOpen(false)}>
+          <Tooltip
+            onClose={() => setCurrentMeInfoOpen(false)}
+            open={currentMeInfoOpen}
+            title={`Controlling ${currentMe?.display_name}`}
+            placement="left"
+          >
+            <Badge
+              color="secondary"
+              overlap="circle"
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              variant="dot"
+            >
+              <Avatar
+                alt={currentMeAvatarAlt}
+                src={currentMeAvatarImg}
+                onClick={() => {
+                  currentMeInfoOpen
+                    ? setCurrentMeInfoOpen(false)
+                    : setCurrentMeInfoOpen(true);
+                }}
+              >
+                {currentMeAvatarAlt}
+              </Avatar>
+            </Badge>
+          </Tooltip>
+        </ClickAwayListener>
+      </Box>
     </Box>
   );
 }
