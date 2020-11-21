@@ -46,7 +46,9 @@ export default function Playlist({ playlist }) {
 
   return (
     <Box>
-      <Typography align="center">Created by: {playlist?.owner?.id}</Typography>
+      <Typography align="center" color="secondary">
+        Created by: {playlist?.owner?.id}
+      </Typography>
       <List>
         {tracks &&
           tracks.map((track, i) => (

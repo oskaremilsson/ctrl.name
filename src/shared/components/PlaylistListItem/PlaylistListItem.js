@@ -19,14 +19,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "36ch",
     backgroundColor: theme.palette.background.paper,
   },
-  title: {
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-  },
-  inline: {
-    display: "inline",
-  },
 }));
 
 export default function PlaylistListItem({ playlist }) {
@@ -56,20 +48,12 @@ export default function PlaylistListItem({ playlist }) {
         <ListItemText
           disableTypography={true}
           primary={
-            <Typography
-              variant="body1"
-              className={classes.title}
-              color="textPrimary"
-            >
+            <Typography variant="body1" color="textPrimary" noWrap>
               {playlist.name}
             </Typography>
           }
           secondary={
-            <Typography
-              variant="body2"
-              className={classes.inline}
-              color="textSecondary"
-            >
+            <Typography variant="body2" color="textSecondary" display="inline">
               {playlist.tracks.total} tracks
             </Typography>
           }
@@ -78,13 +62,9 @@ export default function PlaylistListItem({ playlist }) {
       <FullscreenDialog
         open={open}
         setOpen={setOpen}
-        title={playlist && playlist.name}
-        image={
-          playlist &&
-          playlist.images &&
-          playlist.images.length > 0 &&
-          playlist.images[0].url
-        }
+        title={playlist?.name}
+        headerContent={playlist?.description}
+        image={playlist?.images?.length > 0 && playlist?.images[0]?.url}
       >
         <Playlist playlist={playlist} />
       </FullscreenDialog>

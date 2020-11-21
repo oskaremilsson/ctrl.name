@@ -72,7 +72,12 @@ export default function FullscreenDialog(props) {
         </Toolbar>
       </AppBar>
       <Box padding={2}>
-        <Box display="flex" justifyContent="center">
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          flexDirection="column"
+        >
           {image && (
             <Avatar
               className={classes.image}
@@ -81,8 +86,11 @@ export default function FullscreenDialog(props) {
               variant={avatarVariant || "rounded"}
             />
           )}
-
-          {headerContent && <Typography>{headerContent}</Typography>}
+          <Box padding={2}>
+            {headerContent && (
+              <Typography display="inline">{headerContent}</Typography>
+            )}
+          </Box>
         </Box>
         {children}
       </Box>
