@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+
+import { useSelector } from "react-redux";
+import { selectors } from "shared/stores";
+
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Badge,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import {
@@ -9,6 +17,8 @@ import {
   ArtTrack as ArtTrackIcon,
   Search as SearchIcon,
 } from "@material-ui/icons";
+
+const { getRequests } = selectors;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,6 +32,8 @@ export default function NavBar() {
   const history = useHistory();
   const location = useLocation();
   const [value, setValue] = useState();
+
+  const requests = useSelector((state) => getRequests(state));
 
   const navigate = (_, newValue) => {
     history.push(newValue);
@@ -54,7 +66,11 @@ export default function NavBar() {
       <BottomNavigationAction
         value="/profile"
         label="Profile"
-        icon={<AccountCircleIcon />}
+        icon={
+          <Badge badgeContent={requests?.length} color="secondary">
+            <AccountCircleIcon />
+          </Badge>
+        }
       />
     </BottomNavigation>
   );
