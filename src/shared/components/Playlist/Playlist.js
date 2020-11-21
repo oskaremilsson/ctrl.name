@@ -8,6 +8,7 @@ import {
   Divider,
   Button,
   CircularProgress,
+  Typography,
 } from "@material-ui/core";
 
 import TrackListItem from "shared/components/TrackListItem";
@@ -45,6 +46,7 @@ export default function Playlist({ playlist }) {
 
   return (
     <Box>
+      <Typography align="center">Created by: {playlist?.owner?.id}</Typography>
       <List>
         {tracks &&
           tracks.map((track, i) => (
