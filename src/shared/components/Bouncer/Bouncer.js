@@ -22,6 +22,10 @@ export default function Bouncer() {
   const [loggedIn, setLoggedIn] = useState(undefined);
 
   useEffect(() => {
+    api.ping();
+  }, []);
+
+  useEffect(() => {
     if (refresh_token && !loggedIn && !accessToken) {
       api
         .post("/getAccessToken")

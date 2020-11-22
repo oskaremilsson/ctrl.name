@@ -8,6 +8,11 @@ const base = () => {
   return req;
 };
 
+const ping = () => {
+  const api = base();
+  return api.get("/");
+};
+
 const post = (url, data = new FormData()) => {
   const api = base();
 
@@ -28,6 +33,7 @@ const post = (url, data = new FormData()) => {
 
 const api = {
   post: post,
+  ping: ping,
 };
 
 export default api;
