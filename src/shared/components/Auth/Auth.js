@@ -9,6 +9,11 @@ export default function Auth() {
   const location = useLocation();
   const history = useHistory();
 
+  const gdprConsent = document?.cookie
+    ?.split("; ")
+    ?.find((row) => row.startsWith("gdpr_consent"))
+    ?.split("=")[1];
+
   const query = queryString.parse(location.search);
   const code = query && query.code;
 
@@ -30,16 +35,17 @@ export default function Auth() {
   }, [code, loaded]);
 
   useEffect(() => {
-    if (refreshToken && !uploaded) {
+    console.log(refreshToken, uploaded, gdprConsent);
+    if (refreshToken && !uploaded && gdprConsent) {
       let data = new FormData();
-      data.append("refresh_token", refreshToken);
+      data.append("gdpr_consent", gdprConsent);
 
       api.post("storeRefreshToken", data).then((_) => {
         setUploaded(true);
         history.replace("/");
       });
     }
-  }, [refreshToken, uploaded, history]);
+  }, [refreshToken, uploaded, history, gdprConsent]);
 
   return (
     <Box

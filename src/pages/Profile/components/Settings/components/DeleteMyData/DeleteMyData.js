@@ -115,6 +115,8 @@ export default function DeleteMyData() {
               variant="contained"
               color="primary"
               onClick={() => {
+                document.cookie =
+                  "gdpr_consent= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
                 window.location.reload();
               }}
             >

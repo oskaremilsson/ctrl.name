@@ -1,10 +1,13 @@
-import React from "react";
-
+import React, { useState } from "react";
 import { Box, Button } from "@material-ui/core";
+
+import GdprConsent from "./components/GdprConsent";
 
 import headerImage from "assets/header_img.jpg";
 
 export default function LandingPage() {
+  const [loginDisabled, setLoginDisabled] = useState(true);
+
   return (
     <Box
       display="flex"
@@ -18,12 +21,17 @@ export default function LandingPage() {
       </Box>
 
       <Button
+        disabled={loginDisabled}
         variant="contained"
         color="primary"
         href={`https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_SPOTIFY_REDIRECT_URI}&scope=${process.env.REACT_APP_SPOTIFY_SCOPE}`}
       >
         Login
       </Button>
+
+      <Box padding={1}>
+        <GdprConsent setLoginDisabled={setLoginDisabled} />
+      </Box>
     </Box>
   );
 }
