@@ -15,6 +15,7 @@
     "fontsource-roboto": "^2.1.4",
     "hex-to-rgba": "^2.0.1",
     "invert-color": "^2.0.0",
+    "locutus": "^2.0.14",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-color-extractor": "^1.1.2",

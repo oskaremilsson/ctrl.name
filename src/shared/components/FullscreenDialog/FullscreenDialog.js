@@ -12,6 +12,7 @@ import {
   Avatar,
 } from "@material-ui/core";
 
+import { strip_tags } from "locutus/php/strings";
 import { Close as CloseIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
@@ -88,8 +89,8 @@ export default function FullscreenDialog(props) {
           )}
           <Box padding={2}>
             {headerContent && (
-              <Typography display="inline" style={{ wordBreak: "break-all" }}>
-                {headerContent}
+              <Typography display="inline">
+                {strip_tags(headerContent)}
               </Typography>
             )}
           </Box>
