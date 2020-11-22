@@ -88,7 +88,9 @@ export default function FullscreenDialog(props) {
           )}
           <Box padding={2}>
             {headerContent && (
-              <Typography display="inline">{headerContent}</Typography>
+              <Typography display="inline" style={{ wordBreak: "break-all" }}>
+                {headerContent}
+              </Typography>
             )}
           </Box>
         </Box>
