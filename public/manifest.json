@@ -1,6 +1,6 @@
 {
   "short_name": "ctrl.name",
-  "name": "ctrl.name - shared Spotify control",
+  "name": "ctrl.name - share Spotify control",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,5 +21,6 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#e91e63",
-  "background_color": "#303030"
+  "background_color": "#303030",
+  "orientation": "portrait"
 }
