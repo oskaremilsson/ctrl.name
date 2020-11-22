@@ -4,6 +4,12 @@ import { Switch } from "@material-ui/core";
 
 import api from "utils/api";
 
+const setCookie = (gdpr_consent) => {
+  let now = new Date();
+  let expire = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
+  document.cookie = `gdpr_consent=${gdpr_consent} ; expires=${expire}`;
+};
+
 export default function GdprConsent(props) {
   const { setLoginDisabled } = props;
 
@@ -16,7 +22,6 @@ export default function GdprConsent(props) {
   const [giveConsent, setGiveConsent] = useState(false);
 
   useEffect(() => {
-    console.log("consents!", consent);
     setLoginDisabled(!consent);
   }, [consent, gdpr_consent, setLoginDisabled]);
 
@@ -25,6 +30,7 @@ export default function GdprConsent(props) {
       api
         .post("createGdprConsent")
         .then((res) => {
+          setCookie(res?.data?.Message);
           setConsent(res?.data?.Message);
         })
         .catch((_) => {

@@ -35,7 +35,6 @@ export default function Auth() {
   }, [code, loaded]);
 
   useEffect(() => {
-    console.log(refreshToken, uploaded, gdprConsent);
     if (refreshToken && !uploaded && gdprConsent) {
       let data = new FormData();
       data.append("gdpr_consent", gdprConsent);
