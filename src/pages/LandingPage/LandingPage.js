@@ -18,7 +18,7 @@ export default function LandingPage() {
       minHeight="100vh"
       flexDirection="column"
     >
-      <Box maxWidth="600px">
+      <Box maxWidth="600px" marginBottom={5}>
         <img src={headerImage} alt="header_img" width="100%" />
       </Box>
 
