@@ -15,7 +15,6 @@ import {
   Slide,
 } from "@material-ui/core";
 
-import { makeStyles } from "@material-ui/core/styles";
 import { QueueMusic } from "@material-ui/icons";
 
 import Alert from "@material-ui/lab/Alert";
@@ -24,28 +23,11 @@ import spotify from "utils/spotify";
 
 const { getSpotifyPlayer, getCurrentMeAccessToken } = selectors;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    maxWidth: "36ch",
-    backgroundColor: theme.palette.background.paper,
-  },
-  title: {
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-  },
-  inline: {
-    display: "inline",
-  },
-}));
-
 function TransitionDown(props) {
   return <Slide {...props} direction="down" />;
 }
 
 export default function TrackListItem(props) {
-  const classes = useStyles();
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
   const player = useSelector((state) => getSpotifyPlayer(state));
 
@@ -100,7 +82,7 @@ export default function TrackListItem(props) {
           primary={
             <Typography
               variant="body1"
-              className={classes.title}
+              noWrap
               color={track.is_local ? "textSecondary" : "textPrimary"}
             >
               {track.name}
@@ -109,7 +91,7 @@ export default function TrackListItem(props) {
           secondary={
             <Typography
               variant="body2"
-              className={classes.inline}
+              display="inline"
               color={track.is_local ? "textSecondary" : "textPrimary"}
             >
               {track.artists.map((artist) => artist.name).join(", ")}
