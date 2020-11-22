@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Box, Switch, Link, Typography } from "@material-ui/core";
+import { Switch } from "@material-ui/core";
 
 import api from "utils/api";
 
@@ -43,28 +43,12 @@ export default function GdprConsent(props) {
   };
 
   return (
-    <Box display="flex" alignItems="center">
-      <Switch
-        checked={Boolean(consent)}
-        onChange={handleSwitchChange}
-        name="gdpr-consent"
-        color="secondary"
-        inputProps={{ "aria-label": "give consent" }}
-      />
-      <Box width={200}>
-        <Typography variant="caption">
-          I've read and agreed with the{" "}
-          <Link
-            component="button"
-            onClick={() => {
-              console.log("read terms");
-            }}
-          >
-            terms and conditions
-          </Link>
-          .
-        </Typography>
-      </Box>
-    </Box>
+    <Switch
+      checked={Boolean(consent)}
+      onChange={handleSwitchChange}
+      name="gdpr-consent"
+      color="secondary"
+      inputProps={{ "aria-label": "give consent" }}
+    />
   );
 }

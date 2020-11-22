@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, Link, Typography } from "@material-ui/core";
 
 import GdprConsent from "./components/GdprConsent";
 
 import headerImage from "assets/header_img.jpg";
+import FullscreenDialog from "shared/components/FullscreenDialog";
 
 export default function LandingPage() {
   const [loginDisabled, setLoginDisabled] = useState(true);
+  const [openToS, setOpenToS] = useState(false);
 
   return (
     <Box
@@ -30,8 +32,32 @@ export default function LandingPage() {
       </Button>
 
       <Box padding={1}>
-        <GdprConsent setLoginDisabled={setLoginDisabled} />
+        <Box display="flex" alignItems="center">
+          <GdprConsent setLoginDisabled={setLoginDisabled} />
+          <Box width={200}>
+            <Typography variant="caption">
+              I've read and agreed with the{" "}
+              <Link
+                component="button"
+                onClick={() => {
+                  setOpenToS(true);
+                }}
+              >
+                terms and conditions
+              </Link>
+              .
+            </Typography>
+          </Box>
+        </Box>
       </Box>
+
+      <FullscreenDialog
+        open={openToS}
+        setOpen={setOpenToS}
+        title="Terms & Conditions"
+      >
+        Some text regarding what ctrl.name store and how.
+      </FullscreenDialog>
     </Box>
   );
 }
