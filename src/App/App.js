@@ -12,6 +12,7 @@ import Search from "pages/Search";
 
 import FetchConsents from "./components/FetchConsents";
 import RefreshTokens from "./components/RefreshTokens";
+import SyncPlayer from "./components/SyncPlayer";
 
 import { Box } from "@material-ui/core";
 
@@ -74,6 +75,7 @@ export default function App() {
       </Box>
       <FetchConsents />
       <RefreshTokens />
+      <SyncPlayer />
     </Box>
   );
 }

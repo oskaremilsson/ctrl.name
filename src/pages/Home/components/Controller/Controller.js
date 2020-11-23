@@ -9,7 +9,7 @@ import invert from "invert-color";
 import hexToRgba from "hex-to-rgba";
 
 import CardContent from "./components/CardContent";
-import SyncPlayer from "./components/SyncPlayer";
+import SyncPlayerTimer from "./components/SyncPlayerTimer";
 
 import coverart from "assets/coverart.png";
 
@@ -75,7 +75,7 @@ export default function Controller() {
         <CardContent textColor={textColor} player={player} />
       </Card>
 
-      <SyncPlayer />
+      <SyncPlayerTimer />
     </Box>
   );
 }

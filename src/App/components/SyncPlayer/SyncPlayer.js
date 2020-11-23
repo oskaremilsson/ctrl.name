@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectors, actions } from "shared/stores";
-
-import { Box } from "@material-ui/core";
 
 import spotify from "utils/spotify";
 
@@ -14,8 +12,6 @@ export default function SyncPlayer() {
   const currentMeAccessToken = useSelector((state) =>
     getCurrentMeAccessToken(state)
   );
-
-  const [syncTimer, setSyncTimer] = useState(undefined);
 
   useEffect(() => {
     if (currentMeAccessToken && playerSync) {
@@ -35,20 +31,5 @@ export default function SyncPlayer() {
     }
   }, [dispatch, playerSync, currentMeAccessToken]);
 
-  useEffect(() => {
-    if (!syncTimer) {
-      dispatch(actions.setSpotifyPlayerSync(true));
-      setSyncTimer(
-        setInterval(() => {
-          dispatch(actions.setSpotifyPlayerSync(true));
-        }, process.env.REACT_APP_SPOTIFY_PING_INTERVAL || 30000)
-      );
-    }
-
-    return () => {
-      clearInterval(syncTimer);
-    };
-  }, [dispatch, syncTimer]);
-
-  return <Box></Box>;
+  return <></>;
 }
