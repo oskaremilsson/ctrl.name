@@ -10,9 +10,7 @@ import {
   Divider,
   CircularProgress,
   Avatar,
-  Typography,
   Badge,
-  ClickAwayListener,
   Tooltip,
 } from "@material-ui/core";
 
@@ -168,37 +166,35 @@ export default function Playlists() {
       )}
 
       <Box position="fixed" bottom={72} right={24}>
-        <ClickAwayListener onClickAway={() => setCurrentMeInfoOpen(false)}>
-          <Tooltip
-            onClose={() => setCurrentMeInfoOpen(false)}
-            open={currentMeInfoOpen}
-            title={`Controlling ${currentMe?.display_name}`}
-            placement="left"
-            arrow
+        <Tooltip
+          onClose={() => setCurrentMeInfoOpen(false)}
+          open={currentMeInfoOpen}
+          title={`Controlling ${currentMe?.display_name}`}
+          placement="left"
+          arrow
+        >
+          <Badge
+            color={player ? "secondary" : "primary"}
+            overlap="circle"
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            variant="dot"
           >
-            <Badge
-              color={player ? "secondary" : "primary"}
-              overlap="circle"
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
+            <Avatar
+              alt={currentMeAvatarAlt}
+              src={currentMeAvatarImg}
+              onClick={() => {
+                currentMeInfoOpen
+                  ? setCurrentMeInfoOpen(false)
+                  : setCurrentMeInfoOpen(true);
               }}
-              variant="dot"
             >
-              <Avatar
-                alt={currentMeAvatarAlt}
-                src={currentMeAvatarImg}
-                onClick={() => {
-                  currentMeInfoOpen
-                    ? setCurrentMeInfoOpen(false)
-                    : setCurrentMeInfoOpen(true);
-                }}
-              >
-                {currentMeAvatarAlt}
-              </Avatar>
-            </Badge>
-          </Tooltip>
-        </ClickAwayListener>
+              {currentMeAvatarAlt}
+            </Avatar>
+          </Badge>
+        </Tooltip>
       </Box>
     </Box>
   );
