@@ -19,14 +19,20 @@ import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import PlaylistListItem from "shared/components/PlaylistListItem";
 import spotify from "utils/spotify";
 
-const { getPlaylists, getCurrentMe, getMe, getMeAccessToken } = selectors;
+const {
+  getPlaylists,
+  getCurrentMe,
+  getMe,
+  getMeAccessToken,
+  getSpotifyPlayer,
+} = selectors;
 
 export default function Playlists() {
   const dispatch = useDispatch();
   const currentMe = useSelector((state) => getCurrentMe(state));
   const me = useSelector((state) => getMe(state));
   const meAccessToken = useSelector((state) => getMeAccessToken(state));
-
+  const player = useSelector((state) => getSpotifyPlayer(state));
   const storedPlaylists = useSelector((state) => getPlaylists(state));
 
   const [selectedPlaylists, setSelectedPlaylists] = useState(undefined);
@@ -164,7 +170,7 @@ export default function Playlists() {
             arrow
           >
             <Badge
-              color="secondary"
+              color={player ? "secondary" : "primary"}
               overlap="circle"
               anchorOrigin={{
                 vertical: "bottom",
