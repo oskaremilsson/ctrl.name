@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { selectors } from "shared/stores";
+import { useSelector, useDispatch } from "react-redux";
+import { selectors, actions } from "shared/stores";
 
 import { Box, List, Divider } from "@material-ui/core";
 
@@ -10,12 +10,14 @@ import spotify from "utils/spotify";
 const { getCurrentMeAccessToken } = selectors;
 
 export default function Album({ album }) {
+  const dispatch = useDispatch();
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
   const [tracks, setTracks] = useState(undefined);
 
   useEffect(() => {
     let mounted = true;
     if (access_token && !tracks) {
+      dispatch(actions.setSpotifyPlayerSync(true));
       spotify(access_token)
         .get(`albums/${album.id}/tracks`)
         .then((res) => {
