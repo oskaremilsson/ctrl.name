@@ -33,17 +33,22 @@ export default function SyncPlayer() {
           }
         });
     }
+  }, [dispatch, playerSync, currentMeAccessToken]);
 
+  useEffect(() => {
     if (!syncTimer) {
       dispatch(actions.setSpotifyPlayerSync(true));
-
       setSyncTimer(
         setInterval(() => {
           dispatch(actions.setSpotifyPlayerSync(true));
         }, process.env.REACT_APP_SPOTIFY_PING_INTERVAL || 30000)
       );
     }
-  }, [dispatch, playerSync, currentMeAccessToken, syncTimer]);
+
+    return () => {
+      clearInterval(syncTimer);
+    };
+  }, [dispatch, syncTimer]);
 
   return <Box></Box>;
 }
