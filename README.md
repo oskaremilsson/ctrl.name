@@ -27,6 +27,9 @@ _Saved in local storage in order to only fetch once per day_
 _Saved in redux state in order to only fetch once per app-launch_
 * See your Spotify playlists
 * See public Spotify playlists for the current ctrl.name
+* See who you currently controlling
+* See status of player for currently controlling (red/green dot)
+
 ---
 ### Search
 Free text search Spotify for:
@@ -40,7 +43,10 @@ Free text search Spotify for:
 * Send request to get consent from a ctrl.name user
 * See and manage list of consents
 * See and manage list of requests
+
+##### Settings
 * Logout
+* Delete all my data
 
 ---
 ---
