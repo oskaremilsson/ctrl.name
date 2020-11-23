@@ -34,7 +34,7 @@ export default function Artist({ artist }) {
     }
 
     return () => (mounted = false);
-  }, [access_token, artist, tracks]);
+  }, [dispatch, access_token, artist, tracks]);
 
   useEffect(() => {
     let mounted = true;

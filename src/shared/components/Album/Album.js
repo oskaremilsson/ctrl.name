@@ -31,7 +31,7 @@ export default function Album({ album }) {
     }
 
     return () => (mounted = false);
-  }, [access_token, album, tracks]);
+  }, [dispatch, access_token, album, tracks]);
 
   return (
     <Box>
