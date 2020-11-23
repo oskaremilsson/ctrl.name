@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectors } from "shared/stores";
+import { useSelector, useDispatch } from "react-redux";
+import { selectors, actions } from "shared/stores";
 
 import {
   Box,
@@ -17,6 +17,7 @@ import spotify from "utils/spotify";
 const { getCurrentMeAccessToken } = selectors;
 
 export default function Playlist({ playlist }) {
+  const dispatch = useDispatch();
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
 
   const [tracks, setTracks] = useState([]);
@@ -26,6 +27,7 @@ export default function Playlist({ playlist }) {
   useEffect(() => {
     let mounted = true;
     if (access_token && loadMore) {
+      dispatch(actions.setSpotifyPlayerSync(true));
       const query = nextQuery ? nextQuery.split("?")[1] : "";
       spotify(access_token)
         .get(`playlists/${playlist.id}/tracks?${query}`)
@@ -42,7 +44,7 @@ export default function Playlist({ playlist }) {
     }
 
     return () => (mounted = false);
-  }, [access_token, playlist, tracks, loadMore, nextQuery]);
+  }, [dispatch, access_token, playlist, tracks, loadMore, nextQuery]);
 
   return (
     <Box>
