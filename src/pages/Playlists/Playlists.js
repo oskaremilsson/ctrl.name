@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectors, actions } from "shared/stores";
+import { makeStyles } from "@material-ui/core/styles";
 
 import {
   Box,
   List,
+  ListSubheader,
   Divider,
   CircularProgress,
   Avatar,
@@ -19,6 +21,12 @@ import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import PlaylistListItem from "shared/components/PlaylistListItem";
 import spotify from "utils/spotify";
 
+const useStyles = makeStyles((theme) => ({
+  list: {
+    backgroundColor: theme.palette.background.default,
+  },
+}));
+
 const {
   getPlaylists,
   getCurrentMe,
@@ -29,6 +37,8 @@ const {
 
 export default function Playlists() {
   const dispatch = useDispatch();
+  const classes = useStyles();
+
   const currentMe = useSelector((state) => getCurrentMe(state));
   const me = useSelector((state) => getMe(state));
   const meAccessToken = useSelector((state) => getMeAccessToken(state));
@@ -51,6 +61,11 @@ export default function Playlists() {
     currentMe.images &&
     currentMe.images[0] &&
     currentMe.images[0].url;
+
+  const listTitle =
+    selectedPlaylists === me?.id
+      ? "My playlists"
+      : `ctrl.${selectedPlaylists}'s playlists`;
 
   useEffect(() => {
     if (me) {
@@ -111,40 +126,32 @@ export default function Playlists() {
   return (
     <Box padding={2}>
       <Box display="flex" justifyContent="center">
-        <ToggleButtonGroup
-          value={selectedPlaylists}
-          exclusive
-          onChange={(_, value) => {
-            if (value !== null) {
-              setSelectedPlaylists(value);
-              setPlaylists([]);
-              setNextQuery(undefined);
-            }
-          }}
-          aria-label="playlist selector"
-        >
-          {me && (
+        {currentMe && me && currentMe?.id !== me?.id && (
+          <ToggleButtonGroup
+            value={selectedPlaylists}
+            exclusive
+            onChange={(_, value) => {
+              if (value !== null) {
+                setSelectedPlaylists(value);
+                setPlaylists([]);
+                setNextQuery(undefined);
+              }
+            }}
+            aria-label="playlist selector"
+          >
             <ToggleButton value={me.id} aria-label="my playlists">
               <Avatar alt={meAvatarAlt} src={meAvatarImg} />
             </ToggleButton>
-          )}
-          {currentMe && me && currentMe.id !== me.id && (
+
             <ToggleButton value={currentMe.id} aria-label="currentMe playlists">
               <Avatar alt={currentMeAvatarAlt} src={currentMeAvatarImg} />
             </ToggleButton>
-          )}
-        </ToggleButtonGroup>
-      </Box>
-
-      <Box padding={2} textAlign="center">
-        {selectedPlaylists && (
-          <Typography color="primary">
-            ctrl.{selectedPlaylists}'s playlists
-          </Typography>
+          </ToggleButtonGroup>
         )}
       </Box>
 
-      <List>
+      <List className={classes.list}>
+        <ListSubheader>{listTitle}</ListSubheader>
         {playlists &&
           playlists.map((playlist, i) => (
             <Box key={playlist.id + i}>
