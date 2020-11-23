@@ -53,7 +53,7 @@ export default function Seeker({ color }) {
           onChange={(_, value) => {
             setTempValue(value);
           }}
-          max={duration}
+          max={player ? duration : 10000}
           step={1000}
           aria-labelledby="seek-track"
           disabled={!player}
