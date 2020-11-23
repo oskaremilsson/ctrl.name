@@ -13,6 +13,7 @@ import {
   Avatar,
   Snackbar,
   Slide,
+  Tooltip,
 } from "@material-ui/core";
 
 import { QueueMusic } from "@material-ui/icons";
@@ -36,6 +37,8 @@ export default function TrackListItem(props) {
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState(false);
   const [snackSeverity, setSnackSeverity] = useState(false);
+
+  const [openQueueUnavailable, setOpenQueueUnavailable] = useState(false);
 
   const queueTrack = (uri) => {
     spotify(access_token)
@@ -99,14 +102,29 @@ export default function TrackListItem(props) {
           }
         />
         <ListItemSecondaryAction>
-          <IconButton
-            onClick={() => queueTrack(track.uri)}
-            edge="end"
-            aria-label="queue"
-            disabled={!player || track.is_local}
-          >
-            <QueueMusic />
-          </IconButton>
+          {!player || track.is_local ? (
+            <Tooltip
+              title="Can't queue, nothing is playing"
+              open={openQueueUnavailable}
+              onClose={() => setOpenQueueUnavailable(false)}
+              arrow
+              placement="left"
+            >
+              <span onClick={() => setOpenQueueUnavailable(true)}>
+                <IconButton edge="end" aria-label="queue" disabled>
+                  <QueueMusic />
+                </IconButton>
+              </span>
+            </Tooltip>
+          ) : (
+            <IconButton
+              onClick={() => queueTrack(track.uri)}
+              edge="end"
+              aria-label="queue"
+            >
+              <QueueMusic />
+            </IconButton>
+          )}
         </ListItemSecondaryAction>
       </ListItem>
 
