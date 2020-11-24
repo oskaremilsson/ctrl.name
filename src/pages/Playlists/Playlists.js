@@ -65,6 +65,11 @@ export default function Playlists() {
       ? "My playlists"
       : `ctrl.${selectedPlaylists}'s playlists`;
 
+  const currentMeTitle =
+    currentMe?.id === me?.id
+      ? "Controlling myself"
+      : `Controlling ${currentMe?.display_name}`;
+
   useEffect(() => {
     if (me) {
       setSelectedPlaylists(me.id);
@@ -168,8 +173,9 @@ export default function Playlists() {
       <Box position="fixed" bottom={72} right={24}>
         <Tooltip
           onClose={() => setCurrentMeInfoOpen(false)}
+          onOpen={() => setCurrentMeInfoOpen(true)}
           open={currentMeInfoOpen}
-          title={`Controlling ${currentMe?.display_name}`}
+          title={currentMeTitle}
           placement="left"
           arrow
         >
@@ -185,11 +191,7 @@ export default function Playlists() {
             <Avatar
               alt={currentMeAvatarAlt}
               src={currentMeAvatarImg}
-              onClick={() => {
-                currentMeInfoOpen
-                  ? setCurrentMeInfoOpen(false)
-                  : setCurrentMeInfoOpen(true);
-              }}
+              onClick={() => setCurrentMeInfoOpen(true)}
             >
               {currentMeAvatarAlt}
             </Avatar>
