@@ -16,6 +16,7 @@ import TrackListItem from "shared/components/TrackListItem";
 import PlaylistListItem from "shared/components/PlaylistListItem";
 import ArtistListItem from "shared/components/ArtistListItem";
 import AlbumListItem from "shared/components/AlbumListItem";
+import FloatingCurrentMe from "shared/components/FloatingCurrentMe";
 
 import spotify from "utils/spotify";
 
@@ -118,6 +119,8 @@ export default function Search() {
           </Box>
         ))}
       </List>
+
+      <FloatingCurrentMe />
     </Box>
   );
 }

@@ -10,13 +10,12 @@ import {
   Divider,
   CircularProgress,
   Avatar,
-  Badge,
-  Tooltip,
 } from "@material-ui/core";
 
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 
 import PlaylistListItem from "shared/components/PlaylistListItem";
+import FloatingCurrentMe from "shared/components/FloatingCurrentMe";
 import spotify from "utils/spotify";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,13 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const {
-  getPlaylists,
-  getCurrentMe,
-  getMe,
-  getMeAccessToken,
-  getSpotifyPlayer,
-} = selectors;
+const { getPlaylists, getCurrentMe, getMe, getMeAccessToken } = selectors;
 
 export default function Playlists() {
   const dispatch = useDispatch();
@@ -40,7 +33,6 @@ export default function Playlists() {
   const currentMe = useSelector((state) => getCurrentMe(state));
   const me = useSelector((state) => getMe(state));
   const meAccessToken = useSelector((state) => getMeAccessToken(state));
-  const player = useSelector((state) => getSpotifyPlayer(state));
   const storedPlaylists = useSelector((state) => getPlaylists(state));
 
   const [selectedPlaylists, setSelectedPlaylists] = useState(undefined);
@@ -48,7 +40,6 @@ export default function Playlists() {
   const [playlists, setPlaylists] = useState([]);
   const [nextQuery, setNextQuery] = useState(undefined);
   const [allLoaded, setAllLoaded] = useState(false);
-  const [currentMeInfoOpen, setCurrentMeInfoOpen] = useState(false);
 
   const meAvatarAlt = (me && me.id) || "me";
   const meAvatarImg = me && me.images && me.images[0] && me.images[0].url;
@@ -64,11 +55,6 @@ export default function Playlists() {
     selectedPlaylists === me?.id
       ? "My playlists"
       : `ctrl.${selectedPlaylists}'s playlists`;
-
-  const currentMeTitle =
-    currentMe?.id === me?.id
-      ? "Controlling myself"
-      : `Controlling ${currentMe?.display_name}`;
 
   useEffect(() => {
     if (me) {
@@ -170,34 +156,7 @@ export default function Playlists() {
         </Box>
       )}
 
-      <Box position="fixed" bottom={72} right={24}>
-        <Tooltip
-          onClose={() => setCurrentMeInfoOpen(false)}
-          onOpen={() => setCurrentMeInfoOpen(true)}
-          open={currentMeInfoOpen}
-          title={currentMeTitle}
-          placement="left"
-          arrow
-        >
-          <Badge
-            color={player ? "secondary" : "primary"}
-            overlap="circle"
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            variant="dot"
-          >
-            <Avatar
-              alt={currentMeAvatarAlt}
-              src={currentMeAvatarImg}
-              onClick={() => setCurrentMeInfoOpen(true)}
-            >
-              {currentMeAvatarAlt}
-            </Avatar>
-          </Badge>
-        </Tooltip>
-      </Box>
+      <FloatingCurrentMe />
     </Box>
   );
 }
