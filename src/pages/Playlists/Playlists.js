@@ -42,14 +42,10 @@ export default function Playlists() {
   const [allLoaded, setAllLoaded] = useState(false);
 
   const meAvatarAlt = (me && me.id) || "me";
-  const meAvatarImg = me && me.images && me.images[0] && me.images[0].url;
+  const meAvatarImg = me?.images[0]?.url;
 
-  const currentMeAvatarAlt = (currentMe && currentMe.id) || "current";
-  const currentMeAvatarImg =
-    currentMe &&
-    currentMe.images &&
-    currentMe.images[0] &&
-    currentMe.images[0].url;
+  const currentMeAvatarAlt = currentMe?.id || "current";
+  const currentMeAvatarImg = currentMe?.images[0]?.url;
 
   const listTitle =
     selectedPlaylists === me?.id
