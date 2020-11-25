@@ -21,7 +21,7 @@ export default function Playlists() {
       : `Controlling ${currentMe?.display_name}`;
 
   return (
-    <Box position="fixed" bottom={72} right={24}>
+    <Box position="fixed" bottom={72} right={24} zIndex={1}>
       <Tooltip
         onClose={() => setInfoOpen(false)}
         onOpen={() => setInfoOpen(true)}
