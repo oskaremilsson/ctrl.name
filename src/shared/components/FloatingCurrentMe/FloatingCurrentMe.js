@@ -2,11 +2,24 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectors } from "shared/stores";
 
+import { makeStyles } from "@material-ui/core/styles";
+
 import { Box, Avatar, Badge, Tooltip } from "@material-ui/core";
+
+const useStyles = makeStyles(() => ({
+  colorPrimary: {
+    backgroundColor: "#00e676",
+  },
+  colorSecondary: {
+    backgroundColor: "#b2102f",
+  },
+}));
 
 const { getMe, getCurrentMe, getSpotifyPlayer } = selectors;
 
 export default function Playlists() {
+  const classes = useStyles();
+
   const currentMe = useSelector((state) => getCurrentMe(state));
   const me = useSelector((state) => getMe(state));
   const player = useSelector((state) => getSpotifyPlayer(state));
@@ -20,6 +33,8 @@ export default function Playlists() {
       ? "Controlling myself"
       : `Controlling ${currentMe?.display_name}`;
 
+  const dotColor = player ? "#00e676" : "#ff1744";
+
   return (
     <Box position="fixed" bottom={72} right={24} zIndex={1}>
       <Tooltip
@@ -31,7 +46,11 @@ export default function Playlists() {
         arrow
       >
         <Badge
-          color={player ? "secondary" : "primary"}
+          classes={{
+            colorPrimary: classes.colorPrimary,
+            colorSecondary: classes.colorSecondary,
+          }}
+          color={player ? "primary" : "secondary"}
           overlap="circle"
           anchorOrigin={{
             vertical: "bottom",
