@@ -47,10 +47,13 @@ export default function Playlists() {
   const currentMeAvatarAlt = currentMe?.id || "current";
   const currentMeAvatarImg = currentMe?.images[0]?.url;
 
-  const listTitle =
-    selectedPlaylists === me?.id
-      ? "My playlists"
-      : `ctrl.${selectedPlaylists}'s playlists`;
+  let listTitle = "My playlists";
+  if (selectedPlaylists !== me?.id) {
+    listTitle = `${currentMe?.display_name}'s playlists`;
+    if (currentMe?.display_name === currentMe?.id) {
+      listTitle = `ctrl.${selectedPlaylists}'s playlists`;
+    }
+  }
 
   useEffect(() => {
     if (me) {
