@@ -104,7 +104,7 @@ export default function TrackListItem(props) {
         <ListItemSecondaryAction>
           {!player || track.is_local ? (
             <Tooltip
-              title="Can't queue, nothing is playing"
+              title="Can't queue - no track is playing"
               open={openQueueUnavailable}
               onClose={() => setOpenQueueUnavailable(false)}
               arrow
