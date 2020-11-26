@@ -15,7 +15,6 @@ import {
   Snackbar,
 } from "@material-ui/core";
 
-import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import { Add as AddIcon } from "@material-ui/icons";
 
@@ -23,31 +22,18 @@ import spotify from "utils/spotify";
 
 const { getMeAccessToken, getMe, getCurrentMe, getConsents } = selectors;
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-  },
-  inline: {
-    display: "inline",
-  },
-}));
-
 export default function SwitchCurrentMe({ open, setOpen }) {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const history = useHistory();
 
   const currentMe = useSelector((state) => getCurrentMe(state));
-  const me = useSelector((state) => getMe(state));
   const access_token = useSelector((state) => getMeAccessToken(state));
+
+  const me = useSelector((state) => getMe(state));
   const consents = useSelector((state) => getConsents(state));
+  const consentsWithMe = [me].concat(consents);
 
   const [openFailure, setOpenFailure] = useState(undefined);
-
-  const myAvatarAlt = (me && me.id) || "current";
-  const myAvatarImg = me && me.images && me.images[0] && me.images[0].url;
 
   const switched = (username) => {
     spotify(access_token)
@@ -75,40 +61,10 @@ export default function SwitchCurrentMe({ open, setOpen }) {
           open={open}
         >
           <List>
-            <ListItem
-              button
-              selected={me.id === currentMe.id}
-              onClick={() => switched(me.id)}
-              key={me.id}
-            >
-              <ListItemAvatar>
-                <Avatar alt={myAvatarAlt} src={myAvatarImg} />
-              </ListItemAvatar>
-              <ListItemText
-                disableTypography={true}
-                primary={
-                  <Typography
-                    variant="body1"
-                    className={classes.title}
-                    color="textPrimary"
-                  >
-                    {me.display_name || me.id}
-                  </Typography>
-                }
-                secondary={
-                  <Typography
-                    variant="body2"
-                    className={classes.inline}
-                    color="textSecondary"
-                  >
-                    ctrl.{me.id}
-                  </Typography>
-                }
-              />
-            </ListItem>
-
             {consents &&
-              consents.map((consent) => (
+              me &&
+              consentsWithMe &&
+              consentsWithMe.map((consent) => (
                 <ListItem
                   button
                   selected={consent.id === currentMe.id}
@@ -116,26 +72,19 @@ export default function SwitchCurrentMe({ open, setOpen }) {
                   key={consent.id}
                 >
                   <ListItemAvatar>
-                    <Avatar
-                      alt={consent.id}
-                      src={consent && consent.images && consent.images[0].url}
-                    />
+                    <Avatar alt={consent?.id} src={consent?.images[0]?.url} />
                   </ListItemAvatar>
                   <ListItemText
                     disableTypography={true}
                     primary={
-                      <Typography
-                        variant="body1"
-                        className={classes.title}
-                        color="textPrimary"
-                      >
-                        {consent.display_name || consent.id}
+                      <Typography variant="body1" color="textPrimary">
+                        {consent.display_name}
                       </Typography>
                     }
                     secondary={
                       <Typography
                         variant="body2"
-                        className={classes.inline}
+                        display="inline"
                         color="textSecondary"
                       >
                         ctrl.{consent.id}
