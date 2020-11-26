@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectors, actions } from "shared/stores";
+import { makeStyles } from "@material-ui/core/styles";
 
 import spotify from "utils/spotify";
 import { SkipNext, SkipPrevious, FiberManualRecord } from "@material-ui/icons";
 import { IconButton } from "@material-ui/core";
 
+const useStyles = makeStyles(() => ({
+  disabled: {
+    opacity: 0.5,
+  },
+}));
+
 const { getCurrentMeAccessToken, getSpotifyPlayer } = selectors;
 
 export default function SkipButton({ action, color }) {
   const dispatch = useDispatch();
+  const classes = useStyles();
+
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
   const player = useSelector((state) => getSpotifyPlayer(state));
 
@@ -45,7 +54,13 @@ export default function SkipButton({ action, color }) {
   }
 
   return (
-    <IconButton disabled={!player} onClick={() => setExecute(true)}>
+    <IconButton
+      disabled={!player}
+      onClick={() => setExecute(true)}
+      classes={{
+        disabled: classes.disabled,
+      }}
+    >
       {icon}
     </IconButton>
   );
