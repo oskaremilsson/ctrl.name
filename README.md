@@ -1,8 +1,12 @@
 ![ctrl.name](/public/share_img.jpg?raw=true "ctrl.name")
 # ctrl.name - Share Spotify control
-ReactJS app powered by [spotify-tokenshark](https://github.com/oskaremilsson/spotify-tokenshark)
+This app empowers Spotify users to share control of the now playing and queue.
+
+Powered by [spotify-tokenshark](https://github.com/oskaremilsson/spotify-tokenshark)
+
 
 ## Features
+
 ### Global
 * Add track to queue
 * List tracks for a playlist
