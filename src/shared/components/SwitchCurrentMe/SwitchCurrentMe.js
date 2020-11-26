@@ -60,8 +60,8 @@ export default function SwitchCurrentMe({ open, setOpen }) {
       })
       .catch((_) => {
         console.log(_);
-        dispatch(actions.setConsents(null));
         setOpenFailure(username);
+        dispatch(actions.setMeAccessToken(undefined));
       });
   };
 
