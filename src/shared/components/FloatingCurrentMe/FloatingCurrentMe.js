@@ -33,8 +33,6 @@ export default function Playlists() {
       ? "Controlling myself"
       : `Controlling ${currentMe?.display_name}`;
 
-  const dotColor = player ? "#00e676" : "#ff1744";
-
   return (
     <Box position="fixed" bottom={72} right={24} zIndex={1}>
       <Tooltip
