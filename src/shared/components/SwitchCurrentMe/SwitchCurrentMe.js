@@ -118,7 +118,7 @@ export default function SwitchCurrentMe({ open, setOpen }) {
         }}
       >
         <Alert elevation={6} severity="error" variant="filled">
-          Failed to switch ctrl.{openFailure}
+          Failed to switch, rechecking access...
         </Alert>
       </Snackbar>
     </Box>

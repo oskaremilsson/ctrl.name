@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { selectors, actions } from "shared/stores";
+import React from "react";
+import { useLocation } from "react-router-dom";
 
 import NavBar from "shared/components/NavBar";
 
@@ -16,39 +14,8 @@ import SyncPlayer from "./components/SyncPlayer";
 
 import { Box } from "@material-ui/core";
 
-import api from "utils/api";
-
-const { getCurrentMe, getCurrentMeAccessToken } = selectors;
-
 export default function App() {
-  const dispatch = useDispatch();
   const location = useLocation();
-  const history = useHistory();
-
-  const currentMe = useSelector((state) => getCurrentMe(state));
-  const currentMeAccessToken = useSelector((state) =>
-    getCurrentMeAccessToken(state)
-  );
-
-  useEffect(() => {
-    if (!currentMeAccessToken && currentMe) {
-      let data = new FormData();
-      data.append("username", currentMe.id);
-
-      api
-        .post("getAccessToken", data)
-        .then((res) => {
-          dispatch(actions.setCurrentMeAccessToken(res?.data?.Access_token));
-          dispatch(actions.setSpotifyPlayerSync(true));
-        })
-        .catch((_) => {
-          dispatch(actions.logout());
-          localStorage.clear();
-          history.replace("/");
-          window.location.reload();
-        });
-    }
-  }, [dispatch, history, currentMe, currentMeAccessToken]);
 
   let component;
   switch (location && location.pathname) {
