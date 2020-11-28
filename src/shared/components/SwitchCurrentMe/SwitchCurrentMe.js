@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectors, actions } from "shared/stores";
@@ -34,6 +34,12 @@ export default function SwitchCurrentMe({ open, setOpen }) {
   const consentsWithMe = [me].concat(consents);
 
   const [openFailure, setOpenFailure] = useState(undefined);
+
+  useEffect(() => {
+    if (open) {
+      dispatch(actions.setSyncConsents(true));
+    }
+  }, [open]);
 
   const switched = (username) => {
     spotify(access_token)

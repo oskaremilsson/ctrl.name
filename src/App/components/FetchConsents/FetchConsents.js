@@ -8,6 +8,7 @@ import spotify from "utils/spotify";
 const {
   getMeAccessToken,
   getConsents,
+  getSyncConsents,
   getMyConsents,
   getRequests,
   getMyRequests,
@@ -17,12 +18,14 @@ export default function FetchConsents() {
   const dispatch = useDispatch();
   const accessToken = useSelector((state) => getMeAccessToken(state));
   const consents = useSelector((state) => getConsents(state));
+  const syncConsents = useSelector((state) => getSyncConsents(state));
   const myConsents = useSelector((state) => getMyConsents(state));
   const requests = useSelector((state) => getRequests(state));
   const myRequests = useSelector((state) => getMyRequests(state));
 
   useEffect(() => {
-    if (!consents && accessToken) {
+    if ((!consents || syncConsents) && accessToken) {
+      dispatch(actions.setSyncConsents(false));
       api.post("getConsents").then((res) => {
         let consentCalls = [];
         let populated_consents = [];
@@ -42,7 +45,7 @@ export default function FetchConsents() {
           });
       });
     }
-  }, [dispatch, consents, accessToken]);
+  }, [dispatch, consents, syncConsents, accessToken]);
 
   useEffect(() => {
     if (!myConsents && accessToken) {

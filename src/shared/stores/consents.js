@@ -5,6 +5,11 @@ const setConsents = (payload) => ({
   payload,
 });
 
+const setSyncConsents = (payload) => ({
+  type: "SET_SYNC_CONSENTS",
+  payload,
+});
+
 const setMyConsents = (payload) => ({
   type: "SET_MY_CONSENTS",
   payload,
@@ -22,6 +27,7 @@ const setMyRequests = (payload) => ({
 
 export const actions = {
   setConsents,
+  setSyncConsents,
   setMyConsents,
   setRequests,
   setMyRequests,
@@ -30,6 +36,15 @@ export const actions = {
 function consents(state = {}, action = {}) {
   switch (action.type) {
     case "SET_CONSENTS":
+      return action.payload || null;
+    default:
+      return state;
+  }
+}
+
+function syncConsents(state = {}, action = {}) {
+  switch (action.type) {
+    case "SET_SYNC_CONSENTS":
       return action.payload || null;
     default:
       return state;
@@ -65,6 +80,7 @@ function myRequests(state = {}, action = {}) {
 
 const reducers = combineReducers({
   consents,
+  syncConsents,
   myConsents,
   requests,
   myRequests,
@@ -72,6 +88,7 @@ const reducers = combineReducers({
 
 const initialState = {
   consents: null,
+  syncConsents: null,
   myConsents: null,
   requests: null,
   myRequests: null,
@@ -83,6 +100,7 @@ export const reducer = (state = initialState, action = {}) => {
 
 export const bindSelectors = (slicer) => ({
   getConsents: (state) => slicer(state).consents || null,
+  getSyncConsents: (state) => slicer(state).syncConsents || null,
   getMyConsents: (state) => slicer(state).myConsents || null,
   getRequests: (state) => slicer(state).requests || null,
   getMyRequests: (state) => slicer(state).myRequests || null,
