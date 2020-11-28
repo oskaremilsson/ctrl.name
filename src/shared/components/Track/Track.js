@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectors, actions } from "shared/stores";
+import { makeStyles } from "@material-ui/core/styles";
 
 import {
   Box,
@@ -10,20 +11,28 @@ import {
   ListItem,
   ListItemText,
   ListItemAvatar,
+  Typography,
   Avatar,
   Divider,
 } from "@material-ui/core";
 
 import Rating from "@material-ui/lab/Rating";
-import { Whatshot } from "@material-ui/icons";
 
 import ArtistListItem from "shared/components/ArtistListItem";
 import spotify from "utils/spotify";
+
+const useStyles = makeStyles((theme) => ({
+  rating: {
+    color: theme.palette.primary.main,
+  },
+}));
 
 const { getSpotifyPlayer, getCurrentMeAccessToken } = selectors;
 
 export default function Track({ open, setOpen, track, queueTrack }) {
   const dispatch = useDispatch();
+  const classes = useStyles();
+
   const player = useSelector((state) => getSpotifyPlayer(state));
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
 
@@ -78,13 +87,22 @@ export default function Track({ open, setOpen, track, queueTrack }) {
               )}
             </ListItemAvatar>
             <ListItemText
-              primary={track.name}
+              primary={
+                <Typography
+                  variant="body1"
+                  noWrap
+                  color={track.is_local ? "textSecondary" : "textPrimary"}
+                >
+                  {track.name}
+                </Typography>
+              }
+              disableTypography={true}
               secondary={
                 <Rating
+                  className={classes.rating}
                   name="popularity"
                   value={track.popularity / 20}
                   precision={0.5}
-                  icon={<Whatshot />}
                   size="small"
                   readOnly
                 />
