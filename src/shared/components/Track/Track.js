@@ -19,6 +19,7 @@ import {
 import Rating from "@material-ui/lab/Rating";
 
 import ArtistListItem from "shared/components/ArtistListItem";
+import QueueUnavailableTooltip from "shared/components/QueueUnavailableTooltip";
 import spotify from "utils/spotify";
 
 const useStyles = makeStyles((theme) => ({
@@ -118,15 +119,21 @@ export default function Track({ open, setOpen, track, queueTrack }) {
           ))}
 
           <Box marginTop={2}>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              disabled={!player}
-              onClick={() => queueTrack(track.uri)}
+            <QueueUnavailableTooltip
+              player={player}
+              track={track}
+              position="bottom"
             >
-              Queue track
-            </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                disabled={!player}
+                onClick={() => queueTrack(track.uri)}
+              >
+                Queue track
+              </Button>
+            </QueueUnavailableTooltip>
           </Box>
         </List>
       </Box>

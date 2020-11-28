@@ -13,7 +13,6 @@ import {
   Avatar,
   Snackbar,
   Slide,
-  Tooltip,
 } from "@material-ui/core";
 
 import { QueueMusic } from "@material-ui/icons";
@@ -21,6 +20,7 @@ import { QueueMusic } from "@material-ui/icons";
 import Alert from "@material-ui/lab/Alert";
 
 import Track from "shared/components/Track";
+import QueueUnavailableTooltip from "shared/components/QueueUnavailableTooltip";
 import spotify from "utils/spotify";
 
 const { getSpotifyPlayer, getCurrentMeAccessToken } = selectors;
@@ -39,8 +39,6 @@ export default function TrackListItem(props) {
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState(false);
   const [snackSeverity, setSnackSeverity] = useState(false);
-
-  const [openQueueUnavailable, setOpenQueueUnavailable] = useState(false);
 
   const queueTrack = (uri) => {
     spotify(access_token)
@@ -110,23 +108,15 @@ export default function TrackListItem(props) {
           }
         />
         <ListItemSecondaryAction>
-          <Tooltip
-            title="Can't queue - no track is playing"
-            open={(!player || track.is_local) && openQueueUnavailable}
-            onClose={() => setOpenQueueUnavailable(false)}
-            arrow
-            placement="left"
-          >
-            <span onClick={() => setOpenQueueUnavailable(true)}>
-              <IconButton
-                edge="end"
-                aria-label="queue"
-                disabled={!player || track.is_local}
-              >
-                <QueueMusic />
-              </IconButton>
-            </span>
-          </Tooltip>
+          <QueueUnavailableTooltip player={player} track={track}>
+            <IconButton
+              edge="end"
+              aria-label="queue"
+              disabled={!player || track.is_local}
+            >
+              <QueueMusic />
+            </IconButton>
+          </QueueUnavailableTooltip>
         </ListItemSecondaryAction>
       </ListItem>
 
