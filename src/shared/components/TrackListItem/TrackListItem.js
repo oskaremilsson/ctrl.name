@@ -20,6 +20,7 @@ import { QueueMusic } from "@material-ui/icons";
 
 import Alert from "@material-ui/lab/Alert";
 
+import Track from "shared/components/Track";
 import spotify from "utils/spotify";
 
 const { getSpotifyPlayer, getCurrentMeAccessToken } = selectors;
@@ -34,6 +35,7 @@ export default function TrackListItem(props) {
 
   const { track, avatarVariant } = props;
 
+  const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState(false);
   const [snackSeverity, setSnackSeverity] = useState(false);
@@ -66,7 +68,13 @@ export default function TrackListItem(props) {
 
   return (
     <Box>
-      <ListItem alignItems="center">
+      <ListItem
+        button
+        alignItems="center"
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
         <ListItemAvatar>
           {image ? (
             <Avatar
@@ -127,6 +135,13 @@ export default function TrackListItem(props) {
           )}
         </ListItemSecondaryAction>
       </ListItem>
+
+      <Track
+        open={open}
+        setOpen={setOpen}
+        track={track}
+        queueTrack={queueTrack}
+      />
 
       <Snackbar
         anchorOrigin={{
