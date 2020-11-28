@@ -14,10 +14,15 @@ const logout = () => ({
   type: "LOGOUT",
 });
 
+const logoutWithoutReload = () => ({
+  type: "LOGOUT_WITHOUT_RELOAD",
+});
+
 export const actions = {
   setMe,
   setMeAccessToken,
   logout,
+  logoutWithoutReload,
 };
 
 function me(state = {}, action = {}) {

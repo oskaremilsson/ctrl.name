@@ -57,6 +57,17 @@ export const selectors = {
 const rootReducer = (state, action) => {
   if (action.type === "LOGOUT") {
     state = {};
+    document.cookie = "gdpr_consent= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    localStorage.clear();
+    window.history.replaceState(null, "", "/");
+    window.location.reload();
+  }
+
+  if (action.type === "LOGOUT_WITHOUT_RELOAD") {
+    state = {};
+    document.cookie = "gdpr_consent= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    localStorage.clear();
+    window.history.replaceState(null, "", "/");
   }
 
   return appReducer(state, action);

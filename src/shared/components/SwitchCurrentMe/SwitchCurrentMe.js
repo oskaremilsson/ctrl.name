@@ -46,6 +46,7 @@ export default function SwitchCurrentMe({ open, setOpen }) {
       })
       .catch((_) => {
         console.log(_);
+        console.log("set localstorage here");
         setOpenFailure(username);
         dispatch(actions.setMeAccessToken(undefined));
       });

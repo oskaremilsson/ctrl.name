@@ -34,8 +34,7 @@ export default function Bouncer() {
         })
         .catch((_) => {
           console.log(_);
-          localStorage.clear();
-          history.replace("/");
+          dispatch(actions.logout());
         });
     }
   }, [dispatch, refresh_token, loggedIn, history, accessToken]);
@@ -53,8 +52,7 @@ export default function Bouncer() {
           dispatch(actions.setCurrentMe(selectedMe));
         })
         .catch((_) => {
-          localStorage.clear();
-          history.replace("/");
+          dispatch(actions.logout());
         });
     }
   }, [dispatch, accessToken, loggedIn, history]);

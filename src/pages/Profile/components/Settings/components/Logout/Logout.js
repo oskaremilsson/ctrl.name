@@ -15,9 +15,6 @@ export default function Logout() {
   useEffect(() => {
     if (execute) {
       dispatch(actions.logout());
-      localStorage.clear();
-      history.replace("/");
-      window.location.reload();
     }
   }, [dispatch, history, execute]);
 

@@ -43,15 +43,12 @@ export default function RefreshTokens() {
         })
         .catch((_) => {
           if (me.id !== currentMe.id) {
-            // maybe delete the consent, it seems bad?
-            // Maybe revoked refresh token? handle it on server.
+            localStorage.setItem("selected_me", JSON.stringify(me));
             dispatch(actions.setCurrentMe(me));
             dispatch(actions.setCurrentMeAccessToken(undefined));
+            dispatch(actions.setConsents(undefined));
           } else {
             dispatch(actions.logout());
-            localStorage.clear();
-            history.replace("/");
-            window.location.reload();
           }
         });
     }
@@ -67,8 +64,7 @@ export default function RefreshTokens() {
         })
         .catch((_) => {
           console.log(_);
-          localStorage.clear();
-          history.replace("/");
+          dispatch(actions.logout());
         });
       if (me.id !== currentMe.id) {
         let data = new FormData();
@@ -80,8 +76,7 @@ export default function RefreshTokens() {
             dispatch(actions.setCurrentMeAccessToken(res?.data?.Access_token));
           })
           .catch((_) => {
-            // maybe remove the consent instead?
-            console.log(JSON.stringify(_));
+            dispatch(actions.setConsents(undefined));
           });
       }
     }

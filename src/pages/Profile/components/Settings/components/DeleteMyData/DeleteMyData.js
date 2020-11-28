@@ -30,8 +30,7 @@ export default function DeleteMyData() {
       api
         .post("deleteMyData")
         .then((_) => {
-          dispatch(actions.logout());
-          localStorage.clear();
+          dispatch(actions.logoutWithoutReload());
           setDone(true);
         })
         .catch((_) => {
