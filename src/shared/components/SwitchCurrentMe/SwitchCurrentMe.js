@@ -39,7 +39,7 @@ export default function SwitchCurrentMe({ open, setOpen }) {
     if (open) {
       dispatch(actions.setSyncConsents(true));
     }
-  }, [open]);
+  }, [dispatch, open]);
 
   const switched = (username) => {
     spotify(access_token)
