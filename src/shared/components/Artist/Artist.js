@@ -79,7 +79,7 @@ export default function Artist({ artist }) {
   return (
     <Box>
       <List>
-        {tracks && <ListSubheader>Top Tracks</ListSubheader>}
+        {tracks && <ListSubheader>Popular Tracks</ListSubheader>}
         {tracks &&
           tracks.map((track, i) => (
             <Box key={track && track.uri + i}>
