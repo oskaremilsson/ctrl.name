@@ -85,6 +85,7 @@ export default function Track({ open, setOpen, track, queueTrack }) {
                   value={track.popularity / 20}
                   precision={0.5}
                   icon={<Whatshot />}
+                  size="small"
                   readOnly
                 />
               }
