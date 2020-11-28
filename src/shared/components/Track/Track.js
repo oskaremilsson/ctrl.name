@@ -50,7 +50,7 @@ export default function Track({ open, setOpen, track, queueTrack }) {
         });
     }
     return () => (mounted = false);
-  }, [access_token, track, open]);
+  }, [dispatch, access_token, track, open]);
 
   if (!open) {
     return <></>;
