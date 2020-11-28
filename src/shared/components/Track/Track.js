@@ -14,6 +14,7 @@ import {
   Typography,
   Avatar,
   Divider,
+  Tooltip,
 } from "@material-ui/core";
 
 import Rating from "@material-ui/lab/Rating";
@@ -38,6 +39,7 @@ export default function Track({ open, setOpen, track, queueTrack }) {
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
 
   const [artists, setArtists] = useState([]);
+  const [openRatingInfo, setOpenRatingInfo] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -99,14 +101,24 @@ export default function Track({ open, setOpen, track, queueTrack }) {
               }
               disableTypography={true}
               secondary={
-                <Rating
-                  className={classes.rating}
-                  name="popularity"
-                  value={track.popularity / 20}
-                  precision={0.5}
-                  size="small"
-                  readOnly
-                />
+                <Tooltip
+                  title="Popularity on spotify"
+                  open={openRatingInfo}
+                  onClose={() => setOpenRatingInfo(false)}
+                  arrow
+                  placement="bottom"
+                >
+                  <span onClick={() => setOpenRatingInfo(true)}>
+                    <Rating
+                      className={classes.rating}
+                      name="popularity"
+                      value={track.popularity / 20}
+                      precision={0.5}
+                      size="small"
+                      readOnly
+                    />
+                  </span>
+                </Tooltip>
               }
             />
           </ListItem>
