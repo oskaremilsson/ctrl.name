@@ -110,29 +110,23 @@ export default function TrackListItem(props) {
           }
         />
         <ListItemSecondaryAction>
-          {!player || track.is_local ? (
-            <Tooltip
-              title="Can't queue - no track is playing"
-              open={openQueueUnavailable}
-              onClose={() => setOpenQueueUnavailable(false)}
-              arrow
-              placement="left"
-            >
-              <span onClick={() => setOpenQueueUnavailable(true)}>
-                <IconButton edge="end" aria-label="queue" disabled>
-                  <QueueMusic />
-                </IconButton>
-              </span>
-            </Tooltip>
-          ) : (
-            <IconButton
-              onClick={() => queueTrack(track.uri)}
-              edge="end"
-              aria-label="queue"
-            >
-              <QueueMusic />
-            </IconButton>
-          )}
+          <Tooltip
+            title="Can't queue - no track is playing"
+            open={(!player || track.is_local) && openQueueUnavailable}
+            onClose={() => setOpenQueueUnavailable(false)}
+            arrow
+            placement="left"
+          >
+            <span onClick={() => setOpenQueueUnavailable(true)}>
+              <IconButton
+                edge="end"
+                aria-label="queue"
+                disabled={!player || track.is_local}
+              >
+                <QueueMusic />
+              </IconButton>
+            </span>
+          </Tooltip>
         </ListItemSecondaryAction>
       </ListItem>
 
