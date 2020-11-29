@@ -10,9 +10,16 @@ export default function QueueUnavailableTooltip({
 }) {
   const [openQueueUnavailable, setOpenQueueUnavailable] = useState(false);
 
+  let title;
+  if (!player) {
+    title = "Can't queue - no track is playing";
+  } else if (track.is_local) {
+    title = "Can't queue - track is local";
+  }
+
   return (
     <Tooltip
-      title="Can't queue - no track is playing"
+      title={title}
       open={(!player || track.is_local) && openQueueUnavailable}
       onClose={() => setOpenQueueUnavailable(false)}
       arrow
