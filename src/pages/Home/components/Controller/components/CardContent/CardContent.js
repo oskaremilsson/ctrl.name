@@ -132,7 +132,7 @@ export default function Controller({ player, textColor }) {
             label={ctrlName}
             size="small"
             clickable
-            color="secondary"
+            color="primary"
             onClick={() => {
               setOpenSwitch(true);
             }}

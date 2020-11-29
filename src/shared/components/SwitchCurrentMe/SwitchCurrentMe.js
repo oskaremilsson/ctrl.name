@@ -62,6 +62,7 @@ export default function SwitchCurrentMe({ open, setOpen }) {
     <Box>
       {me && currentMe && (
         <Dialog
+          fullWidth
           onClose={() => {
             setOpen(false);
           }}
