@@ -9,7 +9,8 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Avatar,
+  Card,
+  CardMedia,
 } from "@material-ui/core";
 
 import { strip_tags } from "locutus/php/strings";
@@ -24,6 +25,13 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(20),
     height: theme.spacing(20),
   },
+  card: {
+    width: "100%",
+  },
+  media: {
+    height: 0,
+    paddingTop: "100%",
+  },
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -32,15 +40,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function FullscreenDialog(props) {
   const classes = useStyles();
-  const {
-    children,
-    open,
-    setOpen,
-    title,
-    image,
-    headerContent,
-    avatarVariant,
-  } = props;
+  const { children, open, setOpen, title, image, headerContent } = props;
 
   return (
     <Dialog
@@ -75,12 +75,13 @@ export default function FullscreenDialog(props) {
           flexDirection="column"
         >
           {image && (
-            <Avatar
-              className={classes.image}
-              alt={title}
-              src={image}
-              variant={avatarVariant || "rounded"}
-            />
+            <Card className={classes.card}>
+              <CardMedia
+                className={classes.media}
+                image={image}
+                title={title}
+              />
+            </Card>
           )}
           <Box padding={2}>
             {headerContent && (

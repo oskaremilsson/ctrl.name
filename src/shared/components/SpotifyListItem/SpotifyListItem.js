@@ -75,7 +75,6 @@ export default function SpotifyListItem(props) {
         title={dialogTitle}
         headerContent={dialogHeaderContent}
         image={dialogAvatarSrc || avatarSrc}
-        avatarVariant={avatarVariant}
       >
         {children}
       </FullscreenDialog>
