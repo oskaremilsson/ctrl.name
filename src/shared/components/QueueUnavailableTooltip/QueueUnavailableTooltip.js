@@ -19,7 +19,7 @@ export default function QueueUnavailableTooltip({
 
   return (
     <Tooltip
-      title={title}
+      title={title || ""}
       open={(!player || track.is_local) && openQueueUnavailable}
       onClose={() => setOpenQueueUnavailable(false)}
       arrow
