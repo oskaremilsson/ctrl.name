@@ -42,6 +42,10 @@ export default function FullscreenDialog(props) {
   const classes = useStyles();
   const { children, open, setOpen, title, image, headerContent } = props;
 
+  if (!open) {
+    return <></>;
+  }
+
   return (
     <Dialog
       fullScreen
