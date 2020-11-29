@@ -67,7 +67,7 @@ export default function FullscreenDialog(props) {
         </Toolbar>
       </AppBar>
       <Toolbar />
-      <Box padding={2}>
+      <Box>
         <Box
           display="flex"
           alignItems="center"
@@ -83,13 +83,14 @@ export default function FullscreenDialog(props) {
               />
             </Card>
           )}
-          <Box padding={2}>
-            {headerContent && (
+
+          {headerContent && (
+            <Box padding={2}>
               <Typography display="inline">
                 {strip_tags(headerContent)}
               </Typography>
-            )}
-          </Box>
+            </Box>
+          )}
         </Box>
         {children}
       </Box>
