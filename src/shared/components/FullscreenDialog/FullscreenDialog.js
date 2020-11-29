@@ -17,14 +17,8 @@ import { Close as CloseIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    position: "sticky",
+    position: "fixed",
     background: theme.palette.background.default,
-  },
-  title: {
-    flex: 1,
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
   },
   image: {
     width: theme.spacing(20),
@@ -67,11 +61,12 @@ export default function FullscreenDialog(props) {
           >
             <CloseIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" noWrap>
             {title}
           </Typography>
         </Toolbar>
       </AppBar>
+      <Toolbar />
       <Box padding={2}>
         <Box
           display="flex"
