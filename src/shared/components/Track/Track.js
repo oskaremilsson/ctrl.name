@@ -93,7 +93,6 @@ export default function Track({ open, setOpen, track, queueTrack }) {
               primary={
                 <Typography
                   variant="body1"
-                  noWrap
                   color={track.is_local ? "textSecondary" : "textPrimary"}
                 >
                   {track.name}
