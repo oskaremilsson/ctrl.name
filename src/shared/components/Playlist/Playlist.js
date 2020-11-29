@@ -5,6 +5,7 @@ import { selectors, actions } from "shared/stores";
 import {
   Box,
   List,
+  ListSubheader,
   Divider,
   Button,
   CircularProgress,
@@ -52,6 +53,7 @@ export default function Playlist({ playlist }) {
         Created by: {playlist?.owner?.id}
       </Typography>
       <List>
+        <ListSubheader>Tracks</ListSubheader>
         {tracks &&
           tracks.map((track, i) => (
             <Box key={track.track && track.track.uri + i}>
