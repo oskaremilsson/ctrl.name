@@ -76,7 +76,7 @@ export default function Track({ open, setOpen, track, queueTrack }) {
   }
 
   return (
-    <Dialog open={open} onClose={() => setOpen(false)}>
+    <Dialog open={open} onClose={() => setOpen(false)} fullWidth>
       <Box padding={3}>
         <List>
           <ListItem>
