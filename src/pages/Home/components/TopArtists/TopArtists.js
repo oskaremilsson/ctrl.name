@@ -50,21 +50,19 @@ export default function TopArtists() {
   }, [accessToken, artists]);
 
   return (
-    <Box padding={2}>
-      <Card>
-        <Box padding={2}>
-          <List>
-            <ListSubheader>My Top Artists</ListSubheader>
-            {artists &&
-              artists.map((artist, i) => (
-                <Box key={artist.uri + i}>
-                  <ArtistListItem artist={artist} />
-                  <Divider />
-                </Box>
-              ))}
-          </List>
-        </Box>
-      </Card>
-    </Box>
+    <Card>
+      <Box padding={2}>
+        <List>
+          <ListSubheader>My Top Artists</ListSubheader>
+          {artists &&
+            artists.map((artist, i) => (
+              <Box key={artist.uri + i}>
+                <ArtistListItem artist={artist} />
+                <Divider />
+              </Box>
+            ))}
+        </List>
+      </Box>
+    </Card>
   );
 }

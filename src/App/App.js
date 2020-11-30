@@ -12,7 +12,7 @@ import FetchConsents from "./components/FetchConsents";
 import RefreshTokens from "./components/RefreshTokens";
 import SyncPlayer from "./components/SyncPlayer";
 
-import { Box } from "@material-ui/core";
+import { Box, Container } from "@material-ui/core";
 
 export default function App() {
   const location = useLocation();
@@ -34,12 +34,12 @@ export default function App() {
   }
 
   return (
-    <Box marginBottom={7}>
-      {component}
-
+    <Box marginBottom={9}>
+      <Container maxWidth="md">{component}</Container>
       <Box position="fixed" bottom={0} width="100%" zIndex={2}>
         <NavBar />
       </Box>
+
       <FetchConsents />
       <RefreshTokens />
       <SyncPlayer />

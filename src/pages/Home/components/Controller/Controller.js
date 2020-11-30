@@ -18,7 +18,6 @@ const { getSpotifyPlayer } = selectors;
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    margin: theme.spacing(2),
   },
   cover: {
     width: "100%",
@@ -48,7 +47,7 @@ export default function Controller() {
   }, [player]);
 
   return (
-    <Box display="flex" width="100%">
+    <Box display="flex" width="100%" paddingTop={2}>
       {albumCover && (
         <ColorExtractor
           src={albumCover}

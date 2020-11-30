@@ -50,21 +50,19 @@ export default function TopTracks() {
   }, [accessToken, tracks]);
 
   return (
-    <Box padding={2}>
-      <Card>
-        <Box padding={2}>
-          <List>
-            <ListSubheader>My Top Tracks</ListSubheader>
-            {tracks &&
-              tracks.map((track, i) => (
-                <Box key={track.id + i}>
-                  <TrackListItem track={track} />
-                  <Divider />
-                </Box>
-              ))}
-          </List>
-        </Box>
-      </Card>
-    </Box>
+    <Card>
+      <Box padding={2}>
+        <List>
+          <ListSubheader>My Top Tracks</ListSubheader>
+          {tracks &&
+            tracks.map((track, i) => (
+              <Box key={track.id + i}>
+                <TrackListItem track={track} />
+                <Divider />
+              </Box>
+            ))}
+        </List>
+      </Box>
+    </Card>
   );
 }
