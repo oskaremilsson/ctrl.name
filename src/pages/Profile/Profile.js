@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Container, IconButton } from "@material-ui/core";
+import { Box, Grid, IconButton } from "@material-ui/core";
 
 import ProfileHeader from "./components/ProfileHeader";
 import GiveConsent from "./components/GiveConsent";
@@ -18,11 +18,10 @@ export default function Profile() {
   return (
     <Box>
       <Box paddingBottom={3} paddingTop={3}>
-        <IconButton onClick={() => setSettingsOpen(true)} color="inherit">
-          <SettingsIcon />
-        </IconButton>
-
         <Box marginBottom={5}>
+          <IconButton onClick={() => setSettingsOpen(true)} color="inherit">
+            <SettingsIcon />
+          </IconButton>
           <ProfileHeader />
         </Box>
 
@@ -36,13 +35,23 @@ export default function Profile() {
           </Box>
         </Box>
 
-        <ConsentRequests />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <ConsentRequests />
+          </Grid>
 
-        <MyRequests />
+          <Grid item xs={12}>
+            <MyRequests />
+          </Grid>
 
-        <MyConsentList />
+          <Grid item xs={12}>
+            <MyConsentList />
+          </Grid>
 
-        <ConsentList />
+          <Grid item xs={12}>
+            <ConsentList />
+          </Grid>
+        </Grid>
       </Box>
 
       <Settings open={settingsOpen} setOpen={setSettingsOpen} />
