@@ -77,7 +77,7 @@ export default function ConsentRequests() {
   }, [requests, dispatch]);
 
   return (
-    <Box margin={2}>
+    <Box>
       {requests && requests.length > 0 && (
         <Card>
           <Box padding={1}>

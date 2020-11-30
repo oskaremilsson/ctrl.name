@@ -112,7 +112,7 @@ export default function Playlists() {
   }, [dispatch, selectedPlaylists, allLoaded, playlists, storedPlaylists]);
 
   return (
-    <Box padding={2}>
+    <Box marginTop={2}>
       <Box display="flex" justifyContent="center">
         {currentMe && me && currentMe?.id !== me?.id && (
           <ToggleButtonGroup

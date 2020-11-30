@@ -9,10 +9,12 @@ import FullscreenDialog from "shared/components/FullscreenDialog";
 export default function Settings({ open, setOpen }) {
   return (
     <FullscreenDialog open={open} setOpen={setOpen} title="Settings">
-      <Box marginBottom={6}>
-        <DeleteMyData />
+      <Box padding={2}>
+        <Box marginBottom={6}>
+          <DeleteMyData />
+        </Box>
+        <Logout />
       </Box>
-      <Logout />
     </FullscreenDialog>
   );
 }

@@ -16,7 +16,7 @@ export default function Profile() {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
-    <Container maxWidth="md">
+    <Box>
       <Box paddingBottom={3} paddingTop={3}>
         <IconButton onClick={() => setSettingsOpen(true)} color="inherit">
           <SettingsIcon />
@@ -46,6 +46,6 @@ export default function Profile() {
       </Box>
 
       <Settings open={settingsOpen} setOpen={setSettingsOpen} />
-    </Container>
+    </Box>
   );
 }

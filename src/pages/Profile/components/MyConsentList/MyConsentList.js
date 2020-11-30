@@ -63,7 +63,7 @@ export default function MyConsentList() {
   };
 
   return (
-    <Box margin={2}>
+    <Box>
       {consents && consents.length > 0 && (
         <Card>
           <Box padding={1}>

@@ -49,7 +49,7 @@ export default function MyRequests() {
   };
 
   return (
-    <Box margin={2}>
+    <Box>
       {myRequests && myRequests.length > 0 && (
         <Card>
           <Box padding={1}>
