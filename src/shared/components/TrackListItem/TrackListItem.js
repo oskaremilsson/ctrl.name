@@ -113,6 +113,7 @@ export default function TrackListItem(props) {
               edge="end"
               aria-label="queue"
               disabled={!player || track.is_local}
+              onClick={() => queueTrack(track.uri)}
             >
               <QueueMusic />
             </IconButton>
