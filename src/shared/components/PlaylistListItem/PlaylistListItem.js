@@ -9,7 +9,7 @@ export default function PlaylistListItem({ playlist }) {
       ? playlist.images[playlist.images.length - 1]?.url
       : undefined;
 
-  const dialogImage = album?.images[0]?.url;
+  const dialogImage = playlist?.images[0]?.url;
 
   return (
     <SpotifyListItem
