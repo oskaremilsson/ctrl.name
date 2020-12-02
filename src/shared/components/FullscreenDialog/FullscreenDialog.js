@@ -5,12 +5,12 @@ import {
   Box,
   Dialog,
   Slide,
-  AppBar,
-  Toolbar,
-  IconButton,
   Typography,
   Card,
   CardMedia,
+  Fab,
+  Grid,
+  Container,
 } from "@material-ui/core";
 
 import { strip_tags } from "locutus/php/strings";
@@ -55,47 +55,43 @@ export default function FullscreenDialog(props) {
       }}
       TransitionComponent={Transition}
     >
-      <AppBar className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            onClick={() => setOpen(false)}
+      <Box position="fixed" bottom={8} zIndex={1} width="100%">
+        <Box display="flex" justifyContent="center">
+          <Fab
+            color="primary"
             aria-label="close"
+            onClick={() => setOpen(false)}
+            size="small"
           >
             <CloseIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            {title}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Toolbar />
-      <Box>
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          flexDirection="column"
-        >
-          {image && (
-            <Card className={classes.card}>
-              <CardMedia
-                className={classes.media}
-                image={image}
-                title={title}
-              />
-            </Card>
-          )}
-
-          {headerContent && (
-            <Box padding={2}>
-              <Typography display="inline">
-                {strip_tags(headerContent)}
-              </Typography>
-            </Box>
-          )}
+          </Fab>
         </Box>
+      </Box>
+      <Box marginBottom={6}>
+        {image && (
+          <Card className={classes.card}>
+            <CardMedia className={classes.media} image={image} title={title} />
+          </Card>
+        )}
+        <Container>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Box marginTop={2}>
+                <Typography color="primary" variant="h3" align="left">
+                  {title}
+                </Typography>
+              </Box>
+            </Grid>
+
+            {headerContent && (
+              <Grid item xs={12}>
+                <Typography display="inline">
+                  {strip_tags(headerContent)}
+                </Typography>
+              </Grid>
+            )}
+          </Grid>
+        </Container>
         {children}
       </Box>
     </Dialog>
