@@ -9,6 +9,8 @@ export default function PlaylistListItem({ playlist }) {
       ? playlist.images[playlist.images.length - 1]?.url
       : undefined;
 
+  const dialogImage = album?.images[0]?.url;
+
   return (
     <SpotifyListItem
       avatarSrc={image}
@@ -17,6 +19,7 @@ export default function PlaylistListItem({ playlist }) {
       secondaryText={`${playlist?.tracks?.total} tracks`}
       dialogTitle={playlist?.name}
       dialogHeaderContent={playlist?.description}
+      dialogAvatarSrc={dialogImage}
     >
       <Playlist playlist={playlist} />
     </SpotifyListItem>
