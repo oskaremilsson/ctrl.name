@@ -2,16 +2,30 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectors, actions } from "shared/stores";
 
-import { Box, List, ListSubheader, Divider } from "@material-ui/core";
+import {
+  makeStyles,
+  Box,
+  List,
+  ListSubheader,
+  Divider,
+} from "@material-ui/core";
 
 import TrackListItem from "shared/components/TrackListItem";
 import AlbumListItem from "shared/components/AlbumListItem";
 import spotify from "utils/spotify";
 
+const useStyles = makeStyles((theme) => ({
+  list: {
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+
 const { getCurrentMeAccessToken } = selectors;
 
 export default function Artist({ artist }) {
+  const classes = useStyles();
   const dispatch = useDispatch();
+
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
   const [tracks, setTracks] = useState(undefined);
   const [albums, setAlbums] = useState(undefined);
@@ -78,7 +92,7 @@ export default function Artist({ artist }) {
 
   return (
     <Box>
-      <List>
+      <List className={classes.list}>
         {tracks && <ListSubheader>Popular Tracks</ListSubheader>}
         {tracks &&
           tracks.map((track, i) => (

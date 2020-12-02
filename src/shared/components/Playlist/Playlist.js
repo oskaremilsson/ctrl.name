@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectors, actions } from "shared/stores";
 
 import {
+  makeStyles,
   Box,
   List,
   ListSubheader,
@@ -15,9 +16,16 @@ import {
 import TrackListItem from "shared/components/TrackListItem";
 import spotify from "utils/spotify";
 
+const useStyles = makeStyles((theme) => ({
+  list: {
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+
 const { getCurrentMeAccessToken } = selectors;
 
 export default function Playlist({ playlist }) {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
 
@@ -52,7 +60,7 @@ export default function Playlist({ playlist }) {
       <Typography align="center" color="secondary">
         Created by: {playlist?.owner?.id}
       </Typography>
-      <List>
+      <List className={classes.list}>
         <ListSubheader>Tracks</ListSubheader>
         {tracks &&
           tracks.map((track, i) => (

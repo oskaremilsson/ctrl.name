@@ -17,10 +17,6 @@ import { strip_tags } from "locutus/php/strings";
 import { Close as CloseIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: "fixed",
-    background: theme.palette.background.default,
-  },
   image: {
     width: theme.spacing(20),
     height: theme.spacing(20),
