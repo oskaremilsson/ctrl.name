@@ -51,7 +51,7 @@ export default function FullscreenDialog(props) {
       }}
       TransitionComponent={Transition}
     >
-      <Box position="fixed" bottom={8} zIndex={1} width="100%">
+      <Box position="fixed" bottom={16} zIndex={1} width="100%">
         <Box display="flex" justifyContent="center">
           <Fab
             color="primary"
