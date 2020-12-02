@@ -15,6 +15,7 @@ import {
   Avatar,
   Divider,
   Tooltip,
+  Link,
 } from "@material-ui/core";
 
 import Rating from "@material-ui/lab/Rating";
@@ -145,6 +146,16 @@ export default function Track({ open, setOpen, track, queueTrack }) {
                 Queue track
               </Button>
             </QueueUnavailableTooltip>
+          </Box>
+          <Box marginTop={2}>
+            <Link
+              color="secondary"
+              href={track?.external_urls?.spotify}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open in Spotify
+            </Link>
           </Box>
         </List>
       </Box>
