@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectors, actions } from "shared/stores";
-import { makeStyles } from "@material-ui/core/styles";
 
 import spotify from "utils/spotify";
 import { PlayArrow, Pause } from "@material-ui/icons";
-import { Box, IconButton } from "@material-ui/core";
+import { makeStyles, Box, IconButton } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   disabled: {

@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectors } from "shared/stores";
 
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Box, CardContent, Typography, Chip, Avatar } from "@material-ui/core";
+import {
+  makeStyles,
+  useTheme,
+  Box,
+  CardContent,
+  Typography,
+  Chip,
+  Avatar,
+} from "@material-ui/core";
 
 import { OverflowDetector } from "react-overflow";
 import Marquee from "react-double-marquee";

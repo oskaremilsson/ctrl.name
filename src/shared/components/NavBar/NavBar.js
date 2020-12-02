@@ -5,11 +5,11 @@ import { useSelector } from "react-redux";
 import { selectors } from "shared/stores";
 
 import {
+  makeStyles,
   BottomNavigation,
   BottomNavigationAction,
   Badge,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 
 import {
   Home as HomeIcon,

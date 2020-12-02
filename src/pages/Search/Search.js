@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectors } from "shared/stores";
 
-import { makeStyles } from "@material-ui/core/styles";
-
 import {
+  makeStyles,
   Box,
   TextField,
   List,

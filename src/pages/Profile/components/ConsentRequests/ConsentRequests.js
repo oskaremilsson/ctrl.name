@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectors, actions } from "shared/stores";
 
 import {
+  makeStyles,
   Box,
   List,
   ListItem,
@@ -15,7 +16,6 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import { makeStyles } from "@material-ui/core/styles";
 import { CheckCircle as CheckIcon, HighlightOff } from "@material-ui/icons";
 
 import api from "utils/api";

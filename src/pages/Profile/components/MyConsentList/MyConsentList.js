@@ -4,6 +4,7 @@ import { selectors, actions } from "shared/stores";
 
 import api from "utils/api";
 import {
+  makeStyles,
   Box,
   List,
   ListItem,
@@ -18,7 +19,6 @@ import {
 } from "@material-ui/core";
 
 import { RemoveCircleOutline } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/core/styles";
 
 import Alert from "@material-ui/lab/Alert";
 

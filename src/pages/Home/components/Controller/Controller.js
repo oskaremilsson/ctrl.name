@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectors } from "shared/stores";
 
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Box, Card } from "@material-ui/core";
+import { makeStyles, useTheme, Box, Card } from "@material-ui/core";
 import { ColorExtractor } from "react-color-extractor";
 import invert from "invert-color";
 import hexToRgba from "hex-to-rgba";

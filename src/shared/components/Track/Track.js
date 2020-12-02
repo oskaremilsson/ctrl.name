@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectors, actions } from "shared/stores";
-import { makeStyles } from "@material-ui/core/styles";
 
 import {
+  makeStyles,
   Box,
   Dialog,
   Button,

@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectors } from "shared/stores";
 
-import { makeStyles } from "@material-ui/core/styles";
-
-import { Box, Avatar, Badge, Tooltip } from "@material-ui/core";
+import { makeStyles, Box, Avatar, Badge, Tooltip } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   colorPrimary: {
