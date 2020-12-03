@@ -93,7 +93,7 @@ export default function Artist({ artist }) {
   return (
     <Box>
       <List className={classes.list}>
-        {tracks && <ListSubheader>Popular Tracks</ListSubheader>}
+        {tracks?.length > 0 && <ListSubheader>Popular Tracks</ListSubheader>}
         {tracks &&
           tracks.map((track, i) => (
             <Box key={track && track.uri + i}>
@@ -102,7 +102,7 @@ export default function Artist({ artist }) {
             </Box>
           ))}
 
-        {albums && <ListSubheader>Albums</ListSubheader>}
+        {albums?.length > 0 && <ListSubheader>Albums</ListSubheader>}
         {albums &&
           albums.map((album, i) => (
             <Box key={album && album.uri + i}>
@@ -117,7 +117,7 @@ export default function Artist({ artist }) {
             </Box>
           ))}
 
-        {singles && <ListSubheader>Singles & EPs</ListSubheader>}
+        {singles?.length > 0 && <ListSubheader>Singles & EPs</ListSubheader>}
         {singles &&
           singles.map((single, i) => (
             <Box key={single && single.uri + i}>
