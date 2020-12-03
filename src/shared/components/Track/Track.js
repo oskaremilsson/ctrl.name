@@ -136,23 +136,25 @@ export default function Track({ open, setOpen, track, queueTrack }) {
             </Box>
           ))}
 
-          <Box marginTop={2}>
-            <QueueUnavailableTooltip
-              player={player}
-              track={track}
-              position="bottom"
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                disabled={!player}
-                onClick={() => queueTrack(track.uri)}
+          {queueTrack && (
+            <Box marginTop={2}>
+              <QueueUnavailableTooltip
+                player={player}
+                track={track}
+                position="bottom"
               >
-                Queue track
-              </Button>
-            </QueueUnavailableTooltip>
-          </Box>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  disabled={!player}
+                  onClick={() => queueTrack(track.uri)}
+                >
+                  Queue track
+                </Button>
+              </QueueUnavailableTooltip>
+            </Box>
+          )}
           <Box marginTop={2}>
             <Link
               color="secondary"

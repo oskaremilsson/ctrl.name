@@ -19,6 +19,7 @@ import PlayButton from "./components/PlayButton";
 import SkipButton from "./components/SkipButton";
 import Seeker from "./components/Seeker";
 import SwitchCurrentMe from "shared/components/SwitchCurrentMe";
+import Track from "shared/components/Track";
 
 import { SwapHoriz as SwapHorizIcon } from "@material-ui/icons";
 
@@ -36,6 +37,7 @@ export default function Controller({ player, textColor }) {
 
   const currentMe = useSelector((state) => getCurrentMe(state));
   const [openSwitch, setOpenSwitch] = useState(false);
+  const [openTrack, setOpenTrack] = useState(false);
 
   const [scrollTitle, setScrollTitle] = useState(false);
   const [scrollArtist, setScrollArtist] = useState(false);
@@ -60,13 +62,9 @@ export default function Controller({ player, textColor }) {
     song?.artists?.map((artist) => artist.name).join(", ") ||
     "Play on Spotify to ctrl";
 
-  const switchAvatarAlt = (currentMe && currentMe.id) || "ctrl.current";
-  const switchAvatarImg =
-    currentMe &&
-    currentMe.images &&
-    currentMe.images[0] &&
-    currentMe.images[0].url;
-  const ctrlName = currentMe && `ctrl.${currentMe.id}`;
+  const switchAvatarAlt = currentMe?.id || "ctrl.current";
+  const switchAvatarImg = currentMe?.images[0]?.url;
+  const ctrlName = `ctrl.${currentMe?.id}`;
 
   if (player) {
     if (oldSong !== player.item.uri) {
@@ -86,31 +84,39 @@ export default function Controller({ player, textColor }) {
     >
       <CardContent className={classes.content}>
         <OverflowDetector onOverflowChange={handleTitleOverflow}>
-          {scrollTitle ? (
-            <Typography variant="h6" style={{ color: textColor }}>
+          <Typography
+            variant="h6"
+            style={{ color: textColor }}
+            onClick={() => {
+              if (player) setOpenTrack(true);
+            }}
+          >
+            {scrollTitle ? (
               <Marquee delay={0} direction="left">
                 {songTitle}
               </Marquee>
-            </Typography>
-          ) : (
-            <Typography variant="h6" style={{ color: textColor }}>
-              {songTitle}
-            </Typography>
-          )}
+            ) : (
+              songTitle
+            )}
+          </Typography>
         </OverflowDetector>
 
         <OverflowDetector onOverflowChange={handleArtistOverflow}>
-          {scrollArtist ? (
-            <Typography variant="subtitle1" style={{ color: textColor }}>
+          <Typography
+            variant="subtitle1"
+            style={{ color: textColor }}
+            onClick={() => {
+              if (player) setOpenTrack(true);
+            }}
+          >
+            {scrollArtist ? (
               <Marquee delay={0} direction="left">
                 {artists}
               </Marquee>
-            </Typography>
-          ) : (
-            <Typography variant="subtitle1" style={{ color: textColor }}>
-              {artists}
-            </Typography>
-          )}
+            ) : (
+              artists
+            )}
+          </Typography>
         </OverflowDetector>
       </CardContent>
 
@@ -151,6 +157,7 @@ export default function Controller({ player, textColor }) {
         </Box>
       )}
 
+      <Track open={openTrack} setOpen={setOpenTrack} track={player?.item} />
       <SwitchCurrentMe open={openSwitch} setOpen={setOpenSwitch} />
     </Box>
   );
