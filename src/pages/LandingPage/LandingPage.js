@@ -39,7 +39,7 @@ export default function LandingPage() {
         color="primary"
         href={`https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_SPOTIFY_REDIRECT_URI}&scope=${process.env.REACT_APP_SPOTIFY_SCOPE}`}
       >
-        Login
+        Sign in with Spotify
       </Button>
 
       <Box padding={1}>
