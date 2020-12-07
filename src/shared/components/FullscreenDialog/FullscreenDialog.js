@@ -73,7 +73,12 @@ export default function FullscreenDialog(props) {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Box marginTop={2}>
-                <Typography color="primary" variant="h3" align="left">
+                <Typography
+                  color="primary"
+                  variant="h3"
+                  align="left"
+                  style={{ fontWeight: 600 }}
+                >
                   {title}
                 </Typography>
               </Box>
