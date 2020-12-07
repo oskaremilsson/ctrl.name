@@ -23,11 +23,7 @@ export default function LandingPage() {
       minHeight="100vh"
       flexDirection="column"
     >
-      <Box marginLeft={2} marginRight={2} maxWidth={200}>
-        <Controller demo={demo} />
-      </Box>
-
-      <Box maxWidth="600px" marginBottom={5}>
+      <Box marginTop={4} marginBottom={4} maxWidth={250}>
         <img src={headerImage} alt="header_img" width="100%" />
       </Box>
 
@@ -45,7 +41,7 @@ export default function LandingPage() {
           <GdprConsent setLoginDisabled={setLoginDisabled} />
           <Box width={200}>
             <Typography variant="caption">
-              I've read and agreed with the{" "}
+              I've read and agreed with the
               <Link
                 component="button"
                 onClick={() => {
@@ -60,23 +56,31 @@ export default function LandingPage() {
         </Box>
       </Box>
 
+      <Box marginLeft={2} marginRight={2} marginBottom={2}>
+        <Container maxWidth="xs" disableGutters>
+          <Controller demo={demo} />
+        </Container>
+      </Box>
+
       <FullscreenDialog
         open={openToS}
         setOpen={setOpenToS}
         title="Terms & Conditions"
       >
-        <Typography paragraph>
-          Work in progress. I guess some text regarding what ctrl.name store and
-          how will be here.
-        </Typography>
-        <Typography paragaraph>
-          On login ctrl.name will store your Spotify username. A refresh token
-          to Spotify will be stored encrypted.
-        </Typography>
-        <Typography paragaraph>
-          You can, whenever, choose to delete all data stored by ctrl.name in
-          settings.
-        </Typography>
+        <Box padding={2}>
+          <Typography paragraph>
+            Work in progress. I guess some text regarding what ctrl.name store
+            and how will be here.
+          </Typography>
+          <Typography paragraph>
+            On login ctrl.name will store your Spotify username. A refresh token
+            to Spotify will be stored encrypted.
+          </Typography>
+          <Typography paragraph>
+            You can, whenever, choose to delete all data stored by ctrl.name in
+            settings.
+          </Typography>
+        </Box>
       </FullscreenDialog>
     </Box>
   );
