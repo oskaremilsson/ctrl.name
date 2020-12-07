@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Container } from "@material-ui/core";
 
-import Controller from "./components/Controller";
+import Controller from "shared/components/Controller";
 import TopTracks from "./components/TopTracks";
 import TopArtists from "./components/TopArtists";
 
