@@ -23,10 +23,8 @@ export default function LandingPage() {
       minHeight="100vh"
       flexDirection="column"
     >
-      <Box marginLeft={2} marginRight={2}>
-        <Container maxWidth="xs" disableGutters>
-          <Controller demo={demo} />
-        </Container>
+      <Box marginLeft={2} marginRight={2} maxWidth={200}>
+        <Controller demo={demo} />
       </Box>
 
       <Box maxWidth="600px" marginBottom={5}>
