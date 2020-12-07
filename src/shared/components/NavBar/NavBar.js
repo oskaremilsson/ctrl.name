@@ -6,6 +6,7 @@ import { selectors } from "shared/stores";
 
 import {
   makeStyles,
+  Box,
   BottomNavigation,
   BottomNavigationAction,
   Badge,
@@ -23,7 +24,9 @@ const { getRequests } = selectors;
 const useStyles = makeStyles((theme) => ({
   root: {
     borderTop: `1px solid ${theme.palette.background.default}`,
-    boxShadow: "0px 4px 4px 6px rgba(0,0,0,0.2)",
+  },
+  spacing: {
+    background: theme.palette.background.paper,
   },
 }));
 
@@ -46,32 +49,34 @@ export default function NavBar() {
   }, [location]);
 
   return (
-    <BottomNavigation
-      className={classes.root}
-      value={value}
-      onChange={navigate}
-      showLabels
-    >
-      <BottomNavigationAction value="/" label="Home" icon={<HomeIcon />} />
-      <BottomNavigationAction
-        value="/playlists"
-        label="Playlists"
-        icon={<ArtTrackIcon />}
-      />
-      <BottomNavigationAction
-        value="/search"
-        label="Search"
-        icon={<SearchIcon />}
-      />
-      <BottomNavigationAction
-        value="/profile"
-        label="Profile"
-        icon={
-          <Badge badgeContent={requests?.length} color="secondary">
-            <AccountCircleIcon />
-          </Badge>
-        }
-      />
-    </BottomNavigation>
+    <Box paddingBottom={1} className={classes.spacing}>
+      <BottomNavigation
+        className={classes.root}
+        value={value}
+        onChange={navigate}
+        showLabels
+      >
+        <BottomNavigationAction value="/" label="Home" icon={<HomeIcon />} />
+        <BottomNavigationAction
+          value="/playlists"
+          label="Playlists"
+          icon={<ArtTrackIcon />}
+        />
+        <BottomNavigationAction
+          value="/search"
+          label="Search"
+          icon={<SearchIcon />}
+        />
+        <BottomNavigationAction
+          value="/profile"
+          label="Profile"
+          icon={
+            <Badge badgeContent={requests?.length} color="secondary">
+              <AccountCircleIcon />
+            </Badge>
+          }
+        />
+      </BottomNavigation>
+    </Box>
   );
 }
