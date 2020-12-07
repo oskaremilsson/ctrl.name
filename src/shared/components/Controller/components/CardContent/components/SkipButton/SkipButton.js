@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
 
 const { getCurrentMeAccessToken, getSpotifyPlayer } = selectors;
 
-export default function SkipButton({ action, color }) {
+export default function SkipButton({ action, color, demo }) {
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -54,7 +54,7 @@ export default function SkipButton({ action, color }) {
 
   return (
     <IconButton
-      disabled={!player}
+      disabled={!player || Boolean(demo)}
       onClick={() => setExecute(true)}
       classes={{
         disabled: classes.disabled,

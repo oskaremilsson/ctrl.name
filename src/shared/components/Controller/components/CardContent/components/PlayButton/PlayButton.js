@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
 
 const { getCurrentMeAccessToken, getSpotifyPlayer } = selectors;
 
-export default function PlayButton({ color }) {
+export default function PlayButton({ color, demo }) {
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -52,7 +52,7 @@ export default function PlayButton({ color }) {
   return (
     <Box>
       <IconButton
-        disabled={!player}
+        disabled={!player || Boolean(demo)}
         onClick={handleClick}
         classes={{
           disabled: classes.disabled,

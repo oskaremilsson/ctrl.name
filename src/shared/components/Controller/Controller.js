@@ -26,10 +26,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Controller() {
+export default function Controller({ demo }) {
   const theme = useTheme();
   const classes = useStyles(theme);
-  const player = useSelector((state) => getSpotifyPlayer(state));
+
+  let player = useSelector((state) => getSpotifyPlayer(state));
+  if (demo) {
+    player = demo;
+  }
 
   const [color, setColor] = useState("#535b5c");
   const textColor = invert(color, true);
@@ -70,10 +74,10 @@ export default function Controller() {
       >
         <img width="100%" src={albumCover || coverart} alt={albumName} />
 
-        <CardContent textColor={textColor} player={player} />
+        <CardContent textColor={textColor} player={player} demo={demo} />
       </Card>
 
-      <SyncPlayerTimer />
+      {!demo && <SyncPlayerTimer />}
     </Box>
   );
 }

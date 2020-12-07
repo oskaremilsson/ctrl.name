@@ -13,10 +13,13 @@ const mstoMSS = (ms) => {
   return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 };
 
-export default function Seeker({ color }) {
+export default function Seeker({ color, demo }) {
   const dispatch = useDispatch();
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
-  const player = useSelector((state) => getSpotifyPlayer(state));
+  let player = useSelector((state) => getSpotifyPlayer(state));
+  if (demo) {
+    player = demo;
+  }
 
   const [seek, setSeek] = useState(false);
   const [tempValue, setTempValue] = useState(false);
@@ -56,7 +59,7 @@ export default function Seeker({ color }) {
           max={player ? duration : 10000}
           step={1000}
           aria-labelledby="seek-track"
-          disabled={!player}
+          disabled={!player || Boolean(demo)}
         />
       </Box>
 

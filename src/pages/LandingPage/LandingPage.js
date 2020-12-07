@@ -1,14 +1,19 @@
 import React, { useState } from "react";
-import { Box, Button, Link, Typography } from "@material-ui/core";
+import { Box, Container, Button, Link, Typography } from "@material-ui/core";
 
 import GdprConsent from "./components/GdprConsent";
 
 import headerImage from "assets/header_img.jpg";
 import FullscreenDialog from "shared/components/FullscreenDialog";
+import Controller from "shared/components/Controller";
+
+import demoPlayers from "assets/demoPlayers.json";
 
 export default function LandingPage() {
   const [loginDisabled, setLoginDisabled] = useState(true);
   const [openToS, setOpenToS] = useState(false);
+
+  const demo = demoPlayers[Math.floor(Math.random() * demoPlayers.length)];
 
   return (
     <Box
@@ -18,6 +23,12 @@ export default function LandingPage() {
       minHeight="100vh"
       flexDirection="column"
     >
+      <Box marginLeft={2} marginRight={2}>
+        <Container maxWidth="xs" disableGutters>
+          <Controller demo={demo} />
+        </Container>
+      </Box>
+
       <Box maxWidth="600px" marginBottom={5}>
         <img src={headerImage} alt="header_img" width="100%" />
       </Box>

@@ -22,6 +22,7 @@ import SwitchCurrentMe from "shared/components/SwitchCurrentMe";
 import Track from "shared/components/Track";
 
 import { SwapHoriz as SwapHorizIcon } from "@material-ui/icons";
+import coverart from "assets/coverart.png";
 
 const { getCurrentMe } = selectors;
 
@@ -31,11 +32,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Controller({ player, textColor }) {
+const demoCurrentMe = {
+  id: "name",
+  images: [
+    {
+      url: coverart,
+    },
+  ],
+};
+
+export default function Controller({ player, textColor, demo }) {
   const theme = useTheme();
   const classes = useStyles(theme);
 
-  const currentMe = useSelector((state) => getCurrentMe(state));
+  let currentMe = useSelector((state) => getCurrentMe(state));
+  if (demo) {
+    currentMe = demoCurrentMe;
+  }
+
   const [openSwitch, setOpenSwitch] = useState(false);
   const [openTrack, setOpenTrack] = useState(false);
 
@@ -88,7 +102,7 @@ export default function Controller({ player, textColor }) {
             variant="h6"
             style={{ color: textColor }}
             onClick={() => {
-              if (player) setOpenTrack(true);
+              if (player && !demo) setOpenTrack(true);
             }}
           >
             {scrollTitle ? (
@@ -106,7 +120,7 @@ export default function Controller({ player, textColor }) {
             variant="subtitle1"
             style={{ color: textColor }}
             onClick={() => {
-              if (player) setOpenTrack(true);
+              if (player && !demo) setOpenTrack(true);
             }}
           >
             {scrollArtist ? (
@@ -120,7 +134,7 @@ export default function Controller({ player, textColor }) {
         </OverflowDetector>
       </CardContent>
 
-      <Seeker color={textColor} />
+      <Seeker color={textColor} demo={demo} />
 
       <Box
         display="flex"
@@ -129,9 +143,9 @@ export default function Controller({ player, textColor }) {
         paddingLeft={1}
         paddingBottom={1}
       >
-        <SkipButton action={"previous"} color={textColor} />
-        <PlayButton color={textColor} />
-        <SkipButton action={"next"} color={textColor} />
+        <SkipButton action={"previous"} color={textColor} demo={demo} />
+        <PlayButton color={textColor} demo={demo} />
+        <SkipButton action={"next"} color={textColor} demo={demo} />
       </Box>
 
       {currentMe && (
@@ -147,18 +161,19 @@ export default function Controller({ player, textColor }) {
             clickable
             color="primary"
             onClick={() => {
-              setOpenSwitch(true);
+              if (!demo) setOpenSwitch(true);
             }}
             onDelete={() => {
-              setOpenSwitch(true);
+              if (!demo) setOpenSwitch(true);
             }}
             deleteIcon={<SwapHorizIcon />}
+            disabled={Boolean(demo)}
           />
         </Box>
       )}
 
       <Track open={openTrack} setOpen={setOpenTrack} track={player?.item} />
-      <SwitchCurrentMe open={openSwitch} setOpen={setOpenSwitch} />
+      {!demo && <SwitchCurrentMe open={openSwitch} setOpen={setOpenSwitch} />}
     </Box>
   );
 }

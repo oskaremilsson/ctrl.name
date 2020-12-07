@@ -1,0 +1,532 @@
+[
+  {
+    "shuffle_state": true,
+    "repeat_state": "context",
+    "timestamp": 1607371305978,
+    "progress_ms": 36676,
+    "item": {
+      "album": {
+        "album_type": "single",
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/3Cg6FMCFpcMHugD262Ynrl"
+            },
+            "href": "https://api.spotify.com/v1/artists/3Cg6FMCFpcMHugD262Ynrl",
+            "id": "3Cg6FMCFpcMHugD262Ynrl",
+            "name": "Julia Adams",
+            "type": "artist",
+            "uri": "spotify:artist:3Cg6FMCFpcMHugD262Ynrl"
+          }
+        ],
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/0C2GYI8stEH40fX5L2DJVI"
+        },
+        "href": "https://api.spotify.com/v1/albums/0C2GYI8stEH40fX5L2DJVI",
+        "id": "0C2GYI8stEH40fX5L2DJVI",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b27372b3577672c2e4c2f7f320af",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e0272b3577672c2e4c2f7f320af",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d0000485172b3577672c2e4c2f7f320af",
+            "width": 64
+          }
+        ],
+        "name": "Jag ska bli bättre",
+        "release_date": "2020-11-13",
+        "release_date_precision": "day",
+        "total_tracks": 1,
+        "type": "album",
+        "uri": "spotify:album:0C2GYI8stEH40fX5L2DJVI"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/3Cg6FMCFpcMHugD262Ynrl"
+          },
+          "href": "https://api.spotify.com/v1/artists/3Cg6FMCFpcMHugD262Ynrl",
+          "id": "3Cg6FMCFpcMHugD262Ynrl",
+          "name": "Julia Adams",
+          "type": "artist",
+          "uri": "spotify:artist:3Cg6FMCFpcMHugD262Ynrl"
+        }
+      ],
+      "disc_number": 1,
+      "duration_ms": 169253,
+      "explicit": true,
+      "external_ids": {
+        "isrc": "SEVQI2017001"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/5ooOJOWa02a8690vxtvx94"
+      },
+      "href": "https://api.spotify.com/v1/tracks/5ooOJOWa02a8690vxtvx94",
+      "id": "5ooOJOWa02a8690vxtvx94",
+      "is_local": false,
+      "name": "Jag ska bli bättre",
+      "popularity": 36,
+      "preview_url": "https://p.scdn.co/mp3-preview/9aee2f91b512137a3ed92bb681412e3509c0ab6e?cid=783c7df5386846508e71e9b8cdfe4bda",
+      "track_number": 1,
+      "type": "track",
+      "uri": "spotify:track:5ooOJOWa02a8690vxtvx94"
+    },
+    "currently_playing_type": "track",
+    "actions": {
+      "disallows": {
+        "pausing": false
+      }
+    },
+    "is_playing": true
+  },
+  {
+    "shuffle_state": true,
+    "repeat_state": "context",
+    "timestamp": 1607372699033,
+    "progress_ms": 142659,
+    "item": {
+      "album": {
+        "album_type": "album",
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/6qqNVTkY8uBg9cP3Jd7DAH"
+            },
+            "href": "https://api.spotify.com/v1/artists/6qqNVTkY8uBg9cP3Jd7DAH",
+            "id": "6qqNVTkY8uBg9cP3Jd7DAH",
+            "name": "Billie Eilish",
+            "type": "artist",
+            "uri": "spotify:artist:6qqNVTkY8uBg9cP3Jd7DAH"
+          }
+        ],
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/0S0KGZnfBGSIssfF54WSJh"
+        },
+        "href": "https://api.spotify.com/v1/albums/0S0KGZnfBGSIssfF54WSJh",
+        "id": "0S0KGZnfBGSIssfF54WSJh",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b27350a3147b4edd7701a876c6ce",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e0250a3147b4edd7701a876c6ce",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d0000485150a3147b4edd7701a876c6ce",
+            "width": 64
+          }
+        ],
+        "name": "WHEN WE ALL FALL ASLEEP, WHERE DO WE GO?",
+        "release_date": "2019-03-29",
+        "release_date_precision": "day",
+        "total_tracks": 14,
+        "type": "album",
+        "uri": "spotify:album:0S0KGZnfBGSIssfF54WSJh"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/6qqNVTkY8uBg9cP3Jd7DAH"
+          },
+          "href": "https://api.spotify.com/v1/artists/6qqNVTkY8uBg9cP3Jd7DAH",
+          "id": "6qqNVTkY8uBg9cP3Jd7DAH",
+          "name": "Billie Eilish",
+          "type": "artist",
+          "uri": "spotify:artist:6qqNVTkY8uBg9cP3Jd7DAH"
+        }
+      ],
+      "disc_number": 1,
+      "duration_ms": 196077,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "USUM71815958"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/43zdsphuZLzwA9k4DJhU0I"
+      },
+      "href": "https://api.spotify.com/v1/tracks/43zdsphuZLzwA9k4DJhU0I",
+      "id": "43zdsphuZLzwA9k4DJhU0I",
+      "is_local": false,
+      "name": "when the party's over",
+      "popularity": 86,
+      "preview_url": "https://p.scdn.co/mp3-preview/3ecac85b0a9e25bfb3ff85ab96c9d09ab164cb7b?cid=783c7df5386846508e71e9b8cdfe4bda",
+      "track_number": 7,
+      "type": "track",
+      "uri": "spotify:track:43zdsphuZLzwA9k4DJhU0I"
+    },
+    "currently_playing_type": "track",
+    "actions": {
+      "disallows": {
+        "pausing": false
+      }
+    },
+    "is_playing": true
+  },
+  {
+    "shuffle_state": true,
+    "repeat_state": "context",
+    "timestamp": 1607372942683,
+    "progress_ms": 92964,
+    "item": {
+      "album": {
+        "album_type": "single",
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/3KdFzFHhUFCRdbllsQ1lZd"
+            },
+            "href": "https://api.spotify.com/v1/artists/3KdFzFHhUFCRdbllsQ1lZd",
+            "id": "3KdFzFHhUFCRdbllsQ1lZd",
+            "name": "Felicia Takman",
+            "type": "artist",
+            "uri": "spotify:artist:3KdFzFHhUFCRdbllsQ1lZd"
+          }
+        ],
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/56b2aDDqMDt2qKDJtQD9H5"
+        },
+        "href": "https://api.spotify.com/v1/albums/56b2aDDqMDt2qKDJtQD9H5",
+        "id": "56b2aDDqMDt2qKDJtQD9H5",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b273fd3d3e59bd3445326a5f1752",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e02fd3d3e59bd3445326a5f1752",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d00004851fd3d3e59bd3445326a5f1752",
+            "width": 64
+          }
+        ],
+        "name": "Hatar att förlora",
+        "release_date": "2020-11-06",
+        "release_date_precision": "day",
+        "total_tracks": 5,
+        "type": "album",
+        "uri": "spotify:album:56b2aDDqMDt2qKDJtQD9H5"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/3KdFzFHhUFCRdbllsQ1lZd"
+          },
+          "href": "https://api.spotify.com/v1/artists/3KdFzFHhUFCRdbllsQ1lZd",
+          "id": "3KdFzFHhUFCRdbllsQ1lZd",
+          "name": "Felicia Takman",
+          "type": "artist",
+          "uri": "spotify:artist:3KdFzFHhUFCRdbllsQ1lZd"
+        }
+      ],
+      "disc_number": 1,
+      "duration_ms": 182333,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM72001083"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/1se3i6fm2MtKKORx9xu0z6"
+      },
+      "href": "https://api.spotify.com/v1/tracks/1se3i6fm2MtKKORx9xu0z6",
+      "id": "1se3i6fm2MtKKORx9xu0z6",
+      "is_local": false,
+      "name": "Dunka dumma hjärta dunka",
+      "popularity": 26,
+      "preview_url": "https://p.scdn.co/mp3-preview/823c02b98863b66349ced829757db37b3e0d6023?cid=783c7df5386846508e71e9b8cdfe4bda",
+      "track_number": 2,
+      "type": "track",
+      "uri": "spotify:track:1se3i6fm2MtKKORx9xu0z6"
+    },
+    "currently_playing_type": "track",
+    "actions": {
+      "disallows": {
+        "resuming": true
+      }
+    },
+    "is_playing": true
+  },
+  {
+    "shuffle_state": true,
+    "repeat_state": "context",
+    "timestamp": 1607372994750,
+    "progress_ms": 141432,
+    "item": {
+      "album": {
+        "album_type": "album",
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/2X2m34XTofjWhhW0Wnya5k"
+            },
+            "href": "https://api.spotify.com/v1/artists/2X2m34XTofjWhhW0Wnya5k",
+            "id": "2X2m34XTofjWhhW0Wnya5k",
+            "name": "Klara & Jag",
+            "type": "artist",
+            "uri": "spotify:artist:2X2m34XTofjWhhW0Wnya5k"
+          }
+        ],
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/51emokCGhqMDRruBVKQn9k"
+        },
+        "href": "https://api.spotify.com/v1/albums/51emokCGhqMDRruBVKQn9k",
+        "id": "51emokCGhqMDRruBVKQn9k",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b273fb861f5fd56c2bf946989927",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e02fb861f5fd56c2bf946989927",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d00004851fb861f5fd56c2bf946989927",
+            "width": 64
+          }
+        ],
+        "name": "Det slutar inte här",
+        "release_date": "2020-09-25",
+        "release_date_precision": "day",
+        "total_tracks": 9,
+        "type": "album",
+        "uri": "spotify:album:51emokCGhqMDRruBVKQn9k"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2X2m34XTofjWhhW0Wnya5k"
+          },
+          "href": "https://api.spotify.com/v1/artists/2X2m34XTofjWhhW0Wnya5k",
+          "id": "2X2m34XTofjWhhW0Wnya5k",
+          "name": "Klara & Jag",
+          "type": "artist",
+          "uri": "spotify:artist:2X2m34XTofjWhhW0Wnya5k"
+        }
+      ],
+      "disc_number": 1,
+      "duration_ms": 184200,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEPQA2000126"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/6IPU82toeUvnBTnMZOaAUx"
+      },
+      "href": "https://api.spotify.com/v1/tracks/6IPU82toeUvnBTnMZOaAUx",
+      "id": "6IPU82toeUvnBTnMZOaAUx",
+      "is_local": false,
+      "name": "Tame Impala",
+      "popularity": 31,
+      "preview_url": "https://p.scdn.co/mp3-preview/2f4f473374779ada5d74a2b8fd5e85fd2653b343?cid=783c7df5386846508e71e9b8cdfe4bda",
+      "track_number": 2,
+      "type": "track",
+      "uri": "spotify:track:6IPU82toeUvnBTnMZOaAUx"
+    },
+    "currently_playing_type": "track",
+    "actions": {
+      "disallows": {
+        "resuming": true
+      }
+    },
+    "is_playing": true
+  },
+  {
+    "shuffle_state": true,
+    "repeat_state": "context",
+    "timestamp": 1607373042227,
+    "progress_ms": 51926,
+    "item": {
+      "album": {
+        "album_type": "single",
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0XDfNJsQy7B3q0GfsMHSkp"
+            },
+            "href": "https://api.spotify.com/v1/artists/0XDfNJsQy7B3q0GfsMHSkp",
+            "id": "0XDfNJsQy7B3q0GfsMHSkp",
+            "name": "Tjuvjakt",
+            "type": "artist",
+            "uri": "spotify:artist:0XDfNJsQy7B3q0GfsMHSkp"
+          }
+        ],
+        "available_markets": [],
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/39HtUpcDsDyTOKJRIjoFxE"
+        },
+        "href": "https://api.spotify.com/v1/albums/39HtUpcDsDyTOKJRIjoFxE",
+        "id": "39HtUpcDsDyTOKJRIjoFxE",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b273b8db4baa47d4ea0169543f60",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e02b8db4baa47d4ea0169543f60",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d00004851b8db4baa47d4ea0169543f60",
+            "width": 64
+          }
+        ],
+        "name": "De e fine",
+        "release_date": "2020-10-09",
+        "release_date_precision": "day",
+        "total_tracks": 1,
+        "type": "album",
+        "uri": "spotify:album:39HtUpcDsDyTOKJRIjoFxE"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/0XDfNJsQy7B3q0GfsMHSkp"
+          },
+          "href": "https://api.spotify.com/v1/artists/0XDfNJsQy7B3q0GfsMHSkp",
+          "id": "0XDfNJsQy7B3q0GfsMHSkp",
+          "name": "Tjuvjakt",
+          "type": "artist",
+          "uri": "spotify:artist:0XDfNJsQy7B3q0GfsMHSkp"
+        }
+      ],
+      "available_markets": [],
+      "disc_number": 1,
+      "duration_ms": 197551,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM72001258"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/76R83SLwG6PB4wJPXB5qg6"
+      },
+      "href": "https://api.spotify.com/v1/tracks/76R83SLwG6PB4wJPXB5qg6",
+      "id": "76R83SLwG6PB4wJPXB5qg6",
+      "is_local": false,
+      "name": "De e fine",
+      "popularity": 43,
+      "preview_url": null,
+      "track_number": 1,
+      "type": "track",
+      "uri": "spotify:track:76R83SLwG6PB4wJPXB5qg6"
+    },
+    "currently_playing_type": "track",
+    "actions": {
+      "disallows": {
+        "resuming": true
+      }
+    },
+    "is_playing": true
+  },
+  {
+    "shuffle_state": true,
+    "repeat_state": "context",
+    "timestamp": 1607373108452,
+    "progress_ms": 66173,
+    "item": {
+      "album": {
+        "album_type": "album",
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/1Xyo4u8uXC1ZmMpatF05PJ"
+            },
+            "href": "https://api.spotify.com/v1/artists/1Xyo4u8uXC1ZmMpatF05PJ",
+            "id": "1Xyo4u8uXC1ZmMpatF05PJ",
+            "name": "The Weeknd",
+            "type": "artist",
+            "uri": "spotify:artist:1Xyo4u8uXC1ZmMpatF05PJ"
+          }
+        ],
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/4yP0hdKOZPNshxUOjY0cZj"
+        },
+        "href": "https://api.spotify.com/v1/albums/4yP0hdKOZPNshxUOjY0cZj",
+        "id": "4yP0hdKOZPNshxUOjY0cZj",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b2738863bc11d2aa12b54f5aeb36",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e028863bc11d2aa12b54f5aeb36",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d000048518863bc11d2aa12b54f5aeb36",
+            "width": 64
+          }
+        ],
+        "name": "After Hours",
+        "release_date": "2020-03-20",
+        "release_date_precision": "day",
+        "total_tracks": 14,
+        "type": "album",
+        "uri": "spotify:album:4yP0hdKOZPNshxUOjY0cZj"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/1Xyo4u8uXC1ZmMpatF05PJ"
+          },
+          "href": "https://api.spotify.com/v1/artists/1Xyo4u8uXC1ZmMpatF05PJ",
+          "id": "1Xyo4u8uXC1ZmMpatF05PJ",
+          "name": "The Weeknd",
+          "type": "artist",
+          "uri": "spotify:artist:1Xyo4u8uXC1ZmMpatF05PJ"
+        }
+      ],
+      "disc_number": 1,
+      "duration_ms": 200040,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "USUG11904206"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b"
+      },
+      "href": "https://api.spotify.com/v1/tracks/0VjIjW4GlUZAMYd2vXMi3b",
+      "id": "0VjIjW4GlUZAMYd2vXMi3b",
+      "is_local": false,
+      "name": "Blinding Lights",
+      "popularity": 96,
+      "preview_url": "https://p.scdn.co/mp3-preview/2f860d8f53b4f34dbef1053890845a8a162fba82?cid=783c7df5386846508e71e9b8cdfe4bda",
+      "track_number": 9,
+      "type": "track",
+      "uri": "spotify:track:0VjIjW4GlUZAMYd2vXMi3b"
+    },
+    "currently_playing_type": "track",
+    "actions": {
+      "disallows": {
+        "resuming": true
+      }
+    },
+    "is_playing": true
+  }
+]
