@@ -42,7 +42,7 @@ export default function LandingPage() {
         Sign in with Spotify
       </Button>
 
-      <Box padding={1}>
+      <Box padding={1} marginBottom={5}>
         <Box display="flex" alignItems="center">
           <GdprConsent setLoginDisabled={setLoginDisabled} />
           <Box width={200}>
