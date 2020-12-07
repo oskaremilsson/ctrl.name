@@ -112,7 +112,7 @@ export default function Track({ open, setOpen, track, queueTrack }) {
                   open={openRatingInfo}
                   onClose={() => setOpenRatingInfo(false)}
                   arrow
-                  placement="bottom"
+                  placement="top"
                 >
                   <span onClick={() => setOpenRatingInfo(true)}>
                     <Rating
@@ -141,7 +141,7 @@ export default function Track({ open, setOpen, track, queueTrack }) {
               <QueueUnavailableTooltip
                 player={player}
                 track={track}
-                position="bottom"
+                position="top"
               >
                 <Button
                   variant="contained"
