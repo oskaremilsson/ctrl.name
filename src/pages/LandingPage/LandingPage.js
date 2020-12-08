@@ -13,7 +13,7 @@ import ToS from "./components/ToS";
 import Controller from "shared/components/Controller";
 import About from "shared/components/About";
 
-import headerImage from "assets/header_img.jpg";
+import logo from "assets/logo.png";
 import demoPlayers from "assets/demoPlayers.json";
 
 export default function LandingPage() {
@@ -31,7 +31,7 @@ export default function LandingPage() {
       flexDirection="column"
     >
       <Box marginTop={4} marginBottom={4} maxWidth={250}>
-        <img src={headerImage} alt="header_img" width="100%" />
+        <img src={logo} alt="logo" width="100%" />
       </Box>
 
       <Button

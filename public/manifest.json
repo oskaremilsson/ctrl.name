@@ -1,6 +1,6 @@
 {
   "short_name": "ctrl.name",
-  "name": "ctrl.name - share Spotify control",
+  "name": "ctrl.name - share spotify control",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "icon_small.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "icon_big.png",
       "type": "image/png",
       "sizes": "512x512"
     }
