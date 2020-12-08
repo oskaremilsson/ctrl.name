@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const spotify = (access_token) => {
+const spotify = (access_token, fullUrl) => {
   const req = axios.create({
-    baseURL: process.env.REACT_APP_SPOTIFY_BASE_URL,
+    baseURL: fullUrl ? "" : process.env.REACT_APP_SPOTIFY_BASE_URL,
   });
 
   req.interceptors.request.use(function (config) {

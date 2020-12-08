@@ -28,8 +28,14 @@ export default function Artist({ artist }) {
 
   const access_token = useSelector((state) => getCurrentMeAccessToken(state));
   const [tracks, setTracks] = useState(undefined);
-  const [albums, setAlbums] = useState(undefined);
-  const [singles, setSingles] = useState(undefined);
+
+  const [albums, setAlbums] = useState([]);
+  const [loadAlbums, setLoadAlbums] = useState(true);
+  const [nextAlbums, setNextAlbums] = useState(undefined);
+
+  const [singles, setSingles] = useState([]);
+  const [loadSingles, setLoadSingles] = useState(true);
+  const [nextSingles, setNextSingles] = useState(undefined);
 
   useEffect(() => {
     let mounted = true;
@@ -52,14 +58,21 @@ export default function Artist({ artist }) {
 
   useEffect(() => {
     let mounted = true;
-    if (access_token && !albums) {
-      spotify(access_token)
+    if (access_token && loadAlbums) {
+      spotify(access_token, nextAlbums)
         .get(
-          `artists/${artist.id}/albums?country=from_token&include_groups=album`
+          nextAlbums ||
+            `artists/${artist.id}/albums?country=from_token&include_groups=album`
         )
         .then((res) => {
           if (mounted) {
-            setAlbums(res.data.items);
+            setLoadAlbums(false);
+            setAlbums((albums) => albums.concat(res.data.items));
+
+            setNextAlbums(res.data.next);
+            if (res.data.next) {
+              setLoadAlbums(true);
+            }
           }
         })
         .catch((_) => {
@@ -68,18 +81,25 @@ export default function Artist({ artist }) {
     }
 
     return () => (mounted = false);
-  }, [access_token, artist, albums]);
+  }, [access_token, artist, albums, loadAlbums, nextAlbums]);
 
   useEffect(() => {
     let mounted = true;
-    if (access_token && !singles) {
-      spotify(access_token)
+    if (access_token && loadSingles) {
+      spotify(access_token, nextSingles)
         .get(
-          `artists/${artist.id}/albums?country=from_token&include_groups=single`
+          nextSingles ||
+            `artists/${artist.id}/albums?country=from_token&include_groups=single`
         )
         .then((res) => {
           if (mounted) {
-            setSingles(res.data.items);
+            setLoadSingles(false);
+            setSingles((singles) => singles.concat(res.data.items));
+
+            setNextSingles(res.data.next);
+            if (res.data.next) {
+              setLoadSingles(true);
+            }
           }
         })
         .catch((_) => {
@@ -88,7 +108,7 @@ export default function Artist({ artist }) {
     }
 
     return () => (mounted = false);
-  }, [access_token, artist, singles]);
+  }, [access_token, artist, singles, loadSingles, nextSingles]);
 
   return (
     <Box>
