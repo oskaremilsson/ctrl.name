@@ -8,12 +8,11 @@ export default function ToS({ open, setOpen }) {
     <FullscreenDialog open={open} setOpen={setOpen} title="Terms & Conditions">
       <Box padding={2}>
         <Typography paragraph>
-          Work in progress. I guess some text regarding what ctrl.name store and
-          how will be here.
+          These Terms & Conditions is a work in progress and will be updated.
         </Typography>
         <Typography paragraph>
-          On login ctrl.name will store your Spotify username. A refresh token
-          to Spotify will be stored encrypted.
+          On sign in ctrl.name will store your Spotify username and an encrypted
+          "refresh token" to Spotify API.
         </Typography>
         <Typography paragraph>
           You can, whenever, choose to delete all data stored by ctrl.name in
