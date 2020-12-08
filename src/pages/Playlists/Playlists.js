@@ -74,11 +74,10 @@ export default function Playlists() {
   useEffect(() => {
     let mounted = true;
     if (meAccessToken && loadMore && me && selectedPlaylists) {
-      const query = nextQuery ? nextQuery.split("?")[1] : "";
       const user =
         selectedPlaylists === me.id ? "me" : `users/${selectedPlaylists}`;
-      spotify(meAccessToken)
-        .get(`${user}/playlists?${query}`)
+      spotify(meAccessToken, nextQuery)
+        .get(nextQuery || `${user}/playlists`)
         .then((res) => {
           if (mounted) {
             setLoadMore(false);
