@@ -9,25 +9,24 @@ export default function About() {
           What is ctrl.name?
         </Typography>
         <Typography paragraph>
-          The service allow people to share control of their Spotifys now
-          playing. Adding tracks to the queue, skip songs etc.
+          The app allow people to share Spotify control. Add tracks to the
+          queue, skip etc.
         </Typography>
 
         <Typography variant="h5" color="primary">
           How?
         </Typography>
         <Typography paragraph>
-          On login, a key to Spotifys API is stored encrypted in a vault. This
-          empowers others, with explicit consent, to loan that key and control
-          Spotify.
+          On login, a key to Spotify API is stored encrypted in a vault. This
+          empowers others, with your explicit consent, to get access to control.
         </Typography>
 
         <Typography variant="h5" color="primary">
           Is a consent temporary?
         </Typography>
         <Typography paragraph>
-          No! This is the benefit over Spotify Group Sessions - there is no need
-          to set it up on every use.
+          No! This is the main benefit over using Spotify Group Sessions. There
+          is no need to set it up on every use.
         </Typography>
 
         <Typography variant="h5" color="primary">
@@ -42,8 +41,9 @@ export default function About() {
             rel="noreferrer"
             href="https://www.spotify.com/se/account/apps/"
           >
-            Spotify Account Page
+            Spotify Apps Page
           </Link>
+          .
         </Typography>
 
         <Typography variant="h5" color="primary">
