@@ -20,6 +20,8 @@ import {
 
 import Rating from "@material-ui/lab/Rating";
 
+import { QueueMusic } from "@material-ui/icons";
+
 import ArtistListItem from "shared/components/ArtistListItem";
 import QueueUnavailableTooltip from "shared/components/QueueUnavailableTooltip";
 import spotify from "utils/spotify";
@@ -148,7 +150,11 @@ export default function Track({ open, setOpen, track, queueTrack }) {
                   color="primary"
                   fullWidth
                   disabled={!player}
-                  onClick={() => queueTrack(track.uri)}
+                  onClick={() => {
+                    queueTrack(track.uri);
+                    setOpen(false);
+                  }}
+                  startIcon={<QueueMusic />}
                 >
                   Queue track
                 </Button>
