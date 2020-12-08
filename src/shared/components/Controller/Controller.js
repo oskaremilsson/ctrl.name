@@ -10,7 +10,7 @@ import hexToRgba from "hex-to-rgba";
 import CardContent from "./components/CardContent";
 import SyncPlayerTimer from "./components/SyncPlayerTimer";
 
-import coverart from "assets/coverart.png";
+import coverart from "assets/coverart_boat.png";
 
 const { getSpotifyPlayer } = selectors;
 
@@ -38,10 +38,9 @@ export default function Controller({ demo }) {
   const [color, setColor] = useState("#535b5c");
   const textColor = invert(color, true);
 
-  const album = player && player.item && player.item.album;
-  const albumName = album && album.name;
-  const albumCover =
-    album && album.images && album.images[0] && album.images[0].url;
+  const album = player?.item?.album;
+  const albumName = album?.name;
+  const albumCover = album?.images[0]?.url;
 
   useEffect(() => {
     if (!player) {

@@ -22,7 +22,7 @@ import SwitchCurrentMe from "shared/components/SwitchCurrentMe";
 import Track from "shared/components/Track";
 
 import { SwapHoriz as SwapHorizIcon } from "@material-ui/icons";
-import coverart from "assets/coverart.png";
+import coverart from "assets/coverart_boat.png";
 
 const { getCurrentMe } = selectors;
 
