@@ -3,6 +3,7 @@ import { Box, Container, Button, Link, Typography } from "@material-ui/core";
 
 import GdprConsent from "./components/GdprConsent";
 import ToS from "./components/ToS";
+import About from "./components/About";
 
 import headerImage from "assets/header_img.jpg";
 import Controller from "shared/components/Controller";
@@ -56,9 +57,15 @@ export default function LandingPage() {
         </Box>
       </Box>
 
-      <Box marginLeft={2} marginRight={2} marginBottom={2}>
+      <Box marginLeft={2} marginRight={2}>
         <Container maxWidth="xs" disableGutters>
           <Controller demo={demo} />
+        </Container>
+      </Box>
+
+      <Box margin={2}>
+        <Container maxWidth="xs" disableGutters>
+          <About />
         </Container>
       </Box>
 
