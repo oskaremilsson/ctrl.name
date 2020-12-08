@@ -47,12 +47,10 @@ export default function Search() {
         )
         .then((res) => {
           if (mounted) {
-            setTracks(res.data && res.data.tracks && res.data.tracks.items);
-            setPlaylists(
-              res.data && res.data.playlists && res.data.playlists.items
-            );
-            setArtists(res.data && res.data.artists && res.data.artists.items);
-            setAlbums(res.data && res.data.albums && res.data.albums.items);
+            setTracks(res?.data?.tracks?.items);
+            setPlaylists(res?.data?.playlists?.items);
+            setArtists(res?.data?.artists?.items);
+            setAlbums(res?.data?.albums?.items);
           }
         })
         .catch((_) => {
