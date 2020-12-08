@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Box, Container, Button, Link, Typography } from "@material-ui/core";
 
 import GdprConsent from "./components/GdprConsent";
+import ToS from "./components/ToS";
 
 import headerImage from "assets/header_img.jpg";
-import FullscreenDialog from "shared/components/FullscreenDialog";
 import Controller from "shared/components/Controller";
 
 import demoPlayers from "assets/demoPlayers.json";
@@ -62,26 +62,7 @@ export default function LandingPage() {
         </Container>
       </Box>
 
-      <FullscreenDialog
-        open={openToS}
-        setOpen={setOpenToS}
-        title="Terms & Conditions"
-      >
-        <Box padding={2}>
-          <Typography paragraph>
-            Work in progress. I guess some text regarding what ctrl.name store
-            and how will be here.
-          </Typography>
-          <Typography paragraph>
-            On login ctrl.name will store your Spotify username. A refresh token
-            to Spotify will be stored encrypted.
-          </Typography>
-          <Typography paragraph>
-            You can, whenever, choose to delete all data stored by ctrl.name in
-            settings.
-          </Typography>
-        </Box>
-      </FullscreenDialog>
+      <ToS open={openToS} setOpen={setOpenToS} />
     </Box>
   );
 }
