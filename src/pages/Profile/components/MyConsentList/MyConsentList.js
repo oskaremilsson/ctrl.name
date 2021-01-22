@@ -77,10 +77,7 @@ export default function MyConsentList() {
               {consents.map((consent) => (
                 <ListItem key={consent.id}>
                   <ListItemAvatar>
-                    <Avatar
-                      alt={consent.id}
-                      src={consent && consent.images && consent.images[0].url}
-                    />
+                    <Avatar alt={consent.id} src={consent?.images[0]?.url} />
                   </ListItemAvatar>
 
                   <ListItemText

@@ -62,10 +62,7 @@ export default function MyRequests() {
               {myRequests.map((request) => (
                 <ListItem key={request.id}>
                   <ListItemAvatar>
-                    <Avatar
-                      alt={request.id}
-                      src={request && request.images && request.images[0].url}
-                    />
+                    <Avatar alt={request.id} src={request?.images[0]?.url} />
                   </ListItemAvatar>
 
                   <ListItemText

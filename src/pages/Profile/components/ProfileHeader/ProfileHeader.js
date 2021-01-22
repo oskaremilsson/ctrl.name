@@ -17,9 +17,9 @@ export default function ProfileHeader() {
   const classes = useStyles();
   const me = useSelector((state) => getMe(state));
 
-  const name = me && me.display_name;
+  const name = me?.display_name;
   const username = (me && me.id) || "user";
-  const myAvatarImg = me && me.images && me.images[0] && me.images[0].url;
+  const myAvatarImg = me?.images[0]?.url;
 
   return (
     <Box
